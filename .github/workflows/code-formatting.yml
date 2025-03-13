@@ -31,6 +31,8 @@ jobs:
 
     - name: Set up Python ${{ matrix.python-version }}
       run: |
+        ls
+        pwd
         cd xdsl-torch
         uv python install ${{ matrix.python-version }}
 
