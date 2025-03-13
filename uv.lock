@@ -620,6 +620,8 @@ name = "xdsl-torch"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "lit" },
+    { name = "numpy" },
     { name = "torch" },
     { name = "xdsl" },
 ]
