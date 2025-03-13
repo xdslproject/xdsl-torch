@@ -31,10 +31,16 @@ jobs:
         cache-dependency-glob: "uv.lock"
 
     - name: Set up Python ${{ matrix.python-version }}
-      run: uv python install ${{ matrix.python-version }}
+      run:
+        cd xdsl-torch
+        uv python install ${{ matrix.python-version }}
 
     - name: Install the package locally
-      run: uv sync
+      run:
+        cd xdsl-torch
+        uv sync
 
     - name: Run all tests
-      run: make tests
+      run:
+        cd xdsl-torch
+        make tests
