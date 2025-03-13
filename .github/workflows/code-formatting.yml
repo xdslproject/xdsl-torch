@@ -30,16 +30,16 @@ jobs:
         cache-dependency-glob: "uv.lock"
 
     - name: Set up Python ${{ matrix.python-version }}
-      run:
+      run: |
         cd xdsl-torch
         uv python install ${{ matrix.python-version }}
 
     - name: Install the package locally
-      run:
+      run: |
         cd xdsl-torch
         uv sync
 
     - name: Run code formatting checks with pre-commit
-      uses:
+      uses: |
         cd xdsl-torch
         pre-commit/action@v3.0.0
