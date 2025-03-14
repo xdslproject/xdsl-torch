@@ -21,8 +21,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-      with:
-        path: xdsl-torch
 
     - name: Install uv
       uses: astral-sh/setup-uv@v5
@@ -31,16 +29,10 @@ jobs:
         cache-dependency-glob: "uv.lock"
 
     - name: Set up Python ${{ matrix.python-version }}
-      run: |
-        cd xdsl-torch
-        uv python install ${{ matrix.python-version }}
+      run: uv python install ${{ matrix.python-version }}
 
     - name: Install the package locally
-      run: |
-        cd xdsl-torch
-        uv sync
+      run: uv sync
 
     - name: Run all tests
-      run: |
-        cd xdsl-torch
-        make tests
+      run: make tests
