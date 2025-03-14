@@ -12,10 +12,9 @@ class SimpleMult(torch.nn.Module):
         return x * y
 
 
-example_args = (torch.randn(10, 10), torch.randn(10, 10))
+args = (torch.randn(10, 10), torch.randn(10, 10))
 
-exported_program: torch.export.ExportedProgram = export(SimpleMult(), args=example_args)
-
+exported_program: torch.export.ExportedProgram = export(SimpleMult(), args=args)
 xdsl_op = import_program(exported_program)
 # CHECK:       func.func @main(%x : tensor<10x10xf32>, %y : tensor<10x10xf32>) -> tensor<10x10xf32> {
 # CHECK-NEXT:    %mul = torch.aten.mul.Tensor %x, %y : tensor<10x10xf32>, tensor<10x10xf32> -> tensor<10x10xf32>
@@ -27,8 +26,33 @@ graph = export_program(xdsl_op)
 graph_mod = torch.fx.GraphModule(torch.nn.Module(), graph)
 assert (
     torch.isclose(
-        graph_mod.forward(example_args[0], example_args[1]),
-        SimpleMult().forward(example_args[0], example_args[1]),
+        graph_mod.forward(args[0], args[1]), SimpleMult().forward(args[0], args[1])
+    )
+    .all()
+    .item()
+)
+
+
+class SinCosMult(torch.nn.Module):
+    def forward(self, x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+        return torch.cos(x) * torch.sin(y)
+
+
+exported_program: torch.export.ExportedProgram = export(SinCosMult(), args=args)
+xdsl_op = import_program(exported_program)
+# CHECK:       func.func @main(%x : tensor<10x10xf32>, %y : tensor<10x10xf32>) -> tensor<10x10xf32> {
+# CHECK-NEXT:    %cos = torch.aten.cos %x : tensor<10x10xf32> -> tensor<10x10xf32>
+# CHECK-NEXT:    %sin = torch.aten.sin %y : tensor<10x10xf32> -> tensor<10x10xf32>
+# CHECK-NEXT:    %mul = torch.aten.mul.Tensor %cos, %sin : tensor<10x10xf32>, tensor<10x10xf32> -> tensor<10x10xf32>
+# CHECK-NEXT:    func.return %mul : tensor<10x10xf32>
+# CHECK-NEXT:  }
+print(xdsl_op)
+
+graph = export_program(xdsl_op)
+graph_mod = torch.fx.GraphModule(torch.nn.Module(), graph)
+assert (
+    torch.isclose(
+        graph_mod.forward(args[0], args[1]), SinCosMult().forward(args[0], args[1])
     )
     .all()
     .item()
