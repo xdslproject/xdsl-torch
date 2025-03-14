@@ -44,6 +44,9 @@ ignore = [
     "PT012", # https://beta.ruff.rs/docs/rules/pytest-raises-with-multiple-statements/
 ]
 
+[tool.ruff.lint.per-file-ignores]
+"**/filecheck/*" = ["F811", "F841", "E501"]
+
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
 "xdsl.dialects.utils.fast_math".msg = "Use xdsl.dialects.utils instead"
 "xdsl.dialects.utils.format".msg = "Use xdsl.dialects.utils instead"
