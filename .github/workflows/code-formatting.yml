@@ -20,14 +20,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-      with:
-        path: xdsl-torch
 
     - name: Install uv
       uses: astral-sh/setup-uv@v5
       with:
         enable-cache: true
-        cache-dependency-glob: "uv.lock"
+        cache-dependency-glob: "xdsl-torch/uv.lock"
 
     - name: Set up Python ${{ matrix.python-version }}
       run: |
