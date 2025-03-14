@@ -31,8 +31,6 @@ jobs:
 
     - name: Set up Python ${{ matrix.python-version }}
       run: |
-        ls
-        pwd
         cd xdsl-torch
         uv python install ${{ matrix.python-version }}
 
@@ -42,6 +40,4 @@ jobs:
         uv sync
 
     - name: Run code formatting checks with pre-commit
-      uses: |
-        cd xdsl-torch
-        pre-commit/action@v3.0.0
+      uses: pre-commit/action@v3.0.0
