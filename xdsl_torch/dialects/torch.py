@@ -47,4 +47,4 @@ XDSL_TORCH_OPS: dict[Any, type] = {
 REVERSE_XDSL_TORCH_OPS = {
     xdsl_op: torch_op for torch_op, xdsl_op in XDSL_TORCH_OPS.items()
 }
-TorchDialect = Dialect("torch", [AtenMulTensorOp], [])
+TorchDialect = Dialect("torch", [AtenMulTensorOp, AtenSinOp, AtenCosOp], [])
