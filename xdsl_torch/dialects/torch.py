@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Any
 from xdsl.irdl import IRDLOperation, irdl_op_definition, operand_def, result_def
 from xdsl.dialects.builtin import AnyTensorTypeConstr
 from xdsl.ir import Dialect
@@ -14,6 +14,6 @@ class AtenMulTensorOp(IRDLOperation):
 
     assembly_format = "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
 
-XDSL_TORCH_OPS: Dict[str, IRDLOperation] = {torch.ops.aten.mul.Tensor: AtenMulTensorOp}
+XDSL_TORCH_OPS: Dict[Any, type] = {torch.ops.aten.mul.Tensor: AtenMulTensorOp} # type: ignore
 REVERSE_XDSL_TORCH_OPS = {xdsl_op: torch_op for torch_op, xdsl_op in XDSL_TORCH_OPS.items()}
 TorchDialect = Dialect("torch", [AtenMulTensorOp], [])

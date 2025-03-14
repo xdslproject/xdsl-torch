@@ -9,8 +9,8 @@ from xdsl_torch.dialects.torch import XDSL_TORCH_OPS
 from xdsl_torch.dialects.types import TORCH_DTYPE_TO_XDSL_TYPE
 
 def import_program(prog: torch.export.ExportedProgram, func_name: str = "main") -> func.FuncOp:
-    placeholder_nodes: Dict[str, torch.Node] = {}
-    all_producer_nodes: Dict[str, torch.Node] = {}
+    placeholder_nodes: Dict[str, torch.fx.Node] = {}
+    all_producer_nodes: Dict[str, torch.fx.Node] = {}
     for node in prog.graph.nodes:
         if node.op == "placeholder":
             placeholder_nodes[node.name] = node
@@ -19,26 +19,21 @@ def import_program(prog: torch.export.ExportedProgram, func_name: str = "main") 
             all_producer_nodes[node.name] = node
     
     # Generate func signature
-    sign = prog.graph_signature
-    inp_sign, out_sign = [], []
+    def make_tensor_type(arg: torch.export.graph_signature.InputSpec | torch.export.graph_signature.OutputSpec):
+        tensor_meta = all_producer_nodes[arg.arg.name].meta["tensor_meta"]
+        return TensorType(TORCH_DTYPE_TO_XDSL_TYPE[tensor_meta.dtype], tensor_meta.shape)
 
-    for arg in sign.input_specs:
-        arg_node = all_producer_nodes[arg.arg.name]
-        tensor_meta: torch.fx.passes.TensorMetadata = arg_node.meta['tensor_meta']
-        inp_sign.append(TensorType(TORCH_DTYPE_TO_XDSL_TYPE[tensor_meta.dtype], tensor_meta.shape))
-    
-    for arg in sign.output_specs:
-        arg_node = all_producer_nodes[arg.arg.name]
-        tensor_meta: torch.fx.passes.TensorMetadata = arg_node.meta['tensor_meta']
-        out_sign.append(TensorType(TORCH_DTYPE_TO_XDSL_TYPE[tensor_meta.dtype], tensor_meta.shape))
+    inp_sign = list(map(make_tensor_type, prog.graph_signature.input_specs))
+    out_sign = list(map(make_tensor_type, prog.graph_signature.output_specs))
 
     # Build a FuncOp
     func_op = func.FuncOp(func_name, (inp_sign, out_sign))
 
     with ImplicitBuilder(func_op.body) as args:
-        for i, original_arg in enumerate(sign.input_specs):
+        xdsl_nodes : Dict[str, SSAValue] = {}
+        for i, original_arg in enumerate(prog.graph_signature.input_specs):
             args[i].name_hint = original_arg.arg.name
-        xdsl_nodes : Dict[str, SSAValue] = {arg.name_hint: arg for arg in func_op.args}
+            xdsl_nodes[original_arg.arg.name] = args[i]
 
         for node in prog.graph.nodes:
             if node.op == "call_function":
@@ -46,13 +41,14 @@ def import_program(prog: torch.export.ExportedProgram, func_name: str = "main") 
                     raise NotImplementedError(
                         f"FIX ME: Unimplemented call_function: target={node.target}, {node.meta}"
                     )
-                tensor_meta = node.meta["tensor_meta"]
+                arg_names = [arg.name if type(arg) is torch.fx.Node else "" for arg in node.args]
+                assert(all(arg_names))
                 new_op = XDSL_TORCH_OPS[node.target](
-                    operands=[xdsl_nodes[arg.name] for arg in node.args],
-                    result_types=[TensorType(TORCH_DTYPE_TO_XDSL_TYPE[tensor_meta.dtype], tensor_meta.shape)] # we currently think that everything returns a single tensor
+                    operands=[xdsl_nodes[name] for name in arg_names],
+                    result_types=[TensorType(TORCH_DTYPE_TO_XDSL_TYPE[node.meta["tensor_meta"].dtype], node.meta["tensor_meta"].shape)] # we currently think that everything returns a single tensor
                 )
                 new_op.result.name_hint = node.name
                 xdsl_nodes[node.name] = new_op
-        func.ReturnOp(*[xdsl_nodes[out_node.arg.name] for out_node in sign.output_specs])
+        func.ReturnOp(*[xdsl_nodes[out_node.arg.name] for out_node in prog.graph_signature.output_specs])
 
     return func_op

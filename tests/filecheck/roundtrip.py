@@ -23,11 +23,6 @@ xdsl_op = import_program(exported_program)
 # CHECK-NEXT:  }
 print(xdsl_op)
 
-class SinCosMult(torch.nn.Module):
-    def forward(self, x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
-        return torch.cos(x) * torch.sin(y)
-    
-exported_program: torch.export.ExportedProgram = export(
-    SinCosMult(), args=example_args
-)
-print(exported_program.graph)
+graph = export_program(xdsl_op)
+graph_mod = torch.fx.GraphModule(torch.nn.Module(), graph)
+assert(torch.isclose(graph_mod.forward(example_args[0], example_args[1]), SimpleMult().forward(example_args[0], example_args[1])).all().item())
