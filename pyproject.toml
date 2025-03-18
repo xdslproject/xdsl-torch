@@ -46,6 +46,8 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "**/filecheck/*" = ["F811", "F841", "E501"]
+"**/torch_mapping.py" = ["E501", "F405", "F403"]
+"**/torch_ops_generated.py" = ["E501"]
 
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
 "xdsl.dialects.utils.fast_math".msg = "Use xdsl.dialects.utils instead"
