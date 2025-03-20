@@ -9,7 +9,7 @@ def export_program(func_op: func.FuncOp) -> torch.fx.Graph:
     # TODO: instead of a Graph object construct a full ExportedProgram
     graph = torch.fx.Graph()
 
-    if any(map(lambda arg: arg.name_hint is None, func_op.args)):
+    if any(arg.name_hint is None for arg in func_op.args):
         raise ValueError(f"Args of {func_op.sym_name} must have name hints")
     nodes: dict[SSAValue, torch.fx.Node] = {
         arg: graph.create_node(
