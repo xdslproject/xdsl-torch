@@ -7,7 +7,7 @@ requires-python = ">=3.10"
 dependencies = [
     "numpy>=2.2.4",
     "torch>=2.6.0",
- "xdsl>=0.29.0",
+    "xdsl>=0.29.0",
 ]
 
 [project.scripts]
