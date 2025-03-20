@@ -3,6 +3,7 @@
 import torch
 from torch.export import export
 
+from xdsl_torch.utils.export_program import export_program
 from xdsl_torch.utils.import_program import import_program
 
 
@@ -21,6 +22,16 @@ xdsl_op = import_program(exported_program)
 # CHECK-NEXT:  }
 print(xdsl_op)
 
+graph = export_program(xdsl_op)
+graph_mod = torch.fx.GraphModule(torch.nn.Module(), graph)
+assert (
+    torch.isclose(
+        graph_mod.forward(args[0], args[1]), SimpleMult().forward(args[0], args[1])
+    )
+    .all()
+    .item()
+)
+
 
 class SinCosMult(torch.nn.Module):
     def forward(self, x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
@@ -36,3 +47,13 @@ xdsl_op = import_program(exported_program)
 # CHECK-NEXT:    func.return %mul : tensor<10x10xf32>
 # CHECK-NEXT:  }
 print(xdsl_op)
+
+graph = export_program(xdsl_op)
+graph_mod = torch.fx.GraphModule(torch.nn.Module(), graph)
+assert (
+    torch.isclose(
+        graph_mod.forward(args[0], args[1]), SinCosMult().forward(args[0], args[1])
+    )
+    .all()
+    .item()
+)
