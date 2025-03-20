@@ -1,6 +1,5 @@
 import torch
 from xdsl.dialects import func
-from xdsl.utils.exceptions import DiagnosticException
 
 from xdsl_torch.dialects.torch_mapping import REVERSE_XDSL_TORCH_OPS
 
@@ -8,14 +7,17 @@ from xdsl_torch.dialects.torch_mapping import REVERSE_XDSL_TORCH_OPS
 def export_program(func_op: func.FuncOp) -> torch.fx.Graph:
     # TODO: instead of a Graph object construct a full ExportedProgram
     graph = torch.fx.Graph()
-    nodes: dict[str, torch.fx.Node] = {}
-    for arg in func_op.args:
-        if arg.name_hint is None:
-            # TODO: come up with a scheme that works without name hints just in case
-            raise DiagnosticException("Name hints are required for the conversion")
-        nodes[arg.name_hint] = graph.create_node(
-            "placeholder", arg.name_hint, None, None, arg.name_hint
-        )
+
+    arg_name_hints = tuple(
+        arg.name_hint for arg in func_op.args if arg.name_hint is not None
+    )
+    if len(arg_name_hints) != len(func_op.args):
+        raise ValueError(f"Args of {func_op.sym_name} must have name hints")
+    nodes = {
+        name_hint: graph.create_node("placeholder", name_hint, None, None, name_hint)
+        for name_hint in arg_name_hints
+    }
+
     for op in func_op.body.ops:
         if isinstance(op, func.ReturnOp):
             graph.create_node(
