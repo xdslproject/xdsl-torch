@@ -17,7 +17,7 @@ def export_program(func_op: func.FuncOp) -> torch.fx.Graph:
             "placeholder", arg.name_hint, None, None, arg.name_hint
         )
     for op in func_op.body.ops:
-        if type(op) is func.ReturnOp:
+        if isinstance(op, func.ReturnOp):
             graph.create_node(
                 "output",
                 "",
