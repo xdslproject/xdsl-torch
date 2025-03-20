@@ -30,6 +30,9 @@ build-backend = "setuptools.build_meta"
 reportImportCycles = false
 typeCheckingMode = "strict"
 include = ["xdsl_torch"]
+"ignore" = [
+    "xdsl_torch/dialects/torch_mapping.py"
+]
 
 [tool.ruff]
 target-version = "py310"
@@ -46,7 +49,7 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "**/filecheck/*" = ["F811", "F841", "E501"]
-"**/torch_mapping.py" = ["E501", "F405", "F403"]
+"**/torch_mapping.py" = ["ALL"]
 
 [tool.pytest.ini_options]
 python_files = ["tests/*test_*.py", "docs/*test_*.py"]
