@@ -4,7 +4,7 @@ from xdsl.dialects import func
 from xdsl.dialects.builtin import TensorType
 from xdsl.ir import SSAValue
 
-from xdsl_torch.dialects.torch_mapping import XDSL_TORCH_OPS
+from xdsl_torch.dialects.torch_mapping_generated import XDSL_TORCH_OPS
 from xdsl_torch.utils.type_mapping import TORCH_DTYPE_TO_XDSL_TYPE
 
 

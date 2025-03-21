@@ -2,7 +2,7 @@ import torch
 from xdsl.dialects import func
 from xdsl.ir import SSAValue
 
-from xdsl_torch.dialects.torch_mapping import REVERSE_XDSL_TORCH_OPS
+from xdsl_torch.dialects.torch_mapping_generated import REVERSE_XDSL_TORCH_OPS
 
 
 def export_program(func_op: func.FuncOp) -> torch.fx.Graph:

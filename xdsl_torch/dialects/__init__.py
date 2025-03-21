@@ -7,7 +7,7 @@ def get_all_dialects() -> dict[str, Callable[[], Dialect]]:
     """Returns all available dialects."""
 
     def get_torch():
-        from xdsl_torch.dialects.torch_dialect import TorchDialect
+        from xdsl_torch.dialects.torch_generated import TorchDialect
 
         return TorchDialect
 
