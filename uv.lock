@@ -671,9 +671,9 @@ dependencies = [
     { name = "ordered-set" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4e/b7/629c430280250cc4cba67982b1686b243ed524bbbed6685be55477082dff/xdsl-0.29.0.tar.gz", hash = "sha256:887775e9ff84d9c3aeb1eb341bf01c03cfe8c58bdbc1717dfe2d0ac06f198776", size = 895394 }
+sdist = { url = "https://files.pythonhosted.org/packages/a3/27/e60c89a6ca2946d9154e76de6e0cf7111aa932f95aed06e44cdc9cbf170c/xdsl-0.31.0.tar.gz", hash = "sha256:bc48945af31c056b4baffcd7b4587b36f32232066de01ffdb313d81bd4e03de9", size = 922666 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e2/74/4abc3aca30076fedad5f0cf8f8b82f838ba05423352739bd02c8dc39ac4b/xdsl-0.29.0-py3-none-any.whl", hash = "sha256:db7ab357e7ba56cf8b431a1ab6754832393acd1fa7f238fe4fcd03310526f166", size = 1083119 },
+    { url = "https://files.pythonhosted.org/packages/29/eb/af545bf6b5992c003e5016a7f747aa698917595318fe6a4e8003222bcb33/xdsl-0.31.0-py3-none-any.whl", hash = "sha256:aa438281e5950f0b3d1b8853a6f03763fffbca00becaf860e776d0453e756722", size = 1114039 },
 ]
 
 [[package]]
