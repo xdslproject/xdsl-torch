@@ -1,4 +1,3 @@
-from io import StringIO
 from typing import Any
 
 import torch
@@ -115,6 +114,4 @@ ops, _ = generate_ops()
 
 with open("xdsl_torch/dialects/torch_dialect.py", "w+") as f:
     print(preamble, file=f)
-    buffer = StringIO("")
-    dump_dialect_pyfile("torch", ops, out=buffer)
-    f.write(buffer.getvalue())
+    dump_dialect_pyfile("torch", ops, out=f)  # type: ignore
