@@ -1,3 +1,4 @@
+import subprocess
 from typing import Any
 
 import torch
@@ -107,11 +108,50 @@ def generate_ops() -> tuple[list[tuple[str, OpDef]], dict[str, str]]:
     return ops, op_class_mapping
 
 
+def create_op_class_mapping_file(op_class_mapping: dict[str, str]) -> str:
+    imports = """
+from typing import Dict, Any
+import torch
+from xdsl_torch.dialects.torch_dialect import *
+    """
+    dict_strings = [
+        f"{torch_class}: {xdsl_class},  # type: ignore"
+        for torch_class, xdsl_class in op_class_mapping.items()
+    ]
+    dict_strings.sort()
+
+    mapping = "XDSL_TORCH_OPS: Dict[Any, type] = {" + "\n\t".join(dict_strings) + "\n}"
+    reverse_mapping = """
+REVERSE_XDSL_TORCH_OPS = {
+    xdsl_op: torch_op for torch_op, xdsl_op in XDSL_TORCH_OPS.items()
+}"""
+    content = "\n".join([imports, mapping, reverse_mapping])
+
+    # Format output
+    output = subprocess.run(
+        [
+            "ruff",
+            "format",
+            "--stdin-filename",
+            "mapping.py",
+        ],
+        input=content,
+        capture_output=True,
+        text=True,
+    )
+
+    return output.stdout
+
+
 ## Running everything
 
-ops, _ = generate_ops()
+ops, op_class_mapping = generate_ops()
 ops.sort(key=lambda x: x[0])
 
 with open("xdsl_torch/dialects/torch_dialect.py", "w+") as f:
     print(preamble, file=f)
     dump_dialect_pyfile("torch", ops, out=f)  # type: ignore
+
+with open("xdsl_torch/dialects/torch_mapping.py", "w+") as f:
+    print(preamble, file=f)
+    print(create_op_class_mapping_file(op_class_mapping), file=f)
