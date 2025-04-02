@@ -335,7 +335,6 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.lift.default: Torch_AtenLiftOp,  # type: ignore
     torch.ops.aten.lift_fresh.default: Torch_AtenLiftFreshOp,  # type: ignore
     torch.ops.aten.lift_fresh_copy.default: Torch_AtenLiftFreshCopyOp,  # type: ignore
-    torch.ops.aten.linalg_cholesky_ex.L: Torch_AtenLinalgCholeskyExLOp,  # type: ignore
     torch.ops.aten.linalg_cholesky_ex.default: Torch_AtenLinalgCholeskyExOp,  # type: ignore
     torch.ops.aten.linalg_cross.default: Torch_AtenLinalgCrossOp,  # type: ignore
     torch.ops.aten.linalg_eig.default: Torch_AtenLinalgEigOp,  # type: ignore

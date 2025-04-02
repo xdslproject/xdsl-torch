@@ -2863,22 +2863,6 @@ class Torch_AtenLiftOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenLinalgCholeskyExLOp(IRDLOperation):
-    name = "torch.aten.linalg_cholesky_ex.L"
-    self = operand_def(BaseAttr(TensorType))
-    upper = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
-    check_errors = operand_def(
-        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
-    )
-    L = operand_def(BaseAttr(TensorType))
-    info = operand_def(BaseAttr(TensorType))
-    L = result_def(BaseAttr(TensorType))
-    info = result_def(BaseAttr(TensorType))
-
-    assembly_format = "$self `,` $upper `,` $check_errors `,` $L `,` $info attr-dict `:` type($self) `,` type($upper) `,` type($check_errors) `,` type($L) `,` type($info) `->` type($L) `,` type($info)"
-
-
-@irdl_op_definition
 class Torch_AtenLinalgCholeskyExOp(IRDLOperation):
     name = "torch.aten.linalg_cholesky_ex"
     self = operand_def(BaseAttr(TensorType))
@@ -8025,7 +8009,6 @@ TorchDialect = Dialect(
         Torch_AtenLiftFreshCopyOp,
         Torch_AtenLiftFreshOp,
         Torch_AtenLiftOp,
-        Torch_AtenLinalgCholeskyExLOp,
         Torch_AtenLinalgCholeskyExOp,
         Torch_AtenLinalgCrossOp,
         Torch_AtenLinalgEigOp,
