@@ -401,7 +401,6 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.maximum.default: Torch_AtenMaximumOp,  # type: ignore
     torch.ops.aten.median.default: Torch_AtenMedianOp,  # type: ignore
     torch.ops.aten.median.dim: Torch_AtenMedianDimOp,  # type: ignore
-    torch.ops.aten.median.dim_values: Torch_AtenMedianDimValuesOp,  # type: ignore
     torch.ops.aten.min.default: Torch_AtenMinOp,  # type: ignore
     torch.ops.aten.min.dim: Torch_AtenMinDimOp,  # type: ignore
     torch.ops.aten.min.dim_min: Torch_AtenMinDimMinOp,  # type: ignore
@@ -412,7 +411,6 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.mish_backward.default: Torch_AtenMishBackwardOp,  # type: ignore
     torch.ops.aten.mm.default: Torch_AtenMmOp,  # type: ignore
     torch.ops.aten.mode.default: Torch_AtenModeOp,  # type: ignore
-    torch.ops.aten.mode.values: Torch_AtenModeValuesOp,  # type: ignore
     torch.ops.aten.mse_loss.default: Torch_AtenMseLossOp,  # type: ignore
     torch.ops.aten.mse_loss_backward.default: Torch_AtenMseLossBackwardOp,  # type: ignore
     torch.ops.aten.mse_loss_backward.grad_input: Torch_AtenMseLossBackwardGradInputOp,  # type: ignore
@@ -430,7 +428,6 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.mvlgamma_.default: Torch_AtenMvlgamma_Op,  # type: ignore
     torch.ops.aten.nanmedian.default: Torch_AtenNanmedianOp,  # type: ignore
     torch.ops.aten.nanmedian.dim: Torch_AtenNanmedianDimOp,  # type: ignore
-    torch.ops.aten.nanmedian.dim_values: Torch_AtenNanmedianDimValuesOp,  # type: ignore
     torch.ops.aten.narrow.Tensor: Torch_AtenNarrowTensorOp,  # type: ignore
     torch.ops.aten.narrow.default: Torch_AtenNarrowOp,  # type: ignore
     torch.ops.aten.narrow_copy.default: Torch_AtenNarrowCopyOp,  # type: ignore

@@ -3584,20 +3584,6 @@ class Torch_AtenMedianDimOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenMedianDimValuesOp(IRDLOperation):
-    name = "torch.aten.median.dim_values"
-    self = operand_def(BaseAttr(TensorType))
-    dim = operand_def(BaseAttr(IntegerType))
-    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
-    values = operand_def(BaseAttr(TensorType))
-    indices = operand_def(BaseAttr(TensorType))
-    values = result_def(BaseAttr(TensorType))
-    indices = result_def(BaseAttr(TensorType))
-
-    assembly_format = "$self `,` $dim `,` $keepdim `,` $values `,` $indices attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `,` type($values) `,` type($indices) `->` type($values) `,` type($indices)"
-
-
-@irdl_op_definition
 class Torch_AtenMedianOp(IRDLOperation):
     name = "torch.aten.median"
     self = operand_def(BaseAttr(TensorType))
@@ -3715,20 +3701,6 @@ class Torch_AtenModeOp(IRDLOperation):
     indices = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $dim `,` $keepdim attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `->` type($values) `,` type($indices)"
-
-
-@irdl_op_definition
-class Torch_AtenModeValuesOp(IRDLOperation):
-    name = "torch.aten.mode.values"
-    self = operand_def(BaseAttr(TensorType))
-    dim = operand_def(BaseAttr(IntegerType))
-    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
-    values = operand_def(BaseAttr(TensorType))
-    indices = operand_def(BaseAttr(TensorType))
-    values = result_def(BaseAttr(TensorType))
-    indices = result_def(BaseAttr(TensorType))
-
-    assembly_format = "$self `,` $dim `,` $keepdim `,` $values `,` $indices attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `,` type($values) `,` type($indices) `->` type($values) `,` type($indices)"
 
 
 @irdl_op_definition
@@ -3913,20 +3885,6 @@ class Torch_AtenNanmedianDimOp(IRDLOperation):
     indices = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $dim `,` $keepdim attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `->` type($values) `,` type($indices)"
-
-
-@irdl_op_definition
-class Torch_AtenNanmedianDimValuesOp(IRDLOperation):
-    name = "torch.aten.nanmedian.dim_values"
-    self = operand_def(BaseAttr(TensorType))
-    dim = operand_def(BaseAttr(IntegerType))
-    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
-    values = operand_def(BaseAttr(TensorType))
-    indices = operand_def(BaseAttr(TensorType))
-    values = result_def(BaseAttr(TensorType))
-    indices = result_def(BaseAttr(TensorType))
-
-    assembly_format = "$self `,` $dim `,` $keepdim `,` $values `,` $indices attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `,` type($values) `,` type($indices) `->` type($values) `,` type($indices)"
 
 
 @irdl_op_definition
@@ -8059,7 +8017,6 @@ TorchDialect = Dialect(
         Torch_AtenMaxOtherOp,
         Torch_AtenMaximumOp,
         Torch_AtenMedianDimOp,
-        Torch_AtenMedianDimValuesOp,
         Torch_AtenMedianOp,
         Torch_AtenMinDimMinOp,
         Torch_AtenMinDimOp,
@@ -8071,7 +8028,6 @@ TorchDialect = Dialect(
         Torch_AtenMish_Op,
         Torch_AtenMmOp,
         Torch_AtenModeOp,
-        Torch_AtenModeValuesOp,
         Torch_AtenMseLossBackwardGradInputOp,
         Torch_AtenMseLossBackwardOp,
         Torch_AtenMseLossOp,
@@ -8088,7 +8044,6 @@ TorchDialect = Dialect(
         Torch_AtenMvlgammaOp,
         Torch_AtenMvlgamma_Op,
         Torch_AtenNanmedianDimOp,
-        Torch_AtenNanmedianDimValuesOp,
         Torch_AtenNanmedianOp,
         Torch_AtenNarrowCopyOp,
         Torch_AtenNarrowOp,
