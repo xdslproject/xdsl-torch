@@ -6,13 +6,13 @@ from torch.export import export
 from xdsl_torch.utils.import_program import import_program
 
 
-class Diag(torch.nn.Module):
+class DiagDef(torch.nn.Module):
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return torch.diagonal(x)
 
 
 exported_program: torch.export.ExportedProgram = export(
-    Diag(), args=(torch.randn(10, 10),)
+    DiagDef(), args=(torch.randn(10, 10),)
 )
 
 # CHECK:        %int0 = arith.constant 0 : i32
