@@ -49,9 +49,15 @@ def format_name(name: str):
     return new_name
 
 
-def get_operand(operand_type: str) -> OperandDef:
-    def_func = OptOperandDef if "?" in operand_type else OperandDef
-    return def_func(TORCH_TYPE_TO_ODS_TYPE[operand_type.strip("?")])
+def get_base_type(type_str: str) -> str:
+    if "Optional" in type_str:
+        type_str = type_str[type_str.find("[") + 1 : type_str.rfind("]")]
+    return type_str
+
+
+def get_operand_def(type_str: str) -> OperandDef:
+    def_func = OptOperandDef if "Optional" in type_str else OperandDef
+    return def_func(TORCH_TYPE_TO_ODS_TYPE[get_base_type(type_str)])
 
 
 def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
@@ -82,16 +88,13 @@ def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
     )
 
     # Parse arguments
-    for arg in schema.arguments:
-        if "?" in str(arg.type):
-            print(arg.type)
-            raise Exception()
     if any(
-        arg_type not in TORCH_TYPE_TO_ODS_TYPE
-        for arg_type in [str(arg.type).strip("?") for arg in schema.arguments]
+        get_base_type(str(arg.type)) not in TORCH_TYPE_TO_ODS_TYPE
+        for arg in schema.arguments
     ):
         return None, None
-    operands = [(arg.name, get_operand(str(arg.type))) for arg in schema.arguments]
+
+    operands = [(arg.name, get_operand_def(str(arg.type))) for arg in schema.arguments]
 
     # Parse results
     if any(str(out.type) not in TORCH_TYPE_TO_ODS_TYPE for out in schema.returns):
