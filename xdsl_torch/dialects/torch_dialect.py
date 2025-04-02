@@ -223,6 +223,17 @@ class Torch_AtenAliasOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenAllDimOp(IRDLOperation):
+    name = "torch.aten.all.dim"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $keepdim attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenAllOp(IRDLOperation):
     name = "torch.aten.all"
     self = operand_def(BaseAttr(TensorType))
@@ -256,6 +267,17 @@ class Torch_AtenAngleOp(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAnyDimOp(IRDLOperation):
+    name = "torch.aten.any.dim"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $keepdim attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `->` type($result)"
 
 
 @irdl_op_definition
@@ -758,6 +780,18 @@ class Torch_AtenBmmOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenBucketizeTensorOp(IRDLOperation):
+    name = "torch.aten.bucketize.Tensor"
+    self = operand_def(BaseAttr(TensorType))
+    boundaries = operand_def(BaseAttr(TensorType))
+    out_int32 = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    right = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $boundaries `,` $out_int32 `,` $right attr-dict `:` type($self) `,` type($boundaries) `,` type($out_int32) `,` type($right) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenCeilFloatOp(IRDLOperation):
     name = "torch.aten.ceil.float"
     a = operand_def(BaseAttr(Float64Type))
@@ -801,6 +835,41 @@ class Torch_AtenChannelShuffleOp(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $groups attr-dict `:` type($self) `,` type($groups) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenCholeskyInverseOp(IRDLOperation):
+    name = "torch.aten.cholesky_inverse"
+    self = operand_def(BaseAttr(TensorType))
+    upper = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $upper attr-dict `:` type($self) `,` type($upper) `->` type($result)"
+    )
+
+
+@irdl_op_definition
+class Torch_AtenCholeskyOp(IRDLOperation):
+    name = "torch.aten.cholesky"
+    self = operand_def(BaseAttr(TensorType))
+    upper = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $upper attr-dict `:` type($self) `,` type($upper) `->` type($result)"
+    )
+
+
+@irdl_op_definition
+class Torch_AtenCholeskySolveOp(IRDLOperation):
+    name = "torch.aten.cholesky_solve"
+    self = operand_def(BaseAttr(TensorType))
+    input2 = operand_def(BaseAttr(TensorType))
+    upper = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $input2 `,` $upper attr-dict `:` type($self) `,` type($input2) `,` type($upper) `->` type($result)"
 
 
 @irdl_op_definition
@@ -891,6 +960,19 @@ class Torch_AtenConjPhysical_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenCopyOp(IRDLOperation):
+    name = "torch.aten.copy"
+    self = operand_def(BaseAttr(TensorType))
+    src = operand_def(BaseAttr(TensorType))
+    non_blocking = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $src `,` $non_blocking attr-dict `:` type($self) `,` type($src) `,` type($non_blocking) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenCopy_FloatOp(IRDLOperation):
     name = "torch.aten.copy_.float"
     self = operand_def(BaseAttr(TensorType))
@@ -912,6 +994,19 @@ class Torch_AtenCopy_IntOp(IRDLOperation):
     assembly_format = (
         "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
     )
+
+
+@irdl_op_definition
+class Torch_AtenCopy_Op(IRDLOperation):
+    name = "torch.aten.copy_"
+    self = operand_def(BaseAttr(TensorType))
+    src = operand_def(BaseAttr(TensorType))
+    non_blocking = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $src `,` $non_blocking attr-dict `:` type($self) `,` type($src) `,` type($non_blocking) `->` type($result)"
 
 
 @irdl_op_definition
@@ -1282,6 +1377,86 @@ class Torch_AtenDotOp(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $tensor attr-dict `:` type($self) `,` type($tensor) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenEmbeddingDenseBackwardOp(IRDLOperation):
+    name = "torch.aten.embedding_dense_backward"
+    grad_output = operand_def(BaseAttr(TensorType))
+    indices = operand_def(BaseAttr(TensorType))
+    num_weights = operand_def(BaseAttr(IntegerType))
+    padding_idx = operand_def(BaseAttr(IntegerType))
+    scale_grad_by_freq = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$grad_output `,` $indices `,` $num_weights `,` $padding_idx `,` $scale_grad_by_freq attr-dict `:` type($grad_output) `,` type($indices) `,` type($num_weights) `,` type($padding_idx) `,` type($scale_grad_by_freq) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenEmbeddingOp(IRDLOperation):
+    name = "torch.aten.embedding"
+    weight = operand_def(BaseAttr(TensorType))
+    indices = operand_def(BaseAttr(TensorType))
+    padding_idx = operand_def(BaseAttr(IntegerType))
+    scale_grad_by_freq = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    sparse = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$weight `,` $indices `,` $padding_idx `,` $scale_grad_by_freq `,` $sparse attr-dict `:` type($weight) `,` type($indices) `,` type($padding_idx) `,` type($scale_grad_by_freq) `,` type($sparse) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenEqBoolOp(IRDLOperation):
+    name = "torch.aten.eq.bool"
+    a = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    b = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenEqFloatIntOp(IRDLOperation):
+    name = "torch.aten.eq.float_int"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenEqFloatOp(IRDLOperation):
+    name = "torch.aten.eq.float"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenEqIntFloatOp(IRDLOperation):
+    name = "torch.aten.eq.int_float"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenEqIntOp(IRDLOperation):
+    name = "torch.aten.eq.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
 
 
 @irdl_op_definition
@@ -1729,6 +1904,20 @@ class Torch_AtenFrexpTensorOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenGatherOp(IRDLOperation):
+    name = "torch.aten.gather"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    index = operand_def(BaseAttr(TensorType))
+    sparse_grad = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $index `,` $sparse_grad attr-dict `:` type($self) `,` type($dim) `,` type($index) `,` type($sparse_grad) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenGcdIntOp(IRDLOperation):
     name = "torch.aten.gcd.int"
     a = operand_def(BaseAttr(IntegerType))
@@ -1760,6 +1949,46 @@ class Torch_AtenGcd_Op(IRDLOperation):
     assembly_format = (
         "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
     )
+
+
+@irdl_op_definition
+class Torch_AtenGeFloatIntOp(IRDLOperation):
+    name = "torch.aten.ge.float_int"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenGeFloatOp(IRDLOperation):
+    name = "torch.aten.ge.float"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenGeIntFloatOp(IRDLOperation):
+    name = "torch.aten.ge.int_float"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenGeIntOp(IRDLOperation):
+    name = "torch.aten.ge.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
 
 
 @irdl_op_definition
@@ -1867,6 +2096,76 @@ class Torch_AtenGreater_TensorOp(IRDLOperation):
     assembly_format = (
         "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
     )
+
+
+@irdl_op_definition
+class Torch_AtenGridSampler2DOp(IRDLOperation):
+    name = "torch.aten.grid_sampler_2d"
+    input = operand_def(BaseAttr(TensorType))
+    grid = operand_def(BaseAttr(TensorType))
+    interpolation_mode = operand_def(BaseAttr(IntegerType))
+    padding_mode = operand_def(BaseAttr(IntegerType))
+    align_corners = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$input `,` $grid `,` $interpolation_mode `,` $padding_mode `,` $align_corners attr-dict `:` type($input) `,` type($grid) `,` type($interpolation_mode) `,` type($padding_mode) `,` type($align_corners) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenGridSampler3DOp(IRDLOperation):
+    name = "torch.aten.grid_sampler_3d"
+    input = operand_def(BaseAttr(TensorType))
+    grid = operand_def(BaseAttr(TensorType))
+    interpolation_mode = operand_def(BaseAttr(IntegerType))
+    padding_mode = operand_def(BaseAttr(IntegerType))
+    align_corners = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$input `,` $grid `,` $interpolation_mode `,` $padding_mode `,` $align_corners attr-dict `:` type($input) `,` type($grid) `,` type($interpolation_mode) `,` type($padding_mode) `,` type($align_corners) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenGtFloatIntOp(IRDLOperation):
+    name = "torch.aten.gt.float_int"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenGtFloatOp(IRDLOperation):
+    name = "torch.aten.gt.float"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenGtIntFloatOp(IRDLOperation):
+    name = "torch.aten.gt.int_float"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenGtIntOp(IRDLOperation):
+    name = "torch.aten.gt.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
 
 
 @irdl_op_definition
@@ -2176,6 +2475,83 @@ class Torch_AtenIndexSelectOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenIsCoalescedOp(IRDLOperation):
+    name = "torch.aten.is_coalesced"
+    self = operand_def(BaseAttr(TensorType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenIsComplexOp(IRDLOperation):
+    name = "torch.aten.is_complex"
+    self = operand_def(BaseAttr(TensorType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenIsContiguousMemoryFormatOp(IRDLOperation):
+    name = "torch.aten.is_contiguous.memory_format"
+    self = operand_def(BaseAttr(TensorType))
+    memory_format = operand_def(BaseAttr(IntegerType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$self `,` $memory_format attr-dict `:` type($self) `,` type($memory_format) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenIsContiguousOp(IRDLOperation):
+    name = "torch.aten.is_contiguous"
+    self = operand_def(BaseAttr(TensorType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenIsNonOverlappingAndDenseOp(IRDLOperation):
+    name = "torch.aten.is_non_overlapping_and_dense"
+    self = operand_def(BaseAttr(TensorType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenIsSameSizeOp(IRDLOperation):
+    name = "torch.aten.is_same_size"
+    self = operand_def(BaseAttr(TensorType))
+    other = operand_def(BaseAttr(TensorType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = (
+        "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
+    )
+
+
+@irdl_op_definition
+class Torch_AtenIsStridesLikeFormatOp(IRDLOperation):
+    name = "torch.aten.is_strides_like_format"
+    self = operand_def(BaseAttr(TensorType))
+    memory_format = operand_def(BaseAttr(IntegerType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$self `,` $memory_format attr-dict `:` type($self) `,` type($memory_format) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenIsfiniteFloatOp(IRDLOperation):
+    name = "torch.aten.isfinite.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenIsfiniteOp(IRDLOperation):
     name = "torch.aten.isfinite"
     self = operand_def(BaseAttr(TensorType))
@@ -2185,12 +2561,44 @@ class Torch_AtenIsfiniteOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenIsinTensorTensorOp(IRDLOperation):
+    name = "torch.aten.isin.Tensor_Tensor"
+    elements = operand_def(BaseAttr(TensorType))
+    test_elements = operand_def(BaseAttr(TensorType))
+    assume_unique = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    invert = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$elements `,` $test_elements `,` $assume_unique `,` $invert attr-dict `:` type($elements) `,` type($test_elements) `,` type($assume_unique) `,` type($invert) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenIsinfFloatOp(IRDLOperation):
+    name = "torch.aten.isinf.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenIsinfOp(IRDLOperation):
     name = "torch.aten.isinf"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenIsnanFloatOp(IRDLOperation):
+    name = "torch.aten.isnan.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
 
 
 @irdl_op_definition
@@ -2221,6 +2629,34 @@ class Torch_AtenIsposinfOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenKthvalueOp(IRDLOperation):
+    name = "torch.aten.kthvalue"
+    self = operand_def(BaseAttr(TensorType))
+    k = operand_def(BaseAttr(IntegerType))
+    dim = operand_def(BaseAttr(IntegerType))
+    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $k `,` $dim `,` $keepdim attr-dict `:` type($self) `,` type($k) `,` type($dim) `,` type($keepdim) `->` type($values) `,` type($indices)"
+
+
+@irdl_op_definition
+class Torch_AtenKthvalueValuesOp(IRDLOperation):
+    name = "torch.aten.kthvalue.values"
+    self = operand_def(BaseAttr(TensorType))
+    k = operand_def(BaseAttr(IntegerType))
+    dim = operand_def(BaseAttr(IntegerType))
+    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    values = operand_def(BaseAttr(TensorType))
+    indices = operand_def(BaseAttr(TensorType))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $k `,` $dim `,` $keepdim `,` $values `,` $indices attr-dict `:` type($self) `,` type($k) `,` type($dim) `,` type($keepdim) `,` type($values) `,` type($indices) `->` type($values) `,` type($indices)"
+
+
+@irdl_op_definition
 class Torch_AtenLcmOp(IRDLOperation):
     name = "torch.aten.lcm"
     self = operand_def(BaseAttr(TensorType))
@@ -2242,6 +2678,46 @@ class Torch_AtenLcm_Op(IRDLOperation):
     assembly_format = (
         "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
     )
+
+
+@irdl_op_definition
+class Torch_AtenLeFloatIntOp(IRDLOperation):
+    name = "torch.aten.le.float_int"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLeFloatOp(IRDLOperation):
+    name = "torch.aten.le.float"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLeIntFloatOp(IRDLOperation):
+    name = "torch.aten.le.int_float"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLeIntOp(IRDLOperation):
+    name = "torch.aten.le.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
 
 
 @irdl_op_definition
@@ -2402,6 +2878,36 @@ class Torch_AtenLiftOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenLinalgCholeskyExLOp(IRDLOperation):
+    name = "torch.aten.linalg_cholesky_ex.L"
+    self = operand_def(BaseAttr(TensorType))
+    upper = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    check_errors = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    L = operand_def(BaseAttr(TensorType))
+    info = operand_def(BaseAttr(TensorType))
+    L = result_def(BaseAttr(TensorType))
+    info = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $upper `,` $check_errors `,` $L `,` $info attr-dict `:` type($self) `,` type($upper) `,` type($check_errors) `,` type($L) `,` type($info) `->` type($L) `,` type($info)"
+
+
+@irdl_op_definition
+class Torch_AtenLinalgCholeskyExOp(IRDLOperation):
+    name = "torch.aten.linalg_cholesky_ex"
+    self = operand_def(BaseAttr(TensorType))
+    upper = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    check_errors = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    L = result_def(BaseAttr(TensorType))
+    info = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $upper `,` $check_errors attr-dict `:` type($self) `,` type($upper) `,` type($check_errors) `->` type($L) `,` type($info)"
+
+
+@irdl_op_definition
 class Torch_AtenLinalgCrossOp(IRDLOperation):
     name = "torch.aten.linalg_cross"
     self = operand_def(BaseAttr(TensorType))
@@ -2444,12 +2950,122 @@ class Torch_AtenLinalgHouseholderProductOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenLinalgInvExInverseOp(IRDLOperation):
+    name = "torch.aten.linalg_inv_ex.inverse"
+    A = operand_def(BaseAttr(TensorType))
+    check_errors = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    inverse = operand_def(BaseAttr(TensorType))
+    info = operand_def(BaseAttr(TensorType))
+    inverse = result_def(BaseAttr(TensorType))
+    info = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$A `,` $check_errors `,` $inverse `,` $info attr-dict `:` type($A) `,` type($check_errors) `,` type($inverse) `,` type($info) `->` type($inverse) `,` type($info)"
+
+
+@irdl_op_definition
+class Torch_AtenLinalgInvExOp(IRDLOperation):
+    name = "torch.aten.linalg_inv_ex"
+    A = operand_def(BaseAttr(TensorType))
+    check_errors = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    inverse = result_def(BaseAttr(TensorType))
+    info = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$A `,` $check_errors attr-dict `:` type($A) `,` type($check_errors) `->` type($inverse) `,` type($info)"
+
+
+@irdl_op_definition
+class Torch_AtenLinalgLdlFactorExOp(IRDLOperation):
+    name = "torch.aten.linalg_ldl_factor_ex"
+    self = operand_def(BaseAttr(TensorType))
+    hermitian = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    check_errors = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    LD = result_def(BaseAttr(TensorType))
+    pivots = result_def(BaseAttr(TensorType))
+    info = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $hermitian `,` $check_errors attr-dict `:` type($self) `,` type($hermitian) `,` type($check_errors) `->` type($LD) `,` type($pivots) `,` type($info)"
+
+
+@irdl_op_definition
+class Torch_AtenLinalgLdlSolveOp(IRDLOperation):
+    name = "torch.aten.linalg_ldl_solve"
+    LD = operand_def(BaseAttr(TensorType))
+    pivots = operand_def(BaseAttr(TensorType))
+    B = operand_def(BaseAttr(TensorType))
+    hermitian = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$LD `,` $pivots `,` $B `,` $hermitian attr-dict `:` type($LD) `,` type($pivots) `,` type($B) `,` type($hermitian) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLinalgLuFactorExOp(IRDLOperation):
+    name = "torch.aten.linalg_lu_factor_ex"
+    A = operand_def(BaseAttr(TensorType))
+    pivot = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    check_errors = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    LU = result_def(BaseAttr(TensorType))
+    pivots = result_def(BaseAttr(TensorType))
+    info = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$A `,` $pivot `,` $check_errors attr-dict `:` type($A) `,` type($pivot) `,` type($check_errors) `->` type($LU) `,` type($pivots) `,` type($info)"
+
+
+@irdl_op_definition
+class Torch_AtenLinalgLuOp(IRDLOperation):
+    name = "torch.aten.linalg_lu"
+    A = operand_def(BaseAttr(TensorType))
+    pivot = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    P = result_def(BaseAttr(TensorType))
+    L = result_def(BaseAttr(TensorType))
+    U = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$A `,` $pivot attr-dict `:` type($A) `,` type($pivot) `->` type($P) `,` type($L) `,` type($U)"
+
+
+@irdl_op_definition
+class Torch_AtenLinalgLuSolveOp(IRDLOperation):
+    name = "torch.aten.linalg_lu_solve"
+    LU = operand_def(BaseAttr(TensorType))
+    pivots = operand_def(BaseAttr(TensorType))
+    B = operand_def(BaseAttr(TensorType))
+    left = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    adjoint = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$LU `,` $pivots `,` $B `,` $left `,` $adjoint attr-dict `:` type($LU) `,` type($pivots) `,` type($B) `,` type($left) `,` type($adjoint) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenLinalgMatrixExpOp(IRDLOperation):
     name = "torch.aten.linalg_matrix_exp"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLinalgSolveTriangularOp(IRDLOperation):
+    name = "torch.aten.linalg_solve_triangular"
+    self = operand_def(BaseAttr(TensorType))
+    B = operand_def(BaseAttr(TensorType))
+    upper = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    left = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    unitriangular = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $B `,` $upper `,` $left `,` $unitriangular attr-dict `:` type($self) `,` type($B) `,` type($upper) `,` type($left) `,` type($unitriangular) `->` type($result)"
 
 
 @irdl_op_definition
@@ -2780,6 +3396,46 @@ class Torch_AtenLogicalXor_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenLtFloatIntOp(IRDLOperation):
+    name = "torch.aten.lt.float_int"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLtFloatOp(IRDLOperation):
+    name = "torch.aten.lt.float"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLtIntFloatOp(IRDLOperation):
+    name = "torch.aten.lt.int_float"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLtIntOp(IRDLOperation):
+    name = "torch.aten.lt.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenLtTensorOp(IRDLOperation):
     name = "torch.aten.lt.Tensor"
     self = operand_def(BaseAttr(TensorType))
@@ -2801,6 +3457,24 @@ class Torch_AtenLt_TensorOp(IRDLOperation):
     assembly_format = (
         "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
     )
+
+
+@irdl_op_definition
+class Torch_AtenLuUnpackOp(IRDLOperation):
+    name = "torch.aten.lu_unpack"
+    LU_data = operand_def(BaseAttr(TensorType))
+    LU_pivots = operand_def(BaseAttr(TensorType))
+    unpack_data = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    unpack_pivots = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    P = result_def(BaseAttr(TensorType))
+    L = result_def(BaseAttr(TensorType))
+    U = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$LU_data `,` $LU_pivots `,` $unpack_data `,` $unpack_pivots attr-dict `:` type($LU_data) `,` type($LU_pivots) `,` type($unpack_data) `,` type($unpack_pivots) `->` type($P) `,` type($L) `,` type($U)"
 
 
 @irdl_op_definition
@@ -2885,6 +3559,32 @@ class Torch_AtenMatmulOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenMaxDimMaxOp(IRDLOperation):
+    name = "torch.aten.max.dim_max"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    max = operand_def(BaseAttr(TensorType))
+    max_values = operand_def(BaseAttr(TensorType))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $keepdim `,` $max `,` $max_values attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `,` type($max) `,` type($max_values) `->` type($values) `,` type($indices)"
+
+
+@irdl_op_definition
+class Torch_AtenMaxDimOp(IRDLOperation):
+    name = "torch.aten.max.dim"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $keepdim attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `->` type($values) `,` type($indices)"
+
+
+@irdl_op_definition
 class Torch_AtenMaxOp(IRDLOperation):
     name = "torch.aten.max"
     self = operand_def(BaseAttr(TensorType))
@@ -2918,12 +3618,64 @@ class Torch_AtenMaximumOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenMedianDimOp(IRDLOperation):
+    name = "torch.aten.median.dim"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $keepdim attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `->` type($values) `,` type($indices)"
+
+
+@irdl_op_definition
+class Torch_AtenMedianDimValuesOp(IRDLOperation):
+    name = "torch.aten.median.dim_values"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    values = operand_def(BaseAttr(TensorType))
+    indices = operand_def(BaseAttr(TensorType))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $keepdim `,` $values `,` $indices attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `,` type($values) `,` type($indices) `->` type($values) `,` type($indices)"
+
+
+@irdl_op_definition
 class Torch_AtenMedianOp(IRDLOperation):
     name = "torch.aten.median"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenMinDimMinOp(IRDLOperation):
+    name = "torch.aten.min.dim_min"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    min = operand_def(BaseAttr(TensorType))
+    min_indices = operand_def(BaseAttr(TensorType))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $keepdim `,` $min `,` $min_indices attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `,` type($min) `,` type($min_indices) `->` type($values) `,` type($indices)"
+
+
+@irdl_op_definition
+class Torch_AtenMinDimOp(IRDLOperation):
+    name = "torch.aten.min.dim"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $keepdim attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `->` type($values) `,` type($indices)"
 
 
 @irdl_op_definition
@@ -2997,6 +3749,32 @@ class Torch_AtenMmOp(IRDLOperation):
     assembly_format = (
         "$self `,` $mat2 attr-dict `:` type($self) `,` type($mat2) `->` type($result)"
     )
+
+
+@irdl_op_definition
+class Torch_AtenModeOp(IRDLOperation):
+    name = "torch.aten.mode"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $keepdim attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `->` type($values) `,` type($indices)"
+
+
+@irdl_op_definition
+class Torch_AtenModeValuesOp(IRDLOperation):
+    name = "torch.aten.mode.values"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    values = operand_def(BaseAttr(TensorType))
+    indices = operand_def(BaseAttr(TensorType))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $keepdim `,` $values `,` $indices attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `,` type($values) `,` type($indices) `->` type($values) `,` type($indices)"
 
 
 @irdl_op_definition
@@ -3172,6 +3950,32 @@ class Torch_AtenMvlgamma_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenNanmedianDimOp(IRDLOperation):
+    name = "torch.aten.nanmedian.dim"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $keepdim attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `->` type($values) `,` type($indices)"
+
+
+@irdl_op_definition
+class Torch_AtenNanmedianDimValuesOp(IRDLOperation):
+    name = "torch.aten.nanmedian.dim_values"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    values = operand_def(BaseAttr(TensorType))
+    indices = operand_def(BaseAttr(TensorType))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $keepdim `,` $values `,` $indices attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `,` type($values) `,` type($indices) `->` type($values) `,` type($indices)"
+
+
+@irdl_op_definition
 class Torch_AtenNanmedianOp(IRDLOperation):
     name = "torch.aten.nanmedian"
     self = operand_def(BaseAttr(TensorType))
@@ -3214,6 +4018,56 @@ class Torch_AtenNarrowTensorOp(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $dim `,` $start `,` $length attr-dict `:` type($self) `,` type($dim) `,` type($start) `,` type($length) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenNeBoolOp(IRDLOperation):
+    name = "torch.aten.ne.bool"
+    a = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    b = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenNeFloatIntOp(IRDLOperation):
+    name = "torch.aten.ne.float_int"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenNeFloatOp(IRDLOperation):
+    name = "torch.aten.ne.float"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenNeIntFloatOp(IRDLOperation):
+    name = "torch.aten.ne.int_float"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenNeIntOp(IRDLOperation):
+    name = "torch.aten.ne.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
 
 
 @irdl_op_definition
@@ -3369,6 +4223,32 @@ class Torch_AtenNumelOp(IRDLOperation):
     result = result_def(BaseAttr(IntegerType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenOrmqrOp(IRDLOperation):
+    name = "torch.aten.ormqr"
+    self = operand_def(BaseAttr(TensorType))
+    input2 = operand_def(BaseAttr(TensorType))
+    input3 = operand_def(BaseAttr(TensorType))
+    left = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    transpose = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $input2 `,` $input3 `,` $left `,` $transpose attr-dict `:` type($self) `,` type($input2) `,` type($input3) `,` type($left) `,` type($transpose) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenPairwiseDistanceOp(IRDLOperation):
+    name = "torch.aten.pairwise_distance"
+    x1 = operand_def(BaseAttr(TensorType))
+    x2 = operand_def(BaseAttr(TensorType))
+    p = operand_def(BaseAttr(Float64Type))
+    eps = operand_def(BaseAttr(Float64Type))
+    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$x1 `,` $x2 `,` $p `,` $eps `,` $keepdim attr-dict `:` type($x1) `,` type($x2) `,` type($p) `,` type($eps) `,` type($keepdim) `->` type($result)"
 
 
 @irdl_op_definition
@@ -4135,6 +5015,32 @@ class Torch_AtenSoftMarginLossOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenSortOp(IRDLOperation):
+    name = "torch.aten.sort"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    descending = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $descending attr-dict `:` type($self) `,` type($dim) `,` type($descending) `->` type($values) `,` type($indices)"
+
+
+@irdl_op_definition
+class Torch_AtenSortValuesOp(IRDLOperation):
+    name = "torch.aten.sort.values"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    descending = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    values = operand_def(BaseAttr(TensorType))
+    indices = operand_def(BaseAttr(TensorType))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $descending `,` $values `,` $indices attr-dict `:` type($self) `,` type($dim) `,` type($descending) `,` type($values) `,` type($indices) `->` type($values) `,` type($indices)"
+
+
+@irdl_op_definition
 class Torch_AtenSparseDimOp(IRDLOperation):
     name = "torch.aten.sparse_dim"
     self = operand_def(BaseAttr(TensorType))
@@ -4564,6 +5470,27 @@ class Torch_AtenSqueezeOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenStdMeanOp(IRDLOperation):
+    name = "torch.aten.std_mean"
+    self = operand_def(BaseAttr(TensorType))
+    unbiased = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result0 = result_def(BaseAttr(TensorType))
+    result1 = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $unbiased attr-dict `:` type($self) `,` type($unbiased) `->` type($result0) `,` type($result1)"
+
+
+@irdl_op_definition
+class Torch_AtenStdOp(IRDLOperation):
+    name = "torch.aten.std"
+    self = operand_def(BaseAttr(TensorType))
+    unbiased = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $unbiased attr-dict `:` type($self) `,` type($unbiased) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenStorageOffsetOp(IRDLOperation):
     name = "torch.aten.storage_offset"
     self = operand_def(BaseAttr(TensorType))
@@ -4622,6 +5549,35 @@ class Torch_AtenSubIntOp(IRDLOperation):
     result = result_def(BaseAttr(IntegerType))
 
     assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSvdOp(IRDLOperation):
+    name = "torch.aten.svd"
+    self = operand_def(BaseAttr(TensorType))
+    some = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    compute_uv = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    U = result_def(BaseAttr(TensorType))
+    S = result_def(BaseAttr(TensorType))
+    V = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $some `,` $compute_uv attr-dict `:` type($self) `,` type($some) `,` type($compute_uv) `->` type($U) `,` type($S) `,` type($V)"
+
+
+@irdl_op_definition
+class Torch_AtenSvdUOp(IRDLOperation):
+    name = "torch.aten.svd.U"
+    self = operand_def(BaseAttr(TensorType))
+    some = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    compute_uv = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    U = operand_def(BaseAttr(TensorType))
+    S = operand_def(BaseAttr(TensorType))
+    V = operand_def(BaseAttr(TensorType))
+    U = result_def(BaseAttr(TensorType))
+    S = result_def(BaseAttr(TensorType))
+    V = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $some `,` $compute_uv `,` $U `,` $S `,` $V attr-dict `:` type($self) `,` type($some) `,` type($compute_uv) `,` type($U) `,` type($S) `,` type($V) `->` type($U) `,` type($S) `,` type($V)"
 
 
 @irdl_op_definition
@@ -4799,6 +5755,49 @@ class Torch_AtenTanh_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenToPrimOtherOp(IRDLOperation):
+    name = "torch.aten.to.prim_other"
+    self = operand_def(BaseAttr(TensorType))
+    non_blocking = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    copy = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $non_blocking `,` $copy attr-dict `:` type($self) `,` type($non_blocking) `,` type($copy) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenTopkOp(IRDLOperation):
+    name = "torch.aten.topk"
+    self = operand_def(BaseAttr(TensorType))
+    k = operand_def(BaseAttr(IntegerType))
+    dim = operand_def(BaseAttr(IntegerType))
+    largest = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    sorted = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $k `,` $dim `,` $largest `,` $sorted attr-dict `:` type($self) `,` type($k) `,` type($dim) `,` type($largest) `,` type($sorted) `->` type($values) `,` type($indices)"
+
+
+@irdl_op_definition
+class Torch_AtenTopkValuesOp(IRDLOperation):
+    name = "torch.aten.topk.values"
+    self = operand_def(BaseAttr(TensorType))
+    k = operand_def(BaseAttr(IntegerType))
+    dim = operand_def(BaseAttr(IntegerType))
+    largest = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    sorted = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    values = operand_def(BaseAttr(TensorType))
+    indices = operand_def(BaseAttr(TensorType))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $k `,` $dim `,` $largest `,` $sorted `,` $values `,` $indices attr-dict `:` type($self) `,` type($k) `,` type($dim) `,` type($largest) `,` type($sorted) `,` type($values) `,` type($indices) `->` type($values) `,` type($indices)"
+
+
+@irdl_op_definition
 class Torch_AtenTraceOp(IRDLOperation):
     name = "torch.aten.trace"
     self = operand_def(BaseAttr(TensorType))
@@ -4838,6 +5837,40 @@ class Torch_AtenTranspose_Op(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $dim0 `,` $dim1 attr-dict `:` type($self) `,` type($dim0) `,` type($dim1) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenTriangularSolveOp(IRDLOperation):
+    name = "torch.aten.triangular_solve"
+    self = operand_def(BaseAttr(TensorType))
+    A = operand_def(BaseAttr(TensorType))
+    upper = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    transpose = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    unitriangular = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    solution = result_def(BaseAttr(TensorType))
+    cloned_coefficient = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $A `,` $upper `,` $transpose `,` $unitriangular attr-dict `:` type($self) `,` type($A) `,` type($upper) `,` type($transpose) `,` type($unitriangular) `->` type($solution) `,` type($cloned_coefficient)"
+
+
+@irdl_op_definition
+class Torch_AtenTriangularSolveXOp(IRDLOperation):
+    name = "torch.aten.triangular_solve.X"
+    self = operand_def(BaseAttr(TensorType))
+    A = operand_def(BaseAttr(TensorType))
+    upper = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    transpose = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    unitriangular = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    X = operand_def(BaseAttr(TensorType))
+    M = operand_def(BaseAttr(TensorType))
+    solution = result_def(BaseAttr(TensorType))
+    cloned_coefficient = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $A `,` $upper `,` $transpose `,` $unitriangular `,` $X `,` $M attr-dict `:` type($self) `,` type($A) `,` type($upper) `,` type($transpose) `,` type($unitriangular) `,` type($X) `,` type($M) `->` type($solution) `,` type($cloned_coefficient)"
 
 
 @irdl_op_definition
@@ -4947,6 +5980,25 @@ class Torch_AtenUnfoldOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenUniqueDimOp(IRDLOperation):
+    name = "torch.aten.unique_dim"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    sorted = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    return_inverse = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    return_counts = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    result0 = result_def(BaseAttr(TensorType))
+    result1 = result_def(BaseAttr(TensorType))
+    result2 = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $sorted `,` $return_inverse `,` $return_counts attr-dict `:` type($self) `,` type($dim) `,` type($sorted) `,` type($return_inverse) `,` type($return_counts) `->` type($result0) `,` type($result1) `,` type($result2)"
+
+
+@irdl_op_definition
 class Torch_AtenUnsqueezeCopyOp(IRDLOperation):
     name = "torch.aten.unsqueeze_copy"
     self = operand_def(BaseAttr(TensorType))
@@ -4980,6 +6032,27 @@ class Torch_AtenUnsqueeze_Op(IRDLOperation):
     assembly_format = (
         "$self `,` $dim attr-dict `:` type($self) `,` type($dim) `->` type($result)"
     )
+
+
+@irdl_op_definition
+class Torch_AtenVarMeanOp(IRDLOperation):
+    name = "torch.aten.var_mean"
+    self = operand_def(BaseAttr(TensorType))
+    unbiased = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result0 = result_def(BaseAttr(TensorType))
+    result1 = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $unbiased attr-dict `:` type($self) `,` type($unbiased) `->` type($result0) `,` type($result1)"
+
+
+@irdl_op_definition
+class Torch_AtenVarOp(IRDLOperation):
+    name = "torch.aten.var"
+    self = operand_def(BaseAttr(TensorType))
+    unbiased = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $unbiased attr-dict `:` type($self) `,` type($unbiased) `->` type($result)"
 
 
 @irdl_op_definition
@@ -5121,6 +6194,16 @@ class Torch_Aten_AdaptiveAvgPool3DBackwardOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_Aten_And_BoolOp(IRDLOperation):
+    name = "torch.aten.__and__.bool"
+    a = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    b = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_Aten_And_IntOp(IRDLOperation):
     name = "torch.aten.__and__.int"
     a = operand_def(BaseAttr(IntegerType))
@@ -5161,6 +6244,17 @@ class Torch_Aten_CdistBackwardOp(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$grad `,` $x1 `,` $x2 `,` $p `,` $cdist attr-dict `:` type($grad) `,` type($x1) `,` type($x2) `,` type($p) `,` type($cdist) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_Aten_CholeskySolveHelperOp(IRDLOperation):
+    name = "torch.aten._cholesky_solve_helper"
+    self = operand_def(BaseAttr(TensorType))
+    A = operand_def(BaseAttr(TensorType))
+    upper = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $A `,` $upper attr-dict `:` type($self) `,` type($A) `,` type($upper) `->` type($result)"
 
 
 @irdl_op_definition
@@ -5208,6 +6302,32 @@ class Torch_Aten_EuclideanDistOp(IRDLOperation):
     assembly_format = (
         "$x1 `,` $x2 attr-dict `:` type($x1) `,` type($x2) `->` type($result)"
     )
+
+
+@irdl_op_definition
+class Torch_Aten_FusedMovingAvgObsFqHelperOp(IRDLOperation):
+    name = "torch.aten._fused_moving_avg_obs_fq_helper"
+    self = operand_def(BaseAttr(TensorType))
+    observer_on = operand_def(BaseAttr(TensorType))
+    fake_quant_on = operand_def(BaseAttr(TensorType))
+    running_min = operand_def(BaseAttr(TensorType))
+    running_max = operand_def(BaseAttr(TensorType))
+    scale = operand_def(BaseAttr(TensorType))
+    zero_point = operand_def(BaseAttr(TensorType))
+    averaging_const = operand_def(BaseAttr(Float64Type))
+    quant_min = operand_def(BaseAttr(IntegerType))
+    quant_max = operand_def(BaseAttr(IntegerType))
+    ch_axis = operand_def(BaseAttr(IntegerType))
+    per_row_fake_quant = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    symmetric_quant = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    output = result_def(BaseAttr(TensorType))
+    mask = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $observer_on `,` $fake_quant_on `,` $running_min `,` $running_max `,` $scale `,` $zero_point `,` $averaging_const `,` $quant_min `,` $quant_max `,` $ch_axis `,` $per_row_fake_quant `,` $symmetric_quant attr-dict `:` type($self) `,` type($observer_on) `,` type($fake_quant_on) `,` type($running_min) `,` type($running_max) `,` type($scale) `,` type($zero_point) `,` type($averaging_const) `,` type($quant_min) `,` type($quant_max) `,` type($ch_axis) `,` type($per_row_fake_quant) `,` type($symmetric_quant) `->` type($output) `,` type($mask)"
 
 
 @irdl_op_definition
@@ -5317,6 +6437,44 @@ class Torch_Aten_LinalgSlogdetOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_Aten_LinalgSolveExOp(IRDLOperation):
+    name = "torch.aten._linalg_solve_ex"
+    A = operand_def(BaseAttr(TensorType))
+    B = operand_def(BaseAttr(TensorType))
+    left = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    check_errors = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    result = result_def(BaseAttr(TensorType))
+    LU = result_def(BaseAttr(TensorType))
+    pivots = result_def(BaseAttr(TensorType))
+    info = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$A `,` $B `,` $left `,` $check_errors attr-dict `:` type($A) `,` type($B) `,` type($left) `,` type($check_errors) `->` type($result) `,` type($LU) `,` type($pivots) `,` type($info)"
+
+
+@irdl_op_definition
+class Torch_Aten_LinalgSolveExResultOp(IRDLOperation):
+    name = "torch.aten._linalg_solve_ex.result"
+    A = operand_def(BaseAttr(TensorType))
+    B = operand_def(BaseAttr(TensorType))
+    left = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    check_errors = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    result = operand_def(BaseAttr(TensorType))
+    LU = operand_def(BaseAttr(TensorType))
+    pivots = operand_def(BaseAttr(TensorType))
+    info = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+    LU = result_def(BaseAttr(TensorType))
+    pivots = result_def(BaseAttr(TensorType))
+    info = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$A `,` $B `,` $left `,` $check_errors `,` $result `,` $LU `,` $pivots `,` $info attr-dict `:` type($A) `,` type($B) `,` type($left) `,` type($check_errors) `,` type($result) `,` type($LU) `,` type($pivots) `,` type($info) `->` type($result) `,` type($LU) `,` type($pivots) `,` type($info)"
+
+
+@irdl_op_definition
 class Torch_Aten_LogSoftmaxBackwardDataOp(IRDLOperation):
     name = "torch.aten._log_softmax_backward_data"
     grad_output = operand_def(BaseAttr(TensorType))
@@ -5326,6 +6484,19 @@ class Torch_Aten_LogSoftmaxBackwardDataOp(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$grad_output `,` $output `,` $dim `,` $input_dtype attr-dict `:` type($grad_output) `,` type($output) `,` type($dim) `,` type($input_dtype) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_Aten_LogSoftmaxOp(IRDLOperation):
+    name = "torch.aten._log_softmax"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    half_to_float = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $half_to_float attr-dict `:` type($self) `,` type($dim) `,` type($half_to_float) `->` type($result)"
 
 
 @irdl_op_definition
@@ -5386,6 +6557,16 @@ class Torch_Aten_NestedViewFromBufferOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_Aten_Or_BoolOp(IRDLOperation):
+    name = "torch.aten.__or__.bool"
+    a = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    b = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_Aten_Or_IntOp(IRDLOperation):
     name = "torch.aten.__or__.int"
     a = operand_def(BaseAttr(IntegerType))
@@ -5405,6 +6586,20 @@ class Torch_Aten_Or_TensorOp(IRDLOperation):
     assembly_format = (
         "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
     )
+
+
+@irdl_op_definition
+class Torch_Aten_PackPaddedSequenceOp(IRDLOperation):
+    name = "torch.aten._pack_padded_sequence"
+    input = operand_def(BaseAttr(TensorType))
+    lengths = operand_def(BaseAttr(TensorType))
+    batch_first = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    result0 = result_def(BaseAttr(TensorType))
+    result1 = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$input `,` $lengths `,` $batch_first attr-dict `:` type($input) `,` type($lengths) `,` type($batch_first) `->` type($result0) `,` type($result1)"
 
 
 @irdl_op_definition
@@ -5488,6 +6683,37 @@ class Torch_Aten_SoftmaxBackwardDataOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_Aten_SoftmaxOp(IRDLOperation):
+    name = "torch.aten._softmax"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    half_to_float = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $half_to_float attr-dict `:` type($self) `,` type($dim) `,` type($half_to_float) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_Aten_Unique2Op(IRDLOperation):
+    name = "torch.aten._unique2"
+    self = operand_def(BaseAttr(TensorType))
+    sorted = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    return_inverse = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    return_counts = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    result0 = result_def(BaseAttr(TensorType))
+    result1 = result_def(BaseAttr(TensorType))
+    result2 = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $sorted `,` $return_inverse `,` $return_counts attr-dict `:` type($self) `,` type($sorted) `,` type($return_inverse) `,` type($return_counts) `->` type($result0) `,` type($result1) `,` type($result2)"
+
+
+@irdl_op_definition
 class Torch_Aten_WeightInt4PackMmForCpuOp(IRDLOperation):
     name = "torch.aten._weight_int4pack_mm_for_cpu"
     self = operand_def(BaseAttr(TensorType))
@@ -5532,6 +6758,16 @@ class Torch_Aten_WeightNormInterfaceOp(IRDLOperation):
     result1 = result_def(BaseAttr(TensorType))
 
     assembly_format = "$v `,` $g `,` $dim attr-dict `:` type($v) `,` type($g) `,` type($dim) `->` type($result0) `,` type($result1)"
+
+
+@irdl_op_definition
+class Torch_Aten_Xor_BoolOp(IRDLOperation):
+    name = "torch.aten.__xor__.bool"
+    a = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    b = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
 
 
 @irdl_op_definition
@@ -6414,6 +7650,20 @@ class Torch_PrimsSubOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_PrimsSvdOp(IRDLOperation):
+    name = "torch.prims.svd"
+    A = operand_def(BaseAttr(TensorType))
+    full_matrices = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    U = result_def(BaseAttr(TensorType))
+    S = result_def(BaseAttr(TensorType))
+    Vh = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$A `,` $full_matrices attr-dict `:` type($A) `,` type($full_matrices) `->` type($U) `,` type($S) `,` type($Vh)"
+
+
+@irdl_op_definition
 class Torch_PrimsTanOp(IRDLOperation):
     name = "torch.prims.tan"
     self = operand_def(BaseAttr(TensorType))
@@ -6536,10 +7786,12 @@ TorchDialect = Dialect(
         Torch_AtenAddIntOp,
         Torch_AtenAliasCopyOp,
         Torch_AtenAliasOp,
+        Torch_AtenAllDimOp,
         Torch_AtenAllOp,
         Torch_AtenAngleFloatOp,
         Torch_AtenAngleIntOp,
         Torch_AtenAngleOp,
+        Torch_AtenAnyDimOp,
         Torch_AtenAnyOp,
         Torch_AtenArccosOp,
         Torch_AtenArccos_Op,
@@ -6590,11 +7842,15 @@ TorchDialect = Dialect(
         Torch_AtenBitwiseXorTensorOp,
         Torch_AtenBitwiseXor_TensorOp,
         Torch_AtenBmmOp,
+        Torch_AtenBucketizeTensorOp,
         Torch_AtenCeilFloatOp,
         Torch_AtenCeilIntOp,
         Torch_AtenCeilOp,
         Torch_AtenCeil_Op,
         Torch_AtenChannelShuffleOp,
+        Torch_AtenCholeskyInverseOp,
+        Torch_AtenCholeskyOp,
+        Torch_AtenCholeskySolveOp,
         Torch_AtenClampMaxTensorOp,
         Torch_AtenClampMax_TensorOp,
         Torch_AtenClampMinTensorOp,
@@ -6603,8 +7859,10 @@ TorchDialect = Dialect(
         Torch_AtenConjOp,
         Torch_AtenConjPhysicalOp,
         Torch_AtenConjPhysical_Op,
+        Torch_AtenCopyOp,
         Torch_AtenCopy_FloatOp,
         Torch_AtenCopy_IntOp,
+        Torch_AtenCopy_Op,
         Torch_AtenCopy_TensorOp,
         Torch_AtenCopysignFloatIntOp,
         Torch_AtenCopysignFloatOp,
@@ -6641,6 +7899,13 @@ TorchDialect = Dialect(
         Torch_AtenDivideTensorOp,
         Torch_AtenDivide_TensorOp,
         Torch_AtenDotOp,
+        Torch_AtenEmbeddingDenseBackwardOp,
+        Torch_AtenEmbeddingOp,
+        Torch_AtenEqBoolOp,
+        Torch_AtenEqFloatIntOp,
+        Torch_AtenEqFloatOp,
+        Torch_AtenEqIntFloatOp,
+        Torch_AtenEqIntOp,
         Torch_AtenEqTensorOp,
         Torch_AtenEq_TensorOp,
         Torch_AtenErfFloatOp,
@@ -6686,9 +7951,14 @@ TorchDialect = Dialect(
         Torch_AtenFrac_Op,
         Torch_AtenFrexpOp,
         Torch_AtenFrexpTensorOp,
+        Torch_AtenGatherOp,
         Torch_AtenGcdIntOp,
         Torch_AtenGcdOp,
         Torch_AtenGcd_Op,
+        Torch_AtenGeFloatIntOp,
+        Torch_AtenGeFloatOp,
+        Torch_AtenGeIntFloatOp,
+        Torch_AtenGeIntOp,
         Torch_AtenGeTensorOp,
         Torch_AtenGe_TensorOp,
         Torch_AtenGluBackwardGradInputOp,
@@ -6698,6 +7968,12 @@ TorchDialect = Dialect(
         Torch_AtenGreaterEqual_TensorOp,
         Torch_AtenGreaterTensorOp,
         Torch_AtenGreater_TensorOp,
+        Torch_AtenGridSampler2DOp,
+        Torch_AtenGridSampler3DOp,
+        Torch_AtenGtFloatIntOp,
+        Torch_AtenGtFloatOp,
+        Torch_AtenGtIntFloatOp,
+        Torch_AtenGtIntOp,
         Torch_AtenGtTensorOp,
         Torch_AtenGt_TensorOp,
         Torch_AtenHardsigmoidBackwardGradInputOp,
@@ -6726,13 +8002,30 @@ TorchDialect = Dialect(
         Torch_AtenIndexFillIntTensorOp,
         Torch_AtenIndexFill_IntTensorOp,
         Torch_AtenIndexSelectOp,
+        Torch_AtenIsCoalescedOp,
+        Torch_AtenIsComplexOp,
+        Torch_AtenIsContiguousMemoryFormatOp,
+        Torch_AtenIsContiguousOp,
+        Torch_AtenIsNonOverlappingAndDenseOp,
+        Torch_AtenIsSameSizeOp,
+        Torch_AtenIsStridesLikeFormatOp,
+        Torch_AtenIsfiniteFloatOp,
         Torch_AtenIsfiniteOp,
+        Torch_AtenIsinTensorTensorOp,
+        Torch_AtenIsinfFloatOp,
         Torch_AtenIsinfOp,
+        Torch_AtenIsnanFloatOp,
         Torch_AtenIsnanOp,
         Torch_AtenIsneginfOp,
         Torch_AtenIsposinfOp,
+        Torch_AtenKthvalueOp,
+        Torch_AtenKthvalueValuesOp,
         Torch_AtenLcmOp,
         Torch_AtenLcm_Op,
+        Torch_AtenLeFloatIntOp,
+        Torch_AtenLeFloatOp,
+        Torch_AtenLeIntFloatOp,
+        Torch_AtenLeIntOp,
         Torch_AtenLeTensorOp,
         Torch_AtenLe_TensorOp,
         Torch_AtenLerpTensorOp,
@@ -6748,11 +8041,21 @@ TorchDialect = Dialect(
         Torch_AtenLiftFreshCopyOp,
         Torch_AtenLiftFreshOp,
         Torch_AtenLiftOp,
+        Torch_AtenLinalgCholeskyExLOp,
+        Torch_AtenLinalgCholeskyExOp,
         Torch_AtenLinalgCrossOp,
         Torch_AtenLinalgEigOp,
         Torch_AtenLinalgEigvalsOp,
         Torch_AtenLinalgHouseholderProductOp,
+        Torch_AtenLinalgInvExInverseOp,
+        Torch_AtenLinalgInvExOp,
+        Torch_AtenLinalgLdlFactorExOp,
+        Torch_AtenLinalgLdlSolveOp,
+        Torch_AtenLinalgLuFactorExOp,
+        Torch_AtenLinalgLuOp,
+        Torch_AtenLinalgLuSolveOp,
         Torch_AtenLinalgMatrixExpOp,
+        Torch_AtenLinalgSolveTriangularOp,
         Torch_AtenLog10FloatOp,
         Torch_AtenLog10IntOp,
         Torch_AtenLog10Op,
@@ -6785,8 +8088,13 @@ TorchDialect = Dialect(
         Torch_AtenLogicalOr_Op,
         Torch_AtenLogicalXorOp,
         Torch_AtenLogicalXor_Op,
+        Torch_AtenLtFloatIntOp,
+        Torch_AtenLtFloatOp,
+        Torch_AtenLtIntFloatOp,
+        Torch_AtenLtIntOp,
         Torch_AtenLtTensorOp,
         Torch_AtenLt_TensorOp,
+        Torch_AtenLuUnpackOp,
         Torch_AtenMarginRankingLossOp,
         Torch_AtenMaskedFillTensorOp,
         Torch_AtenMaskedFill_TensorOp,
@@ -6794,10 +8102,16 @@ TorchDialect = Dialect(
         Torch_AtenMaskedScatter_Op,
         Torch_AtenMaskedSelectOp,
         Torch_AtenMatmulOp,
+        Torch_AtenMaxDimMaxOp,
+        Torch_AtenMaxDimOp,
         Torch_AtenMaxOp,
         Torch_AtenMaxOtherOp,
         Torch_AtenMaximumOp,
+        Torch_AtenMedianDimOp,
+        Torch_AtenMedianDimValuesOp,
         Torch_AtenMedianOp,
+        Torch_AtenMinDimMinOp,
+        Torch_AtenMinDimOp,
         Torch_AtenMinOp,
         Torch_AtenMinOtherOp,
         Torch_AtenMinimumOp,
@@ -6805,6 +8119,8 @@ TorchDialect = Dialect(
         Torch_AtenMishOp,
         Torch_AtenMish_Op,
         Torch_AtenMmOp,
+        Torch_AtenModeOp,
+        Torch_AtenModeValuesOp,
         Torch_AtenMseLossBackwardGradInputOp,
         Torch_AtenMseLossBackwardOp,
         Torch_AtenMseLossOp,
@@ -6820,10 +8136,17 @@ TorchDialect = Dialect(
         Torch_AtenMvOp,
         Torch_AtenMvlgammaOp,
         Torch_AtenMvlgamma_Op,
+        Torch_AtenNanmedianDimOp,
+        Torch_AtenNanmedianDimValuesOp,
         Torch_AtenNanmedianOp,
         Torch_AtenNarrowCopyOp,
         Torch_AtenNarrowOp,
         Torch_AtenNarrowTensorOp,
+        Torch_AtenNeBoolOp,
+        Torch_AtenNeFloatIntOp,
+        Torch_AtenNeFloatOp,
+        Torch_AtenNeIntFloatOp,
+        Torch_AtenNeIntOp,
         Torch_AtenNeTensorOp,
         Torch_AtenNe_TensorOp,
         Torch_AtenNegFloatOp,
@@ -6839,6 +8162,8 @@ TorchDialect = Dialect(
         Torch_AtenNotEqualTensorOp,
         Torch_AtenNotEqual_TensorOp,
         Torch_AtenNumelOp,
+        Torch_AtenOrmqrOp,
+        Torch_AtenPairwiseDistanceOp,
         Torch_AtenPdistOp,
         Torch_AtenPixelShuffleOp,
         Torch_AtenPixelUnshuffleOp,
@@ -6915,6 +8240,8 @@ TorchDialect = Dialect(
         Torch_AtenSoftMarginLossBackwardGradInputOp,
         Torch_AtenSoftMarginLossBackwardOp,
         Torch_AtenSoftMarginLossOp,
+        Torch_AtenSortOp,
+        Torch_AtenSortValuesOp,
         Torch_AtenSparseDimOp,
         Torch_AtenSpecialAiryAiOp,
         Torch_AtenSpecialBesselJ0Op,
@@ -6960,12 +8287,16 @@ TorchDialect = Dialect(
         Torch_AtenSqueezeCopyOp,
         Torch_AtenSqueezeDimOp,
         Torch_AtenSqueezeOp,
+        Torch_AtenStdMeanOp,
+        Torch_AtenStdOp,
         Torch_AtenStorageOffsetOp,
         Torch_AtenStrideIntOp,
         Torch_AtenSubFloatIntOp,
         Torch_AtenSubFloatOp,
         Torch_AtenSubIntFloatOp,
         Torch_AtenSubIntOp,
+        Torch_AtenSvdOp,
+        Torch_AtenSvdUOp,
         Torch_AtenSymNumelOp,
         Torch_AtenSymSizeIntOp,
         Torch_AtenSymStorageOffsetOp,
@@ -6984,10 +8315,15 @@ TorchDialect = Dialect(
         Torch_AtenTanhIntOp,
         Torch_AtenTanhOp,
         Torch_AtenTanh_Op,
+        Torch_AtenToPrimOtherOp,
+        Torch_AtenTopkOp,
+        Torch_AtenTopkValuesOp,
         Torch_AtenTraceOp,
         Torch_AtenTransposeCopyIntOp,
         Torch_AtenTransposeIntOp,
         Torch_AtenTranspose_Op,
+        Torch_AtenTriangularSolveOp,
+        Torch_AtenTriangularSolveXOp,
         Torch_AtenTrilOp,
         Torch_AtenTril_Op,
         Torch_AtenTriuOp,
@@ -6998,9 +8334,12 @@ TorchDialect = Dialect(
         Torch_AtenTrunc_Op,
         Torch_AtenUnfoldCopyOp,
         Torch_AtenUnfoldOp,
+        Torch_AtenUniqueDimOp,
         Torch_AtenUnsqueezeCopyOp,
         Torch_AtenUnsqueezeOp,
         Torch_AtenUnsqueeze_Op,
+        Torch_AtenVarMeanOp,
+        Torch_AtenVarOp,
         Torch_AtenVdotOp,
         Torch_AtenViewAsComplexOp,
         Torch_AtenViewAsRealOp,
@@ -7014,14 +8353,17 @@ TorchDialect = Dialect(
         Torch_AtenZero_Op,
         Torch_Aten_AdaptiveAvgPool2DBackwardOp,
         Torch_Aten_AdaptiveAvgPool3DBackwardOp,
+        Torch_Aten_And_BoolOp,
         Torch_Aten_And_IntOp,
         Torch_Aten_And_TensorOp,
         Torch_Aten_AssertAsyncOp,
         Torch_Aten_CdistBackwardOp,
+        Torch_Aten_CholeskySolveHelperOp,
         Torch_Aten_ConvertWeightToInt4PackForCpuOp,
         Torch_Aten_ConvertWeightToInt4PackOp,
         Torch_Aten_EmbeddingBagPerSampleWeightsBackwardOp,
         Torch_Aten_EuclideanDistOp,
+        Torch_Aten_FusedMovingAvgObsFqHelperOp,
         Torch_Aten_Iand_TensorOp,
         Torch_Aten_Ilshift_TensorOp,
         Torch_Aten_IntMmOp,
@@ -7031,14 +8373,19 @@ TorchDialect = Dialect(
         Torch_Aten_LinalgDetOp,
         Torch_Aten_LinalgEigvalsOp,
         Torch_Aten_LinalgSlogdetOp,
+        Torch_Aten_LinalgSolveExOp,
+        Torch_Aten_LinalgSolveExResultOp,
         Torch_Aten_LogSoftmaxBackwardDataOp,
+        Torch_Aten_LogSoftmaxOp,
         Torch_Aten_Lshift_IntOp,
         Torch_Aten_Lshift_TensorOp,
         Torch_Aten_MaskedScaleOp,
         Torch_Aten_NestedViewFromBufferCopyOp,
         Torch_Aten_NestedViewFromBufferOp,
+        Torch_Aten_Or_BoolOp,
         Torch_Aten_Or_IntOp,
         Torch_Aten_Or_TensorOp,
+        Torch_Aten_PackPaddedSequenceOp,
         Torch_Aten_PdistBackwardOp,
         Torch_Aten_PdistForwardOp,
         Torch_Aten_PreluKernelBackwardOp,
@@ -7046,10 +8393,13 @@ TorchDialect = Dialect(
         Torch_Aten_Rshift_IntOp,
         Torch_Aten_Rshift_TensorOp,
         Torch_Aten_SoftmaxBackwardDataOp,
+        Torch_Aten_SoftmaxOp,
+        Torch_Aten_Unique2Op,
         Torch_Aten_WeightInt4PackMmForCpuOp,
         Torch_Aten_WeightInt4PackMmOp,
         Torch_Aten_WeightInt8PackMmOp,
         Torch_Aten_WeightNormInterfaceOp,
+        Torch_Aten_Xor_BoolOp,
         Torch_Aten_Xor_IntOp,
         Torch_Aten_Xor_TensorOp,
         Torch_InductorAccumulateGrad_Op,
@@ -7136,6 +8486,7 @@ TorchDialect = Dialect(
         Torch_PrimsSplitDimOp,
         Torch_PrimsSqrtOp,
         Torch_PrimsSubOp,
+        Torch_PrimsSvdOp,
         Torch_PrimsTanOp,
         Torch_PrimsTanhOp,
         Torch_PrimsTruncOp,
