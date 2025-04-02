@@ -47,6 +47,24 @@ class Torch_AtenAbsolute_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenAcosFloatOp(IRDLOperation):
+    name = "torch.aten.acos.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAcosIntOp(IRDLOperation):
+    name = "torch.aten.acos.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenAcosOp(IRDLOperation):
     name = "torch.aten.acos"
     self = operand_def(BaseAttr(TensorType))
@@ -62,6 +80,24 @@ class Torch_AtenAcos_Op(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAcoshFloatOp(IRDLOperation):
+    name = "torch.aten.acosh.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAcoshIntOp(IRDLOperation):
+    name = "torch.aten.acosh.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
 
 
 @irdl_op_definition
@@ -129,6 +165,46 @@ class Torch_AtenAdaptiveMaxPool3DBackwardOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenAddFloatIntOp(IRDLOperation):
+    name = "torch.aten.add.float_int"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAddFloatOp(IRDLOperation):
+    name = "torch.aten.add.float"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAddIntFloatOp(IRDLOperation):
+    name = "torch.aten.add.int_float"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAddIntOp(IRDLOperation):
+    name = "torch.aten.add.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenAliasCopyOp(IRDLOperation):
     name = "torch.aten.alias_copy"
     self = operand_def(BaseAttr(TensorType))
@@ -153,6 +229,24 @@ class Torch_AtenAllOp(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAngleFloatOp(IRDLOperation):
+    name = "torch.aten.angle.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAngleIntOp(IRDLOperation):
+    name = "torch.aten.angle.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
 
 
 @irdl_op_definition
@@ -306,6 +400,24 @@ class Torch_AtenArctanh_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenAsinFloatOp(IRDLOperation):
+    name = "torch.aten.asin.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAsinIntOp(IRDLOperation):
+    name = "torch.aten.asin.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenAsinOp(IRDLOperation):
     name = "torch.aten.asin"
     self = operand_def(BaseAttr(TensorType))
@@ -324,6 +436,24 @@ class Torch_AtenAsin_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenAsinhFloatOp(IRDLOperation):
+    name = "torch.aten.asinh.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAsinhIntOp(IRDLOperation):
+    name = "torch.aten.asinh.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenAsinhOp(IRDLOperation):
     name = "torch.aten.asinh"
     self = operand_def(BaseAttr(TensorType))
@@ -339,6 +469,46 @@ class Torch_AtenAsinh_Op(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAtan2FloatIntOp(IRDLOperation):
+    name = "torch.aten.atan2.float_int"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAtan2FloatOp(IRDLOperation):
+    name = "torch.aten.atan2.float"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAtan2IntFloatOp(IRDLOperation):
+    name = "torch.aten.atan2.int_float"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAtan2IntOp(IRDLOperation):
+    name = "torch.aten.atan2.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
 
 
 @irdl_op_definition
@@ -366,6 +536,24 @@ class Torch_AtenAtan2_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenAtanFloatOp(IRDLOperation):
+    name = "torch.aten.atan.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAtanIntOp(IRDLOperation):
+    name = "torch.aten.atan.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenAtanOp(IRDLOperation):
     name = "torch.aten.atan"
     self = operand_def(BaseAttr(TensorType))
@@ -381,6 +569,24 @@ class Torch_AtenAtan_Op(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAtanhFloatOp(IRDLOperation):
+    name = "torch.aten.atanh.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenAtanhIntOp(IRDLOperation):
+    name = "torch.aten.atanh.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
 
 
 @irdl_op_definition
@@ -552,6 +758,24 @@ class Torch_AtenBmmOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenCeilFloatOp(IRDLOperation):
+    name = "torch.aten.ceil.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenCeilIntOp(IRDLOperation):
+    name = "torch.aten.ceil.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenCeilOp(IRDLOperation):
     name = "torch.aten.ceil"
     self = operand_def(BaseAttr(TensorType))
@@ -567,6 +791,16 @@ class Torch_AtenCeil_Op(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenChannelShuffleOp(IRDLOperation):
+    name = "torch.aten.channel_shuffle"
+    self = operand_def(BaseAttr(TensorType))
+    groups = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $groups attr-dict `:` type($self) `,` type($groups) `->` type($result)"
 
 
 @irdl_op_definition
@@ -657,6 +891,30 @@ class Torch_AtenConjPhysical_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenCopy_FloatOp(IRDLOperation):
+    name = "torch.aten.copy_.float"
+    self = operand_def(BaseAttr(TensorType))
+    other = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
+    )
+
+
+@irdl_op_definition
+class Torch_AtenCopy_IntOp(IRDLOperation):
+    name = "torch.aten.copy_.int"
+    self = operand_def(BaseAttr(TensorType))
+    other = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
+    )
+
+
+@irdl_op_definition
 class Torch_AtenCopy_TensorOp(IRDLOperation):
     name = "torch.aten.copy_.Tensor"
     self = operand_def(BaseAttr(TensorType))
@@ -666,6 +924,46 @@ class Torch_AtenCopy_TensorOp(IRDLOperation):
     assembly_format = (
         "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
     )
+
+
+@irdl_op_definition
+class Torch_AtenCopysignFloatIntOp(IRDLOperation):
+    name = "torch.aten.copysign.float_int"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenCopysignFloatOp(IRDLOperation):
+    name = "torch.aten.copysign.float"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenCopysignIntFloatOp(IRDLOperation):
+    name = "torch.aten.copysign.int_float"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenCopysignIntOp(IRDLOperation):
+    name = "torch.aten.copysign.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
 
 
 @irdl_op_definition
@@ -693,6 +991,24 @@ class Torch_AtenCopysign_TensorOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenCosFloatOp(IRDLOperation):
+    name = "torch.aten.cos.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenCosIntOp(IRDLOperation):
+    name = "torch.aten.cos.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenCosOp(IRDLOperation):
     name = "torch.aten.cos"
     self = operand_def(BaseAttr(TensorType))
@@ -708,6 +1024,24 @@ class Torch_AtenCos_Op(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenCoshFloatOp(IRDLOperation):
+    name = "torch.aten.cosh.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenCoshIntOp(IRDLOperation):
+    name = "torch.aten.cosh.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
 
 
 @irdl_op_definition
@@ -729,6 +1063,28 @@ class Torch_AtenCosh_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenCummaxOp(IRDLOperation):
+    name = "torch.aten.cummax"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim attr-dict `:` type($self) `,` type($dim) `->` type($values) `,` type($indices)"
+
+
+@irdl_op_definition
+class Torch_AtenCumminOp(IRDLOperation):
+    name = "torch.aten.cummin"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    values = result_def(BaseAttr(TensorType))
+    indices = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim attr-dict `:` type($self) `,` type($dim) `->` type($values) `,` type($indices)"
+
+
+@irdl_op_definition
 class Torch_AtenDeg2RadOp(IRDLOperation):
     name = "torch.aten.deg2rad"
     self = operand_def(BaseAttr(TensorType))
@@ -747,12 +1103,80 @@ class Torch_AtenDeg2Rad_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenDenseDimOp(IRDLOperation):
+    name = "torch.aten.dense_dim"
+    self = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenDetachOp(IRDLOperation):
     name = "torch.aten.detach"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenDiagEmbedOp(IRDLOperation):
+    name = "torch.aten.diag_embed"
+    self = operand_def(BaseAttr(TensorType))
+    offset = operand_def(BaseAttr(IntegerType))
+    dim1 = operand_def(BaseAttr(IntegerType))
+    dim2 = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $offset `,` $dim1 `,` $dim2 attr-dict `:` type($self) `,` type($offset) `,` type($dim1) `,` type($dim2) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenDiagOp(IRDLOperation):
+    name = "torch.aten.diag"
+    self = operand_def(BaseAttr(TensorType))
+    diagonal = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $diagonal attr-dict `:` type($self) `,` type($diagonal) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenDiagonalCopyOp(IRDLOperation):
+    name = "torch.aten.diagonal_copy"
+    self = operand_def(BaseAttr(TensorType))
+    offset = operand_def(BaseAttr(IntegerType))
+    dim1 = operand_def(BaseAttr(IntegerType))
+    dim2 = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $offset `,` $dim1 `,` $dim2 attr-dict `:` type($self) `,` type($offset) `,` type($dim1) `,` type($dim2) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenDiagonalOp(IRDLOperation):
+    name = "torch.aten.diagonal"
+    self = operand_def(BaseAttr(TensorType))
+    offset = operand_def(BaseAttr(IntegerType))
+    dim1 = operand_def(BaseAttr(IntegerType))
+    dim2 = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $offset `,` $dim1 `,` $dim2 attr-dict `:` type($self) `,` type($offset) `,` type($dim1) `,` type($dim2) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenDiagonalScatterOp(IRDLOperation):
+    name = "torch.aten.diagonal_scatter"
+    self = operand_def(BaseAttr(TensorType))
+    src = operand_def(BaseAttr(TensorType))
+    offset = operand_def(BaseAttr(IntegerType))
+    dim1 = operand_def(BaseAttr(IntegerType))
+    dim2 = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $src `,` $offset `,` $dim1 `,` $dim2 attr-dict `:` type($self) `,` type($src) `,` type($offset) `,` type($dim1) `,` type($dim2) `->` type($result)"
 
 
 @irdl_op_definition
@@ -771,6 +1195,35 @@ class Torch_AtenDigamma_Op(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenDimOp(IRDLOperation):
+    name = "torch.aten.dim"
+    self = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenDivFloatOp(IRDLOperation):
+    name = "torch.aten.div.float"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenDivIntOp(IRDLOperation):
+    name = "torch.aten.div.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
 
 
 @irdl_op_definition
@@ -856,6 +1309,24 @@ class Torch_AtenEq_TensorOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenErfFloatOp(IRDLOperation):
+    name = "torch.aten.erf.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenErfIntOp(IRDLOperation):
+    name = "torch.aten.erf.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenErfOp(IRDLOperation):
     name = "torch.aten.erf"
     self = operand_def(BaseAttr(TensorType))
@@ -871,6 +1342,24 @@ class Torch_AtenErf_Op(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenErfcFloatOp(IRDLOperation):
+    name = "torch.aten.erfc.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenErfcIntOp(IRDLOperation):
+    name = "torch.aten.erfc.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
 
 
 @irdl_op_definition
@@ -928,6 +1417,24 @@ class Torch_AtenExp2_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenExpFloatOp(IRDLOperation):
+    name = "torch.aten.exp.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenExpIntOp(IRDLOperation):
+    name = "torch.aten.exp.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenExpOp(IRDLOperation):
     name = "torch.aten.exp"
     self = operand_def(BaseAttr(TensorType))
@@ -943,6 +1450,24 @@ class Torch_AtenExp_Op(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenExpm1FloatOp(IRDLOperation):
+    name = "torch.aten.expm1.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenExpm1IntOp(IRDLOperation):
+    name = "torch.aten.expm1.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
 
 
 @irdl_op_definition
@@ -1040,6 +1565,24 @@ class Torch_AtenFloorDivide_TensorOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenFloorFloatOp(IRDLOperation):
+    name = "torch.aten.floor.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenFloorIntOp(IRDLOperation):
+    name = "torch.aten.floor.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenFloorOp(IRDLOperation):
     name = "torch.aten.floor"
     self = operand_def(BaseAttr(TensorType))
@@ -1079,6 +1622,46 @@ class Torch_AtenFminOp(IRDLOperation):
     assembly_format = (
         "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
     )
+
+
+@irdl_op_definition
+class Torch_AtenFmodFloatIntOp(IRDLOperation):
+    name = "torch.aten.fmod.float_int"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenFmodFloatOp(IRDLOperation):
+    name = "torch.aten.fmod.float"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenFmodIntFloatOp(IRDLOperation):
+    name = "torch.aten.fmod.int_float"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenFmodIntOp(IRDLOperation):
+    name = "torch.aten.fmod.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
 
 
 @irdl_op_definition
@@ -1124,6 +1707,16 @@ class Torch_AtenFrac_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenFrexpOp(IRDLOperation):
+    name = "torch.aten.frexp"
+    a = operand_def(BaseAttr(Float64Type))
+    result0 = result_def(BaseAttr(Float64Type))
+    result1 = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result0) `,` type($result1)"
+
+
+@irdl_op_definition
 class Torch_AtenFrexpTensorOp(IRDLOperation):
     name = "torch.aten.frexp.Tensor"
     self = operand_def(BaseAttr(TensorType))
@@ -1133,6 +1726,16 @@ class Torch_AtenFrexpTensorOp(IRDLOperation):
     assembly_format = (
         "$self attr-dict `:` type($self) `->` type($mantissa) `,` type($exponent)"
     )
+
+
+@irdl_op_definition
+class Torch_AtenGcdIntOp(IRDLOperation):
+    name = "torch.aten.gcd.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
 
 
 @irdl_op_definition
@@ -1180,6 +1783,41 @@ class Torch_AtenGe_TensorOp(IRDLOperation):
 
     assembly_format = (
         "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
+    )
+
+
+@irdl_op_definition
+class Torch_AtenGluBackwardGradInputOp(IRDLOperation):
+    name = "torch.aten.glu_backward.grad_input"
+    grad_output = operand_def(BaseAttr(TensorType))
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    grad_input = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$grad_output `,` $self `,` $dim `,` $grad_input attr-dict `:` type($grad_output) `,` type($self) `,` type($dim) `,` type($grad_input) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenGluBackwardOp(IRDLOperation):
+    name = "torch.aten.glu_backward"
+    grad_output = operand_def(BaseAttr(TensorType))
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$grad_output `,` $self `,` $dim attr-dict `:` type($grad_output) `,` type($self) `,` type($dim) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenGluOp(IRDLOperation):
+    name = "torch.aten.glu"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $dim attr-dict `:` type($self) `,` type($dim) `->` type($result)"
     )
 
 
@@ -1343,6 +1981,43 @@ class Torch_AtenHeaviside_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenHingeEmbeddingLossOp(IRDLOperation):
+    name = "torch.aten.hinge_embedding_loss"
+    self = operand_def(BaseAttr(TensorType))
+    target = operand_def(BaseAttr(TensorType))
+    margin = operand_def(BaseAttr(Float64Type))
+    reduction = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $target `,` $margin `,` $reduction attr-dict `:` type($self) `,` type($target) `,` type($margin) `,` type($reduction) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenHuberLossBackwardOp(IRDLOperation):
+    name = "torch.aten.huber_loss_backward"
+    grad_output = operand_def(BaseAttr(TensorType))
+    self = operand_def(BaseAttr(TensorType))
+    target = operand_def(BaseAttr(TensorType))
+    reduction = operand_def(BaseAttr(IntegerType))
+    delta = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$grad_output `,` $self `,` $target `,` $reduction `,` $delta attr-dict `:` type($grad_output) `,` type($self) `,` type($target) `,` type($reduction) `,` type($delta) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenHuberLossOp(IRDLOperation):
+    name = "torch.aten.huber_loss"
+    self = operand_def(BaseAttr(TensorType))
+    target = operand_def(BaseAttr(TensorType))
+    reduction = operand_def(BaseAttr(IntegerType))
+    delta = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $target `,` $reduction `,` $delta attr-dict `:` type($self) `,` type($target) `,` type($reduction) `,` type($delta) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenHypotOp(IRDLOperation):
     name = "torch.aten.hypot"
     self = operand_def(BaseAttr(TensorType))
@@ -1439,6 +2114,65 @@ class Torch_AtenImagOp(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenIndexCopyOp(IRDLOperation):
+    name = "torch.aten.index_copy"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    index = operand_def(BaseAttr(TensorType))
+    source = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $index `,` $source attr-dict `:` type($self) `,` type($dim) `,` type($index) `,` type($source) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenIndexCopy_Op(IRDLOperation):
+    name = "torch.aten.index_copy_"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    index = operand_def(BaseAttr(TensorType))
+    source = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $index `,` $source attr-dict `:` type($self) `,` type($dim) `,` type($index) `,` type($source) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenIndexFillIntTensorOp(IRDLOperation):
+    name = "torch.aten.index_fill.int_Tensor"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    index = operand_def(BaseAttr(TensorType))
+    value = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $index `,` $value attr-dict `:` type($self) `,` type($dim) `,` type($index) `,` type($value) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenIndexFill_IntTensorOp(IRDLOperation):
+    name = "torch.aten.index_fill_.int_Tensor"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    index = operand_def(BaseAttr(TensorType))
+    value = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $index `,` $value attr-dict `:` type($self) `,` type($dim) `,` type($index) `,` type($value) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenIndexSelectOp(IRDLOperation):
+    name = "torch.aten.index_select"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    index = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $index attr-dict `:` type($self) `,` type($dim) `,` type($index) `->` type($result)"
 
 
 @irdl_op_definition
@@ -1605,6 +2339,24 @@ class Torch_AtenLess_TensorOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenLgammaFloatOp(IRDLOperation):
+    name = "torch.aten.lgamma.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLgammaIntOp(IRDLOperation):
+    name = "torch.aten.lgamma.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenLgammaOp(IRDLOperation):
     name = "torch.aten.lgamma"
     self = operand_def(BaseAttr(TensorType))
@@ -1650,6 +2402,17 @@ class Torch_AtenLiftOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenLinalgCrossOp(IRDLOperation):
+    name = "torch.aten.linalg_cross"
+    self = operand_def(BaseAttr(TensorType))
+    other = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $other `,` $dim attr-dict `:` type($self) `,` type($other) `,` type($dim) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenLinalgEigOp(IRDLOperation):
     name = "torch.aten.linalg_eig"
     self = operand_def(BaseAttr(TensorType))
@@ -1690,6 +2453,24 @@ class Torch_AtenLinalgMatrixExpOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenLog10FloatOp(IRDLOperation):
+    name = "torch.aten.log10.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLog10IntOp(IRDLOperation):
+    name = "torch.aten.log10.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenLog10Op(IRDLOperation):
     name = "torch.aten.log10"
     self = operand_def(BaseAttr(TensorType))
@@ -1705,6 +2486,24 @@ class Torch_AtenLog10_Op(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLog1PFloatOp(IRDLOperation):
+    name = "torch.aten.log1p.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLog1PIntOp(IRDLOperation):
+    name = "torch.aten.log1p.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
 
 
 @irdl_op_definition
@@ -1741,6 +2540,64 @@ class Torch_AtenLog2_Op(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLogFloatFloatOp(IRDLOperation):
+    name = "torch.aten.log.float_float"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLogFloatIntOp(IRDLOperation):
+    name = "torch.aten.log.float_int"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLogFloatOp(IRDLOperation):
+    name = "torch.aten.log.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLogIntFloatOp(IRDLOperation):
+    name = "torch.aten.log.int_float"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLogIntIntOp(IRDLOperation):
+    name = "torch.aten.log.int_int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenLogIntOp(IRDLOperation):
+    name = "torch.aten.log.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
 
 
 @irdl_op_definition
@@ -1817,6 +2674,18 @@ class Torch_AtenLogaddexpOp(IRDLOperation):
 
     assembly_format = (
         "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
+    )
+
+
+@irdl_op_definition
+class Torch_AtenLogcumsumexpOp(IRDLOperation):
+    name = "torch.aten.logcumsumexp"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $dim attr-dict `:` type($self) `,` type($dim) `->` type($result)"
     )
 
 
@@ -1932,6 +2801,19 @@ class Torch_AtenLt_TensorOp(IRDLOperation):
     assembly_format = (
         "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
     )
+
+
+@irdl_op_definition
+class Torch_AtenMarginRankingLossOp(IRDLOperation):
+    name = "torch.aten.margin_ranking_loss"
+    input1 = operand_def(BaseAttr(TensorType))
+    input2 = operand_def(BaseAttr(TensorType))
+    target = operand_def(BaseAttr(TensorType))
+    margin = operand_def(BaseAttr(Float64Type))
+    reduction = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$input1 `,` $input2 `,` $target `,` $margin `,` $reduction attr-dict `:` type($input1) `,` type($input2) `,` type($target) `,` type($margin) `,` type($reduction) `->` type($result)"
 
 
 @irdl_op_definition
@@ -2118,6 +3000,82 @@ class Torch_AtenMmOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenMseLossBackwardGradInputOp(IRDLOperation):
+    name = "torch.aten.mse_loss_backward.grad_input"
+    grad_output = operand_def(BaseAttr(TensorType))
+    self = operand_def(BaseAttr(TensorType))
+    target = operand_def(BaseAttr(TensorType))
+    reduction = operand_def(BaseAttr(IntegerType))
+    grad_input = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$grad_output `,` $self `,` $target `,` $reduction `,` $grad_input attr-dict `:` type($grad_output) `,` type($self) `,` type($target) `,` type($reduction) `,` type($grad_input) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenMseLossBackwardOp(IRDLOperation):
+    name = "torch.aten.mse_loss_backward"
+    grad_output = operand_def(BaseAttr(TensorType))
+    self = operand_def(BaseAttr(TensorType))
+    target = operand_def(BaseAttr(TensorType))
+    reduction = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$grad_output `,` $self `,` $target `,` $reduction attr-dict `:` type($grad_output) `,` type($self) `,` type($target) `,` type($reduction) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenMseLossOp(IRDLOperation):
+    name = "torch.aten.mse_loss"
+    self = operand_def(BaseAttr(TensorType))
+    target = operand_def(BaseAttr(TensorType))
+    reduction = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $target `,` $reduction attr-dict `:` type($self) `,` type($target) `,` type($reduction) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenMulFloatIntOp(IRDLOperation):
+    name = "torch.aten.mul.float_int"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenMulFloatOp(IRDLOperation):
+    name = "torch.aten.mul.float"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenMulIntFloatOp(IRDLOperation):
+    name = "torch.aten.mul.int_float"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenMulIntOp(IRDLOperation):
+    name = "torch.aten.mul.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenMulTensorOp(IRDLOperation):
     name = "torch.aten.mul.Tensor"
     self = operand_def(BaseAttr(TensorType))
@@ -2139,6 +3097,18 @@ class Torch_AtenMul_TensorOp(IRDLOperation):
     assembly_format = (
         "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
     )
+
+
+@irdl_op_definition
+class Torch_AtenMultilabelMarginLossForwardOp(IRDLOperation):
+    name = "torch.aten.multilabel_margin_loss_forward"
+    self = operand_def(BaseAttr(TensorType))
+    target = operand_def(BaseAttr(TensorType))
+    reduction = operand_def(BaseAttr(IntegerType))
+    output = result_def(BaseAttr(TensorType))
+    is_target = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $target `,` $reduction attr-dict `:` type($self) `,` type($target) `,` type($reduction) `->` type($output) `,` type($is_target)"
 
 
 @irdl_op_definition
@@ -2178,12 +3148,72 @@ class Torch_AtenMvOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenMvlgammaOp(IRDLOperation):
+    name = "torch.aten.mvlgamma"
+    self = operand_def(BaseAttr(TensorType))
+    p = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $p attr-dict `:` type($self) `,` type($p) `->` type($result)"
+    )
+
+
+@irdl_op_definition
+class Torch_AtenMvlgamma_Op(IRDLOperation):
+    name = "torch.aten.mvlgamma_"
+    self = operand_def(BaseAttr(TensorType))
+    p = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $p attr-dict `:` type($self) `,` type($p) `->` type($result)"
+    )
+
+
+@irdl_op_definition
 class Torch_AtenNanmedianOp(IRDLOperation):
     name = "torch.aten.nanmedian"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenNarrowCopyOp(IRDLOperation):
+    name = "torch.aten.narrow_copy"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    start = operand_def(BaseAttr(IntegerType))
+    length = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $start `,` $length attr-dict `:` type($self) `,` type($dim) `,` type($start) `,` type($length) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenNarrowOp(IRDLOperation):
+    name = "torch.aten.narrow"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    start = operand_def(BaseAttr(IntegerType))
+    length = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $start `,` $length attr-dict `:` type($self) `,` type($dim) `,` type($start) `,` type($length) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenNarrowTensorOp(IRDLOperation):
+    name = "torch.aten.narrow.Tensor"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    start = operand_def(BaseAttr(TensorType))
+    length = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $start `,` $length attr-dict `:` type($self) `,` type($dim) `,` type($start) `,` type($length) `->` type($result)"
 
 
 @irdl_op_definition
@@ -2208,6 +3238,24 @@ class Torch_AtenNe_TensorOp(IRDLOperation):
     assembly_format = (
         "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
     )
+
+
+@irdl_op_definition
+class Torch_AtenNegFloatOp(IRDLOperation):
+    name = "torch.aten.neg.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenNegIntOp(IRDLOperation):
+    name = "torch.aten.neg.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
 
 
 @irdl_op_definition
@@ -2280,6 +3328,17 @@ class Torch_AtenNonzeroOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenNonzeroStaticOp(IRDLOperation):
+    name = "torch.aten.nonzero_static"
+    self = operand_def(BaseAttr(TensorType))
+    size = operand_def(BaseAttr(IntegerType))
+    fill_value = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $size `,` $fill_value attr-dict `:` type($self) `,` type($size) `,` type($fill_value) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenNotEqualTensorOp(IRDLOperation):
     name = "torch.aten.not_equal.Tensor"
     self = operand_def(BaseAttr(TensorType))
@@ -2304,6 +3363,47 @@ class Torch_AtenNotEqual_TensorOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenNumelOp(IRDLOperation):
+    name = "torch.aten.numel"
+    self = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenPdistOp(IRDLOperation):
+    name = "torch.aten.pdist"
+    self = operand_def(BaseAttr(TensorType))
+    p = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $p attr-dict `:` type($self) `,` type($p) `->` type($result)"
+    )
+
+
+@irdl_op_definition
+class Torch_AtenPixelShuffleOp(IRDLOperation):
+    name = "torch.aten.pixel_shuffle"
+    self = operand_def(BaseAttr(TensorType))
+    upscale_factor = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $upscale_factor attr-dict `:` type($self) `,` type($upscale_factor) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenPixelUnshuffleOp(IRDLOperation):
+    name = "torch.aten.pixel_unshuffle"
+    self = operand_def(BaseAttr(TensorType))
+    downscale_factor = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $downscale_factor attr-dict `:` type($self) `,` type($downscale_factor) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenPolarOp(IRDLOperation):
     name = "torch.aten.polar"
     abs = operand_def(BaseAttr(TensorType))
@@ -2316,12 +3416,74 @@ class Torch_AtenPolarOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenPolygammaOp(IRDLOperation):
+    name = "torch.aten.polygamma"
+    n = operand_def(BaseAttr(IntegerType))
+    self = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$n `,` $self attr-dict `:` type($n) `,` type($self) `->` type($result)"
+    )
+
+
+@irdl_op_definition
 class Torch_AtenPositiveOp(IRDLOperation):
     name = "torch.aten.positive"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenPowFloatIntOp(IRDLOperation):
+    name = "torch.aten.pow.float_int"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenPowFloatOp(IRDLOperation):
+    name = "torch.aten.pow.float"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenPowIntFloatOp(IRDLOperation):
+    name = "torch.aten.pow.int_float"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenPowIntOp(IRDLOperation):
+    name = "torch.aten.pow.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenPowIntToIntOp(IRDLOperation):
+    name = "torch.aten.pow.int_to_int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
 
 
 @irdl_op_definition
@@ -2427,6 +3589,46 @@ class Torch_AtenRelu_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenRemainderFloatIntOp(IRDLOperation):
+    name = "torch.aten.remainder.float_int"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenRemainderFloatOp(IRDLOperation):
+    name = "torch.aten.remainder.float"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenRemainderIntFloatOp(IRDLOperation):
+    name = "torch.aten.remainder.int_float"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenRemainderIntOp(IRDLOperation):
+    name = "torch.aten.remainder.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenRemainderTensorOp(IRDLOperation):
     name = "torch.aten.remainder.Tensor"
     self = operand_def(BaseAttr(TensorType))
@@ -2451,12 +3653,50 @@ class Torch_AtenRemainder_TensorOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenRoundDecimalsOp(IRDLOperation):
+    name = "torch.aten.round.decimals"
+    self = operand_def(BaseAttr(TensorType))
+    decimals = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $decimals attr-dict `:` type($self) `,` type($decimals) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenRoundFloatOp(IRDLOperation):
+    name = "torch.aten.round.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenRoundIntOp(IRDLOperation):
+    name = "torch.aten.round.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenRoundOp(IRDLOperation):
     name = "torch.aten.round"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenRound_DecimalsOp(IRDLOperation):
+    name = "torch.aten.round_.decimals"
+    self = operand_def(BaseAttr(TensorType))
+    decimals = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $decimals attr-dict `:` type($self) `,` type($decimals) `->` type($result)"
 
 
 @irdl_op_definition
@@ -2484,6 +3724,77 @@ class Torch_AtenRsqrt_Op(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenScatterAddOp(IRDLOperation):
+    name = "torch.aten.scatter_add"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    index = operand_def(BaseAttr(TensorType))
+    src = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $index `,` $src attr-dict `:` type($self) `,` type($dim) `,` type($index) `,` type($src) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenScatterAdd_Op(IRDLOperation):
+    name = "torch.aten.scatter_add_"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    index = operand_def(BaseAttr(TensorType))
+    src = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $index `,` $src attr-dict `:` type($self) `,` type($dim) `,` type($index) `,` type($src) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenScatterSrcOp(IRDLOperation):
+    name = "torch.aten.scatter.src"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    index = operand_def(BaseAttr(TensorType))
+    src = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $index `,` $src attr-dict `:` type($self) `,` type($dim) `,` type($index) `,` type($src) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenScatter_SrcOp(IRDLOperation):
+    name = "torch.aten.scatter_.src"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    index = operand_def(BaseAttr(TensorType))
+    src = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $index `,` $src attr-dict `:` type($self) `,` type($dim) `,` type($index) `,` type($src) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSelectIntOp(IRDLOperation):
+    name = "torch.aten.select.int"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    index = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $index attr-dict `:` type($self) `,` type($dim) `,` type($index) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSelectScatterOp(IRDLOperation):
+    name = "torch.aten.select_scatter"
+    self = operand_def(BaseAttr(TensorType))
+    src = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    index = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $src `,` $dim `,` $index attr-dict `:` type($self) `,` type($src) `,` type($dim) `,` type($index) `->` type($result)"
 
 
 @irdl_op_definition
@@ -2647,6 +3958,24 @@ class Torch_AtenSilu_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenSinFloatOp(IRDLOperation):
+    name = "torch.aten.sin.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSinIntOp(IRDLOperation):
+    name = "torch.aten.sin.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenSinOp(IRDLOperation):
     name = "torch.aten.sin"
     self = operand_def(BaseAttr(TensorType))
@@ -2683,6 +4012,24 @@ class Torch_AtenSinc_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenSinhFloatOp(IRDLOperation):
+    name = "torch.aten.sinh.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSinhIntOp(IRDLOperation):
+    name = "torch.aten.sinh.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenSinhOp(IRDLOperation):
     name = "torch.aten.sinh"
     self = operand_def(BaseAttr(TensorType))
@@ -2696,6 +4043,102 @@ class Torch_AtenSinh_Op(IRDLOperation):
     name = "torch.aten.sinh_"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSizeIntOp(IRDLOperation):
+    name = "torch.aten.size.int"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = (
+        "$self `,` $dim attr-dict `:` type($self) `,` type($dim) `->` type($result)"
+    )
+
+
+@irdl_op_definition
+class Torch_AtenSmoothL1LossBackwardGradInputOp(IRDLOperation):
+    name = "torch.aten.smooth_l1_loss_backward.grad_input"
+    grad_output = operand_def(BaseAttr(TensorType))
+    self = operand_def(BaseAttr(TensorType))
+    target = operand_def(BaseAttr(TensorType))
+    reduction = operand_def(BaseAttr(IntegerType))
+    beta = operand_def(BaseAttr(Float64Type))
+    grad_input = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$grad_output `,` $self `,` $target `,` $reduction `,` $beta `,` $grad_input attr-dict `:` type($grad_output) `,` type($self) `,` type($target) `,` type($reduction) `,` type($beta) `,` type($grad_input) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSmoothL1LossBackwardOp(IRDLOperation):
+    name = "torch.aten.smooth_l1_loss_backward"
+    grad_output = operand_def(BaseAttr(TensorType))
+    self = operand_def(BaseAttr(TensorType))
+    target = operand_def(BaseAttr(TensorType))
+    reduction = operand_def(BaseAttr(IntegerType))
+    beta = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$grad_output `,` $self `,` $target `,` $reduction `,` $beta attr-dict `:` type($grad_output) `,` type($self) `,` type($target) `,` type($reduction) `,` type($beta) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSmoothL1LossOp(IRDLOperation):
+    name = "torch.aten.smooth_l1_loss"
+    self = operand_def(BaseAttr(TensorType))
+    target = operand_def(BaseAttr(TensorType))
+    reduction = operand_def(BaseAttr(IntegerType))
+    beta = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $target `,` $reduction `,` $beta attr-dict `:` type($self) `,` type($target) `,` type($reduction) `,` type($beta) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSoftMarginLossBackwardGradInputOp(IRDLOperation):
+    name = "torch.aten.soft_margin_loss_backward.grad_input"
+    grad_output = operand_def(BaseAttr(TensorType))
+    self = operand_def(BaseAttr(TensorType))
+    target = operand_def(BaseAttr(TensorType))
+    reduction = operand_def(BaseAttr(IntegerType))
+    grad_input = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$grad_output `,` $self `,` $target `,` $reduction `,` $grad_input attr-dict `:` type($grad_output) `,` type($self) `,` type($target) `,` type($reduction) `,` type($grad_input) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSoftMarginLossBackwardOp(IRDLOperation):
+    name = "torch.aten.soft_margin_loss_backward"
+    grad_output = operand_def(BaseAttr(TensorType))
+    self = operand_def(BaseAttr(TensorType))
+    target = operand_def(BaseAttr(TensorType))
+    reduction = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$grad_output `,` $self `,` $target `,` $reduction attr-dict `:` type($grad_output) `,` type($self) `,` type($target) `,` type($reduction) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSoftMarginLossOp(IRDLOperation):
+    name = "torch.aten.soft_margin_loss"
+    self = operand_def(BaseAttr(TensorType))
+    target = operand_def(BaseAttr(TensorType))
+    reduction = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $target `,` $reduction attr-dict `:` type($self) `,` type($target) `,` type($reduction) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSparseDimOp(IRDLOperation):
+    name = "torch.aten.sparse_dim"
+    self = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(IntegerType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
 
@@ -3025,6 +4468,24 @@ class Torch_AtenSpecialZetaOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenSqrtFloatOp(IRDLOperation):
+    name = "torch.aten.sqrt.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSqrtIntOp(IRDLOperation):
+    name = "torch.aten.sqrt.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenSqrtOp(IRDLOperation):
     name = "torch.aten.sqrt"
     self = operand_def(BaseAttr(TensorType))
@@ -3061,6 +4522,18 @@ class Torch_AtenSquare_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenSqueezeCopyDimOp(IRDLOperation):
+    name = "torch.aten.squeeze_copy.dim"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $dim attr-dict `:` type($self) `,` type($dim) `->` type($result)"
+    )
+
+
+@irdl_op_definition
 class Torch_AtenSqueezeCopyOp(IRDLOperation):
     name = "torch.aten.squeeze_copy"
     self = operand_def(BaseAttr(TensorType))
@@ -3070,12 +4543,127 @@ class Torch_AtenSqueezeCopyOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenSqueezeDimOp(IRDLOperation):
+    name = "torch.aten.squeeze.dim"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $dim attr-dict `:` type($self) `,` type($dim) `->` type($result)"
+    )
+
+
+@irdl_op_definition
 class Torch_AtenSqueezeOp(IRDLOperation):
     name = "torch.aten.squeeze"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenStorageOffsetOp(IRDLOperation):
+    name = "torch.aten.storage_offset"
+    self = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenStrideIntOp(IRDLOperation):
+    name = "torch.aten.stride.int"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = (
+        "$self `,` $dim attr-dict `:` type($self) `,` type($dim) `->` type($result)"
+    )
+
+
+@irdl_op_definition
+class Torch_AtenSubFloatIntOp(IRDLOperation):
+    name = "torch.aten.sub.float_int"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSubFloatOp(IRDLOperation):
+    name = "torch.aten.sub.float"
+    a = operand_def(BaseAttr(Float64Type))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSubIntFloatOp(IRDLOperation):
+    name = "torch.aten.sub.int_float"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSubIntOp(IRDLOperation):
+    name = "torch.aten.sub.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSymNumelOp(IRDLOperation):
+    name = "torch.aten.sym_numel"
+    self = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSymSizeIntOp(IRDLOperation):
+    name = "torch.aten.sym_size.int"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = (
+        "$self `,` $dim attr-dict `:` type($self) `,` type($dim) `->` type($result)"
+    )
+
+
+@irdl_op_definition
+class Torch_AtenSymStorageOffsetOp(IRDLOperation):
+    name = "torch.aten.sym_storage_offset"
+    self = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenSymStrideIntOp(IRDLOperation):
+    name = "torch.aten.sym_stride.int"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = (
+        "$self `,` $dim attr-dict `:` type($self) `,` type($dim) `->` type($result)"
+    )
 
 
 @irdl_op_definition
@@ -3118,6 +4706,24 @@ class Torch_AtenTakeOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenTanFloatOp(IRDLOperation):
+    name = "torch.aten.tan.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenTanIntOp(IRDLOperation):
+    name = "torch.aten.tan.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenTanOp(IRDLOperation):
     name = "torch.aten.tan"
     self = operand_def(BaseAttr(TensorType))
@@ -3157,6 +4763,24 @@ class Torch_AtenTanhBackwardOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenTanhFloatOp(IRDLOperation):
+    name = "torch.aten.tanh.float"
+    a = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenTanhIntOp(IRDLOperation):
+    name = "torch.aten.tanh.int"
+    a = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(Float64Type))
+
+    assembly_format = "$a attr-dict `:` type($a) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenTanhOp(IRDLOperation):
     name = "torch.aten.tanh"
     self = operand_def(BaseAttr(TensorType))
@@ -3181,6 +4805,79 @@ class Torch_AtenTraceOp(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenTransposeCopyIntOp(IRDLOperation):
+    name = "torch.aten.transpose_copy.int"
+    self = operand_def(BaseAttr(TensorType))
+    dim0 = operand_def(BaseAttr(IntegerType))
+    dim1 = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim0 `,` $dim1 attr-dict `:` type($self) `,` type($dim0) `,` type($dim1) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenTransposeIntOp(IRDLOperation):
+    name = "torch.aten.transpose.int"
+    self = operand_def(BaseAttr(TensorType))
+    dim0 = operand_def(BaseAttr(IntegerType))
+    dim1 = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim0 `,` $dim1 attr-dict `:` type($self) `,` type($dim0) `,` type($dim1) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenTranspose_Op(IRDLOperation):
+    name = "torch.aten.transpose_"
+    self = operand_def(BaseAttr(TensorType))
+    dim0 = operand_def(BaseAttr(IntegerType))
+    dim1 = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim0 `,` $dim1 attr-dict `:` type($self) `,` type($dim0) `,` type($dim1) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenTrilOp(IRDLOperation):
+    name = "torch.aten.tril"
+    self = operand_def(BaseAttr(TensorType))
+    diagonal = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $diagonal attr-dict `:` type($self) `,` type($diagonal) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenTril_Op(IRDLOperation):
+    name = "torch.aten.tril_"
+    self = operand_def(BaseAttr(TensorType))
+    diagonal = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $diagonal attr-dict `:` type($self) `,` type($diagonal) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenTriuOp(IRDLOperation):
+    name = "torch.aten.triu"
+    self = operand_def(BaseAttr(TensorType))
+    diagonal = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $diagonal attr-dict `:` type($self) `,` type($diagonal) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenTriu_Op(IRDLOperation):
+    name = "torch.aten.triu_"
+    self = operand_def(BaseAttr(TensorType))
+    diagonal = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $diagonal attr-dict `:` type($self) `,` type($diagonal) `->` type($result)"
 
 
 @irdl_op_definition
@@ -3226,6 +4923,66 @@ class Torch_AtenTrunc_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenUnfoldCopyOp(IRDLOperation):
+    name = "torch.aten.unfold_copy"
+    self = operand_def(BaseAttr(TensorType))
+    dimension = operand_def(BaseAttr(IntegerType))
+    size = operand_def(BaseAttr(IntegerType))
+    step = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dimension `,` $size `,` $step attr-dict `:` type($self) `,` type($dimension) `,` type($size) `,` type($step) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenUnfoldOp(IRDLOperation):
+    name = "torch.aten.unfold"
+    self = operand_def(BaseAttr(TensorType))
+    dimension = operand_def(BaseAttr(IntegerType))
+    size = operand_def(BaseAttr(IntegerType))
+    step = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dimension `,` $size `,` $step attr-dict `:` type($self) `,` type($dimension) `,` type($size) `,` type($step) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenUnsqueezeCopyOp(IRDLOperation):
+    name = "torch.aten.unsqueeze_copy"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $dim attr-dict `:` type($self) `,` type($dim) `->` type($result)"
+    )
+
+
+@irdl_op_definition
+class Torch_AtenUnsqueezeOp(IRDLOperation):
+    name = "torch.aten.unsqueeze"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $dim attr-dict `:` type($self) `,` type($dim) `->` type($result)"
+    )
+
+
+@irdl_op_definition
+class Torch_AtenUnsqueeze_Op(IRDLOperation):
+    name = "torch.aten.unsqueeze_"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $dim attr-dict `:` type($self) `,` type($dim) `->` type($result)"
+    )
+
+
+@irdl_op_definition
 class Torch_AtenVdotOp(IRDLOperation):
     name = "torch.aten.vdot"
     self = operand_def(BaseAttr(TensorType))
@@ -3253,6 +5010,30 @@ class Torch_AtenViewAsRealOp(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenViewCopyDtypeOp(IRDLOperation):
+    name = "torch.aten.view_copy.dtype"
+    self = operand_def(BaseAttr(TensorType))
+    dtype = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $dtype attr-dict `:` type($self) `,` type($dtype) `->` type($result)"
+    )
+
+
+@irdl_op_definition
+class Torch_AtenViewDtypeOp(IRDLOperation):
+    name = "torch.aten.view.dtype"
+    self = operand_def(BaseAttr(TensorType))
+    dtype = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $dtype attr-dict `:` type($self) `,` type($dtype) `->` type($result)"
+    )
 
 
 @irdl_op_definition
@@ -3340,6 +5121,16 @@ class Torch_Aten_AdaptiveAvgPool3DBackwardOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_Aten_And_IntOp(IRDLOperation):
+    name = "torch.aten.__and__.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_Aten_And_TensorOp(IRDLOperation):
     name = "torch.aten.__and__.Tensor"
     self = operand_def(BaseAttr(TensorType))
@@ -3357,6 +5148,54 @@ class Torch_Aten_AssertAsyncOp(IRDLOperation):
     self = operand_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self)"
+
+
+@irdl_op_definition
+class Torch_Aten_CdistBackwardOp(IRDLOperation):
+    name = "torch.aten._cdist_backward"
+    grad = operand_def(BaseAttr(TensorType))
+    x1 = operand_def(BaseAttr(TensorType))
+    x2 = operand_def(BaseAttr(TensorType))
+    p = operand_def(BaseAttr(Float64Type))
+    cdist = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$grad `,` $x1 `,` $x2 `,` $p `,` $cdist attr-dict `:` type($grad) `,` type($x1) `,` type($x2) `,` type($p) `,` type($cdist) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_Aten_ConvertWeightToInt4PackForCpuOp(IRDLOperation):
+    name = "torch.aten._convert_weight_to_int4pack_for_cpu"
+    self = operand_def(BaseAttr(TensorType))
+    innerKTiles = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $innerKTiles attr-dict `:` type($self) `,` type($innerKTiles) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_Aten_ConvertWeightToInt4PackOp(IRDLOperation):
+    name = "torch.aten._convert_weight_to_int4pack"
+    self = operand_def(BaseAttr(TensorType))
+    innerKTiles = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $innerKTiles attr-dict `:` type($self) `,` type($innerKTiles) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_Aten_EmbeddingBagPerSampleWeightsBackwardOp(IRDLOperation):
+    name = "torch.aten._embedding_bag_per_sample_weights_backward"
+    grad = operand_def(BaseAttr(TensorType))
+    weight = operand_def(BaseAttr(TensorType))
+    indices = operand_def(BaseAttr(TensorType))
+    offsets = operand_def(BaseAttr(TensorType))
+    offset2bag = operand_def(BaseAttr(TensorType))
+    mode = operand_def(BaseAttr(IntegerType))
+    padding_idx = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$grad `,` $weight `,` $indices `,` $offsets `,` $offset2bag `,` $mode `,` $padding_idx attr-dict `:` type($grad) `,` type($weight) `,` type($indices) `,` type($offsets) `,` type($offset2bag) `,` type($mode) `,` type($padding_idx) `->` type($result)"
 
 
 @irdl_op_definition
@@ -3478,6 +5317,28 @@ class Torch_Aten_LinalgSlogdetOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_Aten_LogSoftmaxBackwardDataOp(IRDLOperation):
+    name = "torch.aten._log_softmax_backward_data"
+    grad_output = operand_def(BaseAttr(TensorType))
+    output = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    input_dtype = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$grad_output `,` $output `,` $dim `,` $input_dtype attr-dict `:` type($grad_output) `,` type($output) `,` type($dim) `,` type($input_dtype) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_Aten_Lshift_IntOp(IRDLOperation):
+    name = "torch.aten.__lshift__.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_Aten_Lshift_TensorOp(IRDLOperation):
     name = "torch.aten.__lshift__.Tensor"
     self = operand_def(BaseAttr(TensorType))
@@ -3487,6 +5348,17 @@ class Torch_Aten_Lshift_TensorOp(IRDLOperation):
     assembly_format = (
         "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
     )
+
+
+@irdl_op_definition
+class Torch_Aten_MaskedScaleOp(IRDLOperation):
+    name = "torch.aten._masked_scale"
+    self = operand_def(BaseAttr(TensorType))
+    mask = operand_def(BaseAttr(TensorType))
+    scale = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $mask `,` $scale attr-dict `:` type($self) `,` type($mask) `,` type($scale) `->` type($result)"
 
 
 @irdl_op_definition
@@ -3514,6 +5386,16 @@ class Torch_Aten_NestedViewFromBufferOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_Aten_Or_IntOp(IRDLOperation):
+    name = "torch.aten.__or__.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_Aten_Or_TensorOp(IRDLOperation):
     name = "torch.aten.__or__.Tensor"
     self = operand_def(BaseAttr(TensorType))
@@ -3522,6 +5404,30 @@ class Torch_Aten_Or_TensorOp(IRDLOperation):
 
     assembly_format = (
         "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
+    )
+
+
+@irdl_op_definition
+class Torch_Aten_PdistBackwardOp(IRDLOperation):
+    name = "torch.aten._pdist_backward"
+    grad = operand_def(BaseAttr(TensorType))
+    self = operand_def(BaseAttr(TensorType))
+    p = operand_def(BaseAttr(Float64Type))
+    pdist = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$grad `,` $self `,` $p `,` $pdist attr-dict `:` type($grad) `,` type($self) `,` type($p) `,` type($pdist) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_Aten_PdistForwardOp(IRDLOperation):
+    name = "torch.aten._pdist_forward"
+    self = operand_def(BaseAttr(TensorType))
+    p = operand_def(BaseAttr(Float64Type))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $p attr-dict `:` type($self) `,` type($p) `->` type($result)"
     )
 
 
@@ -3548,6 +5454,16 @@ class Torch_Aten_PreluKernelOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_Aten_Rshift_IntOp(IRDLOperation):
+    name = "torch.aten.__rshift__.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_Aten_Rshift_TensorOp(IRDLOperation):
     name = "torch.aten.__rshift__.Tensor"
     self = operand_def(BaseAttr(TensorType))
@@ -3560,6 +5476,42 @@ class Torch_Aten_Rshift_TensorOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_Aten_SoftmaxBackwardDataOp(IRDLOperation):
+    name = "torch.aten._softmax_backward_data"
+    grad_output = operand_def(BaseAttr(TensorType))
+    output = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    input_dtype = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$grad_output `,` $output `,` $dim `,` $input_dtype attr-dict `:` type($grad_output) `,` type($output) `,` type($dim) `,` type($input_dtype) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_Aten_WeightInt4PackMmForCpuOp(IRDLOperation):
+    name = "torch.aten._weight_int4pack_mm_for_cpu"
+    self = operand_def(BaseAttr(TensorType))
+    mat2 = operand_def(BaseAttr(TensorType))
+    qGroupSize = operand_def(BaseAttr(IntegerType))
+    qScaleAndZeros = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $mat2 `,` $qGroupSize `,` $qScaleAndZeros attr-dict `:` type($self) `,` type($mat2) `,` type($qGroupSize) `,` type($qScaleAndZeros) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_Aten_WeightInt4PackMmOp(IRDLOperation):
+    name = "torch.aten._weight_int4pack_mm"
+    self = operand_def(BaseAttr(TensorType))
+    mat2 = operand_def(BaseAttr(TensorType))
+    qGroupSize = operand_def(BaseAttr(IntegerType))
+    qScaleAndZeros = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $mat2 `,` $qGroupSize `,` $qScaleAndZeros attr-dict `:` type($self) `,` type($mat2) `,` type($qGroupSize) `,` type($qScaleAndZeros) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_Aten_WeightInt8PackMmOp(IRDLOperation):
     name = "torch.aten._weight_int8pack_mm"
     self = operand_def(BaseAttr(TensorType))
@@ -3568,6 +5520,28 @@ class Torch_Aten_WeightInt8PackMmOp(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $mat2 `,` $scales attr-dict `:` type($self) `,` type($mat2) `,` type($scales) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_Aten_WeightNormInterfaceOp(IRDLOperation):
+    name = "torch.aten._weight_norm_interface"
+    v = operand_def(BaseAttr(TensorType))
+    g = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    result0 = result_def(BaseAttr(TensorType))
+    result1 = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$v `,` $g `,` $dim attr-dict `:` type($v) `,` type($g) `,` type($dim) `->` type($result0) `,` type($result1)"
+
+
+@irdl_op_definition
+class Torch_Aten_Xor_IntOp(IRDLOperation):
+    name = "torch.aten.__xor__.int"
+    a = operand_def(BaseAttr(IntegerType))
+    b = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(IntegerType))
+
+    assembly_format = "$a `,` $b attr-dict `:` type($a) `,` type($b) `->` type($result)"
 
 
 @irdl_op_definition
@@ -3590,6 +5564,17 @@ class Torch_InductorAccumulateGrad_Op(IRDLOperation):
 
     assembly_format = (
         "$variable `,` $new_grad attr-dict `:` type($variable) `,` type($new_grad)"
+    )
+
+
+@irdl_op_definition
+class Torch_InductorResizeStorageBytes_Op(IRDLOperation):
+    name = "torch.inductor.resize_storage_bytes_"
+    variable = operand_def(BaseAttr(TensorType))
+    new_size = operand_def(BaseAttr(IntegerType))
+
+    assembly_format = (
+        "$variable `,` $new_size attr-dict `:` type($variable) `,` type($new_size)"
     )
 
 
@@ -3798,6 +5783,28 @@ class Torch_PrimsCeilOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_PrimsCollapseOp(IRDLOperation):
+    name = "torch.prims.collapse"
+    a = operand_def(BaseAttr(TensorType))
+    start = operand_def(BaseAttr(IntegerType))
+    end = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$a `,` $start `,` $end attr-dict `:` type($a) `,` type($start) `,` type($end) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_PrimsCollapseViewOp(IRDLOperation):
+    name = "torch.prims.collapse_view"
+    a = operand_def(BaseAttr(TensorType))
+    start = operand_def(BaseAttr(IntegerType))
+    end = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$a `,` $start `,` $end attr-dict `:` type($a) `,` type($start) `,` type($end) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_PrimsConjOp(IRDLOperation):
     name = "torch.prims.conj"
     a = operand_def(BaseAttr(TensorType))
@@ -3813,6 +5820,18 @@ class Torch_PrimsConjPhysicalOp(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_PrimsConvertElementTypeOp(IRDLOperation):
+    name = "torch.prims.convert_element_type"
+    a = operand_def(BaseAttr(TensorType))
+    dtype = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$a `,` $dtype attr-dict `:` type($a) `,` type($dtype) `->` type($result)"
+    )
 
 
 @irdl_op_definition
@@ -4363,6 +6382,17 @@ class Torch_PrimsSphericalBesselJ0Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_PrimsSplitDimOp(IRDLOperation):
+    name = "torch.prims.split_dim"
+    a = operand_def(BaseAttr(TensorType))
+    dim = operand_def(BaseAttr(IntegerType))
+    outer_length = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$a `,` $dim `,` $outer_length attr-dict `:` type($a) `,` type($dim) `,` type($outer_length) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_PrimsSqrtOp(IRDLOperation):
     name = "torch.prims.sqrt"
     self = operand_def(BaseAttr(TensorType))
@@ -4408,6 +6438,18 @@ class Torch_PrimsTruncOp(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_PrimsViewOfDtypeOp(IRDLOperation):
+    name = "torch.prims.view_of_dtype"
+    a = operand_def(BaseAttr(TensorType))
+    dtype = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$a `,` $dtype attr-dict `:` type($a) `,` type($dtype) `->` type($result)"
+    )
 
 
 @irdl_op_definition
@@ -4458,6 +6500,17 @@ class Torch_Profiler_RecordFunctionExitOp(IRDLOperation):
     assembly_format = "$_0 attr-dict `:` type($_0)"
 
 
+@irdl_op_definition
+class Torch_QuantizedHardswishOp(IRDLOperation):
+    name = "torch.quantized.hardswish"
+    input = operand_def(BaseAttr(TensorType))
+    output_scale = operand_def(BaseAttr(Float64Type))
+    output_zero_point = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$input `,` $output_scale `,` $output_zero_point attr-dict `:` type($input) `,` type($output_scale) `,` type($output_zero_point) `->` type($result)"
+
+
 TorchDialect = Dialect(
     "torch",
     [
@@ -4465,17 +6518,27 @@ TorchDialect = Dialect(
         Torch_AtenAbs_Op,
         Torch_AtenAbsoluteOp,
         Torch_AtenAbsolute_Op,
+        Torch_AtenAcosFloatOp,
+        Torch_AtenAcosIntOp,
         Torch_AtenAcosOp,
         Torch_AtenAcos_Op,
+        Torch_AtenAcoshFloatOp,
+        Torch_AtenAcoshIntOp,
         Torch_AtenAcoshOp,
         Torch_AtenAcosh_Op,
         Torch_AtenAdaptiveMaxPool2DBackwardGradInputOp,
         Torch_AtenAdaptiveMaxPool2DBackwardOp,
         Torch_AtenAdaptiveMaxPool3DBackwardGradInputOp,
         Torch_AtenAdaptiveMaxPool3DBackwardOp,
+        Torch_AtenAddFloatIntOp,
+        Torch_AtenAddFloatOp,
+        Torch_AtenAddIntFloatOp,
+        Torch_AtenAddIntOp,
         Torch_AtenAliasCopyOp,
         Torch_AtenAliasOp,
         Torch_AtenAllOp,
+        Torch_AtenAngleFloatOp,
+        Torch_AtenAngleIntOp,
         Torch_AtenAngleOp,
         Torch_AtenAnyOp,
         Torch_AtenArccosOp,
@@ -4492,14 +6555,26 @@ TorchDialect = Dialect(
         Torch_AtenArctan_Op,
         Torch_AtenArctanhOp,
         Torch_AtenArctanh_Op,
+        Torch_AtenAsinFloatOp,
+        Torch_AtenAsinIntOp,
         Torch_AtenAsinOp,
         Torch_AtenAsin_Op,
+        Torch_AtenAsinhFloatOp,
+        Torch_AtenAsinhIntOp,
         Torch_AtenAsinhOp,
         Torch_AtenAsinh_Op,
+        Torch_AtenAtan2FloatIntOp,
+        Torch_AtenAtan2FloatOp,
+        Torch_AtenAtan2IntFloatOp,
+        Torch_AtenAtan2IntOp,
         Torch_AtenAtan2Op,
         Torch_AtenAtan2_Op,
+        Torch_AtenAtanFloatOp,
+        Torch_AtenAtanIntOp,
         Torch_AtenAtanOp,
         Torch_AtenAtan_Op,
+        Torch_AtenAtanhFloatOp,
+        Torch_AtenAtanhIntOp,
         Torch_AtenAtanhOp,
         Torch_AtenAtanh_Op,
         Torch_AtenBitwiseAndTensorOp,
@@ -4515,8 +6590,11 @@ TorchDialect = Dialect(
         Torch_AtenBitwiseXorTensorOp,
         Torch_AtenBitwiseXor_TensorOp,
         Torch_AtenBmmOp,
+        Torch_AtenCeilFloatOp,
+        Torch_AtenCeilIntOp,
         Torch_AtenCeilOp,
         Torch_AtenCeil_Op,
+        Torch_AtenChannelShuffleOp,
         Torch_AtenClampMaxTensorOp,
         Torch_AtenClampMax_TensorOp,
         Torch_AtenClampMinTensorOp,
@@ -4525,18 +6603,39 @@ TorchDialect = Dialect(
         Torch_AtenConjOp,
         Torch_AtenConjPhysicalOp,
         Torch_AtenConjPhysical_Op,
+        Torch_AtenCopy_FloatOp,
+        Torch_AtenCopy_IntOp,
         Torch_AtenCopy_TensorOp,
+        Torch_AtenCopysignFloatIntOp,
+        Torch_AtenCopysignFloatOp,
+        Torch_AtenCopysignIntFloatOp,
+        Torch_AtenCopysignIntOp,
         Torch_AtenCopysignTensorOp,
         Torch_AtenCopysign_TensorOp,
+        Torch_AtenCosFloatOp,
+        Torch_AtenCosIntOp,
         Torch_AtenCosOp,
         Torch_AtenCos_Op,
+        Torch_AtenCoshFloatOp,
+        Torch_AtenCoshIntOp,
         Torch_AtenCoshOp,
         Torch_AtenCosh_Op,
+        Torch_AtenCummaxOp,
+        Torch_AtenCumminOp,
         Torch_AtenDeg2RadOp,
         Torch_AtenDeg2Rad_Op,
+        Torch_AtenDenseDimOp,
         Torch_AtenDetachOp,
+        Torch_AtenDiagEmbedOp,
+        Torch_AtenDiagOp,
+        Torch_AtenDiagonalCopyOp,
+        Torch_AtenDiagonalOp,
+        Torch_AtenDiagonalScatterOp,
         Torch_AtenDigammaOp,
         Torch_AtenDigamma_Op,
+        Torch_AtenDimOp,
+        Torch_AtenDivFloatOp,
+        Torch_AtenDivIntOp,
         Torch_AtenDivTensorOp,
         Torch_AtenDiv_TensorOp,
         Torch_AtenDivideTensorOp,
@@ -4544,16 +6643,24 @@ TorchDialect = Dialect(
         Torch_AtenDotOp,
         Torch_AtenEqTensorOp,
         Torch_AtenEq_TensorOp,
+        Torch_AtenErfFloatOp,
+        Torch_AtenErfIntOp,
         Torch_AtenErfOp,
         Torch_AtenErf_Op,
+        Torch_AtenErfcFloatOp,
+        Torch_AtenErfcIntOp,
         Torch_AtenErfcOp,
         Torch_AtenErfc_Op,
         Torch_AtenErfinvOp,
         Torch_AtenErfinv_Op,
         Torch_AtenExp2Op,
         Torch_AtenExp2_Op,
+        Torch_AtenExpFloatOp,
+        Torch_AtenExpIntOp,
         Torch_AtenExpOp,
         Torch_AtenExp_Op,
+        Torch_AtenExpm1FloatOp,
+        Torch_AtenExpm1IntOp,
         Torch_AtenExpm1Op,
         Torch_AtenExpm1_Op,
         Torch_AtenFillTensorOp,
@@ -4563,19 +6670,30 @@ TorchDialect = Dialect(
         Torch_AtenFloatPower_TensorOp,
         Torch_AtenFloorDivideOp,
         Torch_AtenFloorDivide_TensorOp,
+        Torch_AtenFloorFloatOp,
+        Torch_AtenFloorIntOp,
         Torch_AtenFloorOp,
         Torch_AtenFloor_Op,
         Torch_AtenFmaxOp,
         Torch_AtenFminOp,
+        Torch_AtenFmodFloatIntOp,
+        Torch_AtenFmodFloatOp,
+        Torch_AtenFmodIntFloatOp,
+        Torch_AtenFmodIntOp,
         Torch_AtenFmodTensorOp,
         Torch_AtenFmod_TensorOp,
         Torch_AtenFracOp,
         Torch_AtenFrac_Op,
+        Torch_AtenFrexpOp,
         Torch_AtenFrexpTensorOp,
+        Torch_AtenGcdIntOp,
         Torch_AtenGcdOp,
         Torch_AtenGcd_Op,
         Torch_AtenGeTensorOp,
         Torch_AtenGe_TensorOp,
+        Torch_AtenGluBackwardGradInputOp,
+        Torch_AtenGluBackwardOp,
+        Torch_AtenGluOp,
         Torch_AtenGreaterEqualTensorOp,
         Torch_AtenGreaterEqual_TensorOp,
         Torch_AtenGreaterTensorOp,
@@ -4591,6 +6709,9 @@ TorchDialect = Dialect(
         Torch_AtenHardswish_Op,
         Torch_AtenHeavisideOp,
         Torch_AtenHeaviside_Op,
+        Torch_AtenHingeEmbeddingLossOp,
+        Torch_AtenHuberLossBackwardOp,
+        Torch_AtenHuberLossOp,
         Torch_AtenHypotOp,
         Torch_AtenHypot_Op,
         Torch_AtenI0Op,
@@ -4600,6 +6721,11 @@ TorchDialect = Dialect(
         Torch_AtenIgammacOp,
         Torch_AtenIgammac_Op,
         Torch_AtenImagOp,
+        Torch_AtenIndexCopyOp,
+        Torch_AtenIndexCopy_Op,
+        Torch_AtenIndexFillIntTensorOp,
+        Torch_AtenIndexFill_IntTensorOp,
+        Torch_AtenIndexSelectOp,
         Torch_AtenIsfiniteOp,
         Torch_AtenIsinfOp,
         Torch_AtenIsnanOp,
@@ -4615,21 +6741,34 @@ TorchDialect = Dialect(
         Torch_AtenLessEqual_TensorOp,
         Torch_AtenLessTensorOp,
         Torch_AtenLess_TensorOp,
+        Torch_AtenLgammaFloatOp,
+        Torch_AtenLgammaIntOp,
         Torch_AtenLgammaOp,
         Torch_AtenLgamma_Op,
         Torch_AtenLiftFreshCopyOp,
         Torch_AtenLiftFreshOp,
         Torch_AtenLiftOp,
+        Torch_AtenLinalgCrossOp,
         Torch_AtenLinalgEigOp,
         Torch_AtenLinalgEigvalsOp,
         Torch_AtenLinalgHouseholderProductOp,
         Torch_AtenLinalgMatrixExpOp,
+        Torch_AtenLog10FloatOp,
+        Torch_AtenLog10IntOp,
         Torch_AtenLog10Op,
         Torch_AtenLog10_Op,
+        Torch_AtenLog1PFloatOp,
+        Torch_AtenLog1PIntOp,
         Torch_AtenLog1POp,
         Torch_AtenLog1P_Op,
         Torch_AtenLog2Op,
         Torch_AtenLog2_Op,
+        Torch_AtenLogFloatFloatOp,
+        Torch_AtenLogFloatIntOp,
+        Torch_AtenLogFloatOp,
+        Torch_AtenLogIntFloatOp,
+        Torch_AtenLogIntIntOp,
+        Torch_AtenLogIntOp,
         Torch_AtenLogOp,
         Torch_AtenLogSigmoidBackwardGradInputOp,
         Torch_AtenLogSigmoidBackwardOp,
@@ -4637,6 +6776,7 @@ TorchDialect = Dialect(
         Torch_AtenLog_Op,
         Torch_AtenLogaddexp2Op,
         Torch_AtenLogaddexpOp,
+        Torch_AtenLogcumsumexpOp,
         Torch_AtenLogicalAndOp,
         Torch_AtenLogicalAnd_Op,
         Torch_AtenLogicalNotOp,
@@ -4647,6 +6787,7 @@ TorchDialect = Dialect(
         Torch_AtenLogicalXor_Op,
         Torch_AtenLtTensorOp,
         Torch_AtenLt_TensorOp,
+        Torch_AtenMarginRankingLossOp,
         Torch_AtenMaskedFillTensorOp,
         Torch_AtenMaskedFill_TensorOp,
         Torch_AtenMaskedScatterOp,
@@ -4664,14 +6805,29 @@ TorchDialect = Dialect(
         Torch_AtenMishOp,
         Torch_AtenMish_Op,
         Torch_AtenMmOp,
+        Torch_AtenMseLossBackwardGradInputOp,
+        Torch_AtenMseLossBackwardOp,
+        Torch_AtenMseLossOp,
+        Torch_AtenMulFloatIntOp,
+        Torch_AtenMulFloatOp,
+        Torch_AtenMulIntFloatOp,
+        Torch_AtenMulIntOp,
         Torch_AtenMulTensorOp,
         Torch_AtenMul_TensorOp,
+        Torch_AtenMultilabelMarginLossForwardOp,
         Torch_AtenMultiplyTensorOp,
         Torch_AtenMultiply_TensorOp,
         Torch_AtenMvOp,
+        Torch_AtenMvlgammaOp,
+        Torch_AtenMvlgamma_Op,
         Torch_AtenNanmedianOp,
+        Torch_AtenNarrowCopyOp,
+        Torch_AtenNarrowOp,
+        Torch_AtenNarrowTensorOp,
         Torch_AtenNeTensorOp,
         Torch_AtenNe_TensorOp,
+        Torch_AtenNegFloatOp,
+        Torch_AtenNegIntOp,
         Torch_AtenNegOp,
         Torch_AtenNeg_Op,
         Torch_AtenNegativeOp,
@@ -4679,10 +6835,21 @@ TorchDialect = Dialect(
         Torch_AtenNextafterOp,
         Torch_AtenNextafter_Op,
         Torch_AtenNonzeroOp,
+        Torch_AtenNonzeroStaticOp,
         Torch_AtenNotEqualTensorOp,
         Torch_AtenNotEqual_TensorOp,
+        Torch_AtenNumelOp,
+        Torch_AtenPdistOp,
+        Torch_AtenPixelShuffleOp,
+        Torch_AtenPixelUnshuffleOp,
         Torch_AtenPolarOp,
+        Torch_AtenPolygammaOp,
         Torch_AtenPositiveOp,
+        Torch_AtenPowFloatIntOp,
+        Torch_AtenPowFloatOp,
+        Torch_AtenPowIntFloatOp,
+        Torch_AtenPowIntOp,
+        Torch_AtenPowIntToIntOp,
         Torch_AtenPowTensorTensorOp,
         Torch_AtenPow_TensorOp,
         Torch_AtenPreluOp,
@@ -4694,12 +6861,26 @@ TorchDialect = Dialect(
         Torch_AtenRelu6Op,
         Torch_AtenReluOp,
         Torch_AtenRelu_Op,
+        Torch_AtenRemainderFloatIntOp,
+        Torch_AtenRemainderFloatOp,
+        Torch_AtenRemainderIntFloatOp,
+        Torch_AtenRemainderIntOp,
         Torch_AtenRemainderTensorOp,
         Torch_AtenRemainder_TensorOp,
+        Torch_AtenRoundDecimalsOp,
+        Torch_AtenRoundFloatOp,
+        Torch_AtenRoundIntOp,
         Torch_AtenRoundOp,
+        Torch_AtenRound_DecimalsOp,
         Torch_AtenRound_Op,
         Torch_AtenRsqrtOp,
         Torch_AtenRsqrt_Op,
+        Torch_AtenScatterAddOp,
+        Torch_AtenScatterAdd_Op,
+        Torch_AtenScatterSrcOp,
+        Torch_AtenScatter_SrcOp,
+        Torch_AtenSelectIntOp,
+        Torch_AtenSelectScatterOp,
         Torch_AtenSeluOp,
         Torch_AtenSelu_Op,
         Torch_AtenSet_Op,
@@ -4717,12 +6898,24 @@ TorchDialect = Dialect(
         Torch_AtenSiluBackwardOp,
         Torch_AtenSiluOp,
         Torch_AtenSilu_Op,
+        Torch_AtenSinFloatOp,
+        Torch_AtenSinIntOp,
         Torch_AtenSinOp,
         Torch_AtenSin_Op,
         Torch_AtenSincOp,
         Torch_AtenSinc_Op,
+        Torch_AtenSinhFloatOp,
+        Torch_AtenSinhIntOp,
         Torch_AtenSinhOp,
         Torch_AtenSinh_Op,
+        Torch_AtenSizeIntOp,
+        Torch_AtenSmoothL1LossBackwardGradInputOp,
+        Torch_AtenSmoothL1LossBackwardOp,
+        Torch_AtenSmoothL1LossOp,
+        Torch_AtenSoftMarginLossBackwardGradInputOp,
+        Torch_AtenSoftMarginLossBackwardOp,
+        Torch_AtenSoftMarginLossOp,
+        Torch_AtenSparseDimOp,
         Torch_AtenSpecialAiryAiOp,
         Torch_AtenSpecialBesselJ0Op,
         Torch_AtenSpecialBesselJ1Op,
@@ -4757,30 +6950,62 @@ TorchDialect = Dialect(
         Torch_AtenSpecialSphericalBesselJ0Op,
         Torch_AtenSpecialXlog1PyOp,
         Torch_AtenSpecialZetaOp,
+        Torch_AtenSqrtFloatOp,
+        Torch_AtenSqrtIntOp,
         Torch_AtenSqrtOp,
         Torch_AtenSqrt_Op,
         Torch_AtenSquareOp,
         Torch_AtenSquare_Op,
+        Torch_AtenSqueezeCopyDimOp,
         Torch_AtenSqueezeCopyOp,
+        Torch_AtenSqueezeDimOp,
         Torch_AtenSqueezeOp,
+        Torch_AtenStorageOffsetOp,
+        Torch_AtenStrideIntOp,
+        Torch_AtenSubFloatIntOp,
+        Torch_AtenSubFloatOp,
+        Torch_AtenSubIntFloatOp,
+        Torch_AtenSubIntOp,
+        Torch_AtenSymNumelOp,
+        Torch_AtenSymSizeIntOp,
+        Torch_AtenSymStorageOffsetOp,
+        Torch_AtenSymStrideIntOp,
         Torch_AtenTCopyOp,
         Torch_AtenTOp,
         Torch_AtenT_Op,
         Torch_AtenTakeOp,
+        Torch_AtenTanFloatOp,
+        Torch_AtenTanIntOp,
         Torch_AtenTanOp,
         Torch_AtenTan_Op,
         Torch_AtenTanhBackwardGradInputOp,
         Torch_AtenTanhBackwardOp,
+        Torch_AtenTanhFloatOp,
+        Torch_AtenTanhIntOp,
         Torch_AtenTanhOp,
         Torch_AtenTanh_Op,
         Torch_AtenTraceOp,
+        Torch_AtenTransposeCopyIntOp,
+        Torch_AtenTransposeIntOp,
+        Torch_AtenTranspose_Op,
+        Torch_AtenTrilOp,
+        Torch_AtenTril_Op,
+        Torch_AtenTriuOp,
+        Torch_AtenTriu_Op,
         Torch_AtenTrueDivideTensorOp,
         Torch_AtenTrueDivide_TensorOp,
         Torch_AtenTruncOp,
         Torch_AtenTrunc_Op,
+        Torch_AtenUnfoldCopyOp,
+        Torch_AtenUnfoldOp,
+        Torch_AtenUnsqueezeCopyOp,
+        Torch_AtenUnsqueezeOp,
+        Torch_AtenUnsqueeze_Op,
         Torch_AtenVdotOp,
         Torch_AtenViewAsComplexOp,
         Torch_AtenViewAsRealOp,
+        Torch_AtenViewCopyDtypeOp,
+        Torch_AtenViewDtypeOp,
         Torch_AtenWhereSelfOp,
         Torch_AtenXlogyOuttensorOp,
         Torch_AtenXlogyTensorOp,
@@ -4789,8 +7014,13 @@ TorchDialect = Dialect(
         Torch_AtenZero_Op,
         Torch_Aten_AdaptiveAvgPool2DBackwardOp,
         Torch_Aten_AdaptiveAvgPool3DBackwardOp,
+        Torch_Aten_And_IntOp,
         Torch_Aten_And_TensorOp,
         Torch_Aten_AssertAsyncOp,
+        Torch_Aten_CdistBackwardOp,
+        Torch_Aten_ConvertWeightToInt4PackForCpuOp,
+        Torch_Aten_ConvertWeightToInt4PackOp,
+        Torch_Aten_EmbeddingBagPerSampleWeightsBackwardOp,
         Torch_Aten_EuclideanDistOp,
         Torch_Aten_Iand_TensorOp,
         Torch_Aten_Ilshift_TensorOp,
@@ -4801,16 +7031,29 @@ TorchDialect = Dialect(
         Torch_Aten_LinalgDetOp,
         Torch_Aten_LinalgEigvalsOp,
         Torch_Aten_LinalgSlogdetOp,
+        Torch_Aten_LogSoftmaxBackwardDataOp,
+        Torch_Aten_Lshift_IntOp,
         Torch_Aten_Lshift_TensorOp,
+        Torch_Aten_MaskedScaleOp,
         Torch_Aten_NestedViewFromBufferCopyOp,
         Torch_Aten_NestedViewFromBufferOp,
+        Torch_Aten_Or_IntOp,
         Torch_Aten_Or_TensorOp,
+        Torch_Aten_PdistBackwardOp,
+        Torch_Aten_PdistForwardOp,
         Torch_Aten_PreluKernelBackwardOp,
         Torch_Aten_PreluKernelOp,
+        Torch_Aten_Rshift_IntOp,
         Torch_Aten_Rshift_TensorOp,
+        Torch_Aten_SoftmaxBackwardDataOp,
+        Torch_Aten_WeightInt4PackMmForCpuOp,
+        Torch_Aten_WeightInt4PackMmOp,
         Torch_Aten_WeightInt8PackMmOp,
+        Torch_Aten_WeightNormInterfaceOp,
+        Torch_Aten_Xor_IntOp,
         Torch_Aten_Xor_TensorOp,
         Torch_InductorAccumulateGrad_Op,
+        Torch_InductorResizeStorageBytes_Op,
         Torch_PrimsAbsOp,
         Torch_PrimsAcosOp,
         Torch_PrimsAcoshOp,
@@ -4832,8 +7075,11 @@ TorchDialect = Dialect(
         Torch_PrimsBitwiseXorOp,
         Torch_PrimsCbrtOp,
         Torch_PrimsCeilOp,
+        Torch_PrimsCollapseOp,
+        Torch_PrimsCollapseViewOp,
         Torch_PrimsConjOp,
         Torch_PrimsConjPhysicalOp,
+        Torch_PrimsConvertElementTypeOp,
         Torch_PrimsCopyToOp,
         Torch_PrimsCosOp,
         Torch_PrimsCoshOp,
@@ -4887,16 +7133,19 @@ TorchDialect = Dialect(
         Torch_PrimsSinOp,
         Torch_PrimsSinhOp,
         Torch_PrimsSphericalBesselJ0Op,
+        Torch_PrimsSplitDimOp,
         Torch_PrimsSqrtOp,
         Torch_PrimsSubOp,
         Torch_PrimsTanOp,
         Torch_PrimsTanhOp,
         Torch_PrimsTruncOp,
+        Torch_PrimsViewOfDtypeOp,
         Torch_PrimsViewOfOp,
         Torch_PrimsWhereOp,
         Torch_PrimsZetaOp,
         Torch_Prims_MakeTokenOp,
         Torch_Profiler_RecordFunctionExitOp,
+        Torch_QuantizedHardswishOp,
     ],
     [],
 )
