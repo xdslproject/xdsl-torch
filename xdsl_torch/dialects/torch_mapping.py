@@ -41,7 +41,6 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten._linalg_eigvals.default: Torch_Aten_LinalgEigvalsOp,  # type: ignore
     torch.ops.aten._linalg_slogdet.default: Torch_Aten_LinalgSlogdetOp,  # type: ignore
     torch.ops.aten._linalg_solve_ex.default: Torch_Aten_LinalgSolveExOp,  # type: ignore
-    torch.ops.aten._linalg_solve_ex.result: Torch_Aten_LinalgSolveExResultOp,  # type: ignore
     torch.ops.aten._log_softmax.default: Torch_Aten_LogSoftmaxOp,  # type: ignore
     torch.ops.aten._log_softmax_backward_data.default: Torch_Aten_LogSoftmaxBackwardDataOp,  # type: ignore
     torch.ops.aten._masked_scale.default: Torch_Aten_MaskedScaleOp,  # type: ignore

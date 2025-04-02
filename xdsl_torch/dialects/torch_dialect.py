@@ -6320,27 +6320,6 @@ class Torch_Aten_LinalgSolveExOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_Aten_LinalgSolveExResultOp(IRDLOperation):
-    name = "torch.aten._linalg_solve_ex.result"
-    A = operand_def(BaseAttr(TensorType))
-    B = operand_def(BaseAttr(TensorType))
-    left = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
-    check_errors = operand_def(
-        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
-    )
-    result = operand_def(BaseAttr(TensorType))
-    LU = operand_def(BaseAttr(TensorType))
-    pivots = operand_def(BaseAttr(TensorType))
-    info = operand_def(BaseAttr(TensorType))
-    result = result_def(BaseAttr(TensorType))
-    LU = result_def(BaseAttr(TensorType))
-    pivots = result_def(BaseAttr(TensorType))
-    info = result_def(BaseAttr(TensorType))
-
-    assembly_format = "$A `,` $B `,` $left `,` $check_errors `,` $result `,` $LU `,` $pivots `,` $info attr-dict `:` type($A) `,` type($B) `,` type($left) `,` type($check_errors) `,` type($result) `,` type($LU) `,` type($pivots) `,` type($info) `->` type($result) `,` type($LU) `,` type($pivots) `,` type($info)"
-
-
-@irdl_op_definition
 class Torch_Aten_LogSoftmaxBackwardDataOp(IRDLOperation):
     name = "torch.aten._log_softmax_backward_data"
     grad_output = operand_def(BaseAttr(TensorType))
@@ -8231,7 +8210,6 @@ TorchDialect = Dialect(
         Torch_Aten_LinalgEigvalsOp,
         Torch_Aten_LinalgSlogdetOp,
         Torch_Aten_LinalgSolveExOp,
-        Torch_Aten_LinalgSolveExResultOp,
         Torch_Aten_LogSoftmaxBackwardDataOp,
         Torch_Aten_LogSoftmaxOp,
         Torch_Aten_Lshift_IntOp,
