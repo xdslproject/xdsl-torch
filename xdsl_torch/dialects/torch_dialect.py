@@ -2642,21 +2642,6 @@ class Torch_AtenKthvalueOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenKthvalueValuesOp(IRDLOperation):
-    name = "torch.aten.kthvalue.values"
-    self = operand_def(BaseAttr(TensorType))
-    k = operand_def(BaseAttr(IntegerType))
-    dim = operand_def(BaseAttr(IntegerType))
-    keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
-    values = operand_def(BaseAttr(TensorType))
-    indices = operand_def(BaseAttr(TensorType))
-    values = result_def(BaseAttr(TensorType))
-    indices = result_def(BaseAttr(TensorType))
-
-    assembly_format = "$self `,` $k `,` $dim `,` $keepdim `,` $values `,` $indices attr-dict `:` type($self) `,` type($k) `,` type($dim) `,` type($keepdim) `,` type($values) `,` type($indices) `->` type($values) `,` type($indices)"
-
-
-@irdl_op_definition
 class Torch_AtenLcmOp(IRDLOperation):
     name = "torch.aten.lcm"
     self = operand_def(BaseAttr(TensorType))
@@ -8019,7 +8004,6 @@ TorchDialect = Dialect(
         Torch_AtenIsneginfOp,
         Torch_AtenIsposinfOp,
         Torch_AtenKthvalueOp,
-        Torch_AtenKthvalueValuesOp,
         Torch_AtenLcmOp,
         Torch_AtenLcm_Op,
         Torch_AtenLeFloatIntOp,

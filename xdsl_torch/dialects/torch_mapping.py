@@ -314,7 +314,6 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.isneginf.default: Torch_AtenIsneginfOp,  # type: ignore
     torch.ops.aten.isposinf.default: Torch_AtenIsposinfOp,  # type: ignore
     torch.ops.aten.kthvalue.default: Torch_AtenKthvalueOp,  # type: ignore
-    torch.ops.aten.kthvalue.values: Torch_AtenKthvalueValuesOp,  # type: ignore
     torch.ops.aten.lcm.default: Torch_AtenLcmOp,  # type: ignore
     torch.ops.aten.lcm_.default: Torch_AtenLcm_Op,  # type: ignore
     torch.ops.aten.le.Tensor: Torch_AtenLeTensorOp,  # type: ignore

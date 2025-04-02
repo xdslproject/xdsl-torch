@@ -57,6 +57,7 @@ def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
     if full_op_name in [
         "torch.aten._linalg_slogdet.sign",
         "torch.aten._linalg_det.result",
+        "torch.aten.kthvalue.values",
     ]:
         # Ops have argument and return named the same way => we get an error
         return None, None
