@@ -2,10 +2,16 @@ import subprocess
 from typing import Any
 
 import torch
-from xdsl.dialects.builtin import AnyTensorTypeConstr, Float64Type, IntegerType
+from xdsl.dialects.builtin import (
+    AnyTensorTypeConstr,
+    Float64Type,
+    IntegerType,
+    Signedness,
+)
 from xdsl.irdl import (
     Attribute,
     BaseAttr,
+    EqAttrConstraint,
     GenericAttrConstraint,
     OpDef,
     OperandDef,
@@ -17,6 +23,7 @@ TORCH_TYPE_TO_ODS_TYPE: dict[str, GenericAttrConstraint[Attribute]] = {
     "Tensor": AnyTensorTypeConstr,
     "int": BaseAttr(IntegerType),
     "float": BaseAttr(Float64Type),
+    "bool": EqAttrConstraint(IntegerType(1, Signedness.UNSIGNED)),
 }
 
 preamble = """###
@@ -50,6 +57,16 @@ def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
     if full_op_name in [
         "torch.aten._linalg_slogdet.sign",
         "torch.aten._linalg_det.result",
+        "torch.aten.kthvalue.values",
+        "torch.aten.linalg_cholesky_ex.L",
+        "torch.aten.linalg_inv_ex.inverse",
+        "torch.aten.nanmedian.dim_values",
+        "torch.aten.median.dim_values",
+        "torch.aten.mode.values",
+        "torch.aten.sort.values",
+        "torch.aten.svd.U",
+        "torch.aten.topk.values",
+        "torch.aten._linalg_solve_ex.result",
     ]:
         # Ops have argument and return named the same way => we get an error
         return None, None
