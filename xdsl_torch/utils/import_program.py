@@ -12,6 +12,9 @@ from xdsl_torch.utils.type_mapping import TORCH_DTYPE_TO_XDSL_TYPE
 
 
 def literal_to_ssa(value: Any) -> tuple[str, SSAValue]:
+    """
+    Construct a ConstantOp for a scalar value.
+    """
     match value:
         case int():
             attr = IntegerAttr.from_int_and_width(value, 32)
@@ -34,24 +37,27 @@ def literal_to_ssa(value: Any) -> tuple[str, SSAValue]:
 def get_op_operands(
     node: torch.fx.Node, xdsl_nodes: dict[str, SSAValue]
 ) -> list[SSAValue]:
-    arguments: list[tuple[torch.Argument, Any]] = list(
+    """
+    Construct a list of operands for a target operation defined by `node`.
+    Constructs const ops for static arguments.
+    """
+    arguments: tuple[tuple[torch.Argument, Any], ...] = tuple(
         zip_longest(node.target._schema.arguments, node.args)  # type: ignore
     )
     operands: list[SSAValue] = []
 
     for arg_spec, arg_value in arguments:
         if type(arg_value) is torch.fx.Node:
-            if arg_value.name not in xdsl_nodes:
-                raise Exception(
-                    f"Node {arg_value.name} should have been processed before"
-                )
+            assert (
+                arg_value.name in xdsl_nodes
+            ), f"Node {arg_value.name} should have been processed before"
             operands.append(xdsl_nodes[arg_value.name])
 
         if arg_value is None:
-            if not (
-                arg_spec.has_default_value() and arg_spec.default_value is not None
-            ):
-                raise Exception("A non provided argument must have a default value")
+            assert (
+                arg_spec.has_default_value()
+            ), "A non provided argument must have a default value"
+            assert arg_spec.default_value is not None, "Inconsistency inside a spec"
             new_name, new_const = literal_to_ssa(arg_spec.default_value)
             xdsl_nodes[new_name] = new_const
             operands.append(new_const)
