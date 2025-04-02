@@ -604,7 +604,6 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.tanh_backward.grad_input: Torch_AtenTanhBackwardGradInputOp,  # type: ignore
     torch.ops.aten.to.prim_other: Torch_AtenToPrimOtherOp,  # type: ignore
     torch.ops.aten.topk.default: Torch_AtenTopkOp,  # type: ignore
-    torch.ops.aten.topk.values: Torch_AtenTopkValuesOp,  # type: ignore
     torch.ops.aten.trace.default: Torch_AtenTraceOp,  # type: ignore
     torch.ops.aten.transpose.int: Torch_AtenTransposeIntOp,  # type: ignore
     torch.ops.aten.transpose_.default: Torch_AtenTranspose_Op,  # type: ignore

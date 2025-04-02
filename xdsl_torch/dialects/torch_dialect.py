@@ -5664,22 +5664,6 @@ class Torch_AtenTopkOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenTopkValuesOp(IRDLOperation):
-    name = "torch.aten.topk.values"
-    self = operand_def(BaseAttr(TensorType))
-    k = operand_def(BaseAttr(IntegerType))
-    dim = operand_def(BaseAttr(IntegerType))
-    largest = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
-    sorted = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
-    values = operand_def(BaseAttr(TensorType))
-    indices = operand_def(BaseAttr(TensorType))
-    values = result_def(BaseAttr(TensorType))
-    indices = result_def(BaseAttr(TensorType))
-
-    assembly_format = "$self `,` $k `,` $dim `,` $largest `,` $sorted `,` $values `,` $indices attr-dict `:` type($self) `,` type($k) `,` type($dim) `,` type($largest) `,` type($sorted) `,` type($values) `,` type($indices) `->` type($values) `,` type($indices)"
-
-
-@irdl_op_definition
 class Torch_AtenTraceOp(IRDLOperation):
     name = "torch.aten.trace"
     self = operand_def(BaseAttr(TensorType))
@@ -8191,7 +8175,6 @@ TorchDialect = Dialect(
         Torch_AtenTanh_Op,
         Torch_AtenToPrimOtherOp,
         Torch_AtenTopkOp,
-        Torch_AtenTopkValuesOp,
         Torch_AtenTraceOp,
         Torch_AtenTransposeCopyIntOp,
         Torch_AtenTransposeIntOp,
