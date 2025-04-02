@@ -52,15 +52,20 @@ def get_op_operands(
                 arg_value.name in xdsl_nodes
             ), f"Node {arg_value.name} should have been processed before"
             operands.append(xdsl_nodes[arg_value.name])
+            continue
 
         if arg_value is None:
             assert (
                 arg_spec.has_default_value()
             ), "A non provided argument must have a default value"
             assert arg_spec.default_value is not None, "Inconsistency inside a spec"
-            new_name, new_const = literal_to_ssa(arg_spec.default_value)
-            xdsl_nodes[new_name] = new_const
-            operands.append(new_const)
+            value = arg_spec.default_value
+        else:
+            value = arg_value
+
+        new_name, new_const = literal_to_ssa(value)
+        xdsl_nodes[new_name] = new_const
+        operands.append(new_const)
 
     return operands
 
