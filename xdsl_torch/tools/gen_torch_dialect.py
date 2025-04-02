@@ -2,12 +2,21 @@ import subprocess
 from typing import Any
 
 import torch
-from xdsl.dialects.builtin import AnyTensorTypeConstr
-from xdsl.irdl import OpDef, OperandDef, ResultDef
+from xdsl.dialects.builtin import AnyTensorTypeConstr, Float64Type, IntegerType
+from xdsl.irdl import (
+    Attribute,
+    BaseAttr,
+    GenericAttrConstraint,
+    OpDef,
+    OperandDef,
+    ResultDef,
+)
 from xdsl.utils.dialect_codegen import dump_dialect_pyfile
 
-TORCH_TYPE_TO_ODS_TYPE = {
+TORCH_TYPE_TO_ODS_TYPE: dict[str, GenericAttrConstraint[Attribute]] = {
     "Tensor": AnyTensorTypeConstr,
+    "int": BaseAttr(IntegerType),
+    "float": BaseAttr(Float64Type),
 }
 
 preamble = """###
