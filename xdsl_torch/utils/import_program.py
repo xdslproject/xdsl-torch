@@ -79,7 +79,7 @@ def import_program(
         tensor_meta = all_producer_nodes[arg.arg.name].meta["tensor_meta"]
         return TensorType(
             TORCH_DTYPE_TO_XDSL_TYPE[tensor_meta.dtype],
-            tensor_meta.shape,  # type: ignore
+            tensor_meta.shape,
         )
 
     inp_sign = list(map(make_tensor_type, prog.graph_signature.input_specs))
@@ -105,7 +105,7 @@ def import_program(
                     operands=operands,
                     result_types=[
                         TensorType(
-                            TORCH_DTYPE_TO_XDSL_TYPE[node.meta["tensor_meta"].dtype],  # type: ignore
+                            TORCH_DTYPE_TO_XDSL_TYPE[node.meta["tensor_meta"].dtype],
                             node.meta["tensor_meta"].shape,
                         )
                     ],  # we currently think that everything returns a single tensor
