@@ -583,7 +583,6 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.sub.float_int: Torch_AtenSubFloatIntOp,  # type: ignore
     torch.ops.aten.sub.int: Torch_AtenSubIntOp,  # type: ignore
     torch.ops.aten.sub.int_float: Torch_AtenSubIntFloatOp,  # type: ignore
-    torch.ops.aten.svd.U: Torch_AtenSvdUOp,  # type: ignore
     torch.ops.aten.svd.default: Torch_AtenSvdOp,  # type: ignore
     torch.ops.aten.sym_numel.default: Torch_AtenSymNumelOp,  # type: ignore
     torch.ops.aten.sym_size.int: Torch_AtenSymSizeIntOp,  # type: ignore

@@ -5463,22 +5463,6 @@ class Torch_AtenSvdOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenSvdUOp(IRDLOperation):
-    name = "torch.aten.svd.U"
-    self = operand_def(BaseAttr(TensorType))
-    some = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
-    compute_uv = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
-    U = operand_def(BaseAttr(TensorType))
-    S = operand_def(BaseAttr(TensorType))
-    V = operand_def(BaseAttr(TensorType))
-    U = result_def(BaseAttr(TensorType))
-    S = result_def(BaseAttr(TensorType))
-    V = result_def(BaseAttr(TensorType))
-
-    assembly_format = "$self `,` $some `,` $compute_uv `,` $U `,` $S `,` $V attr-dict `:` type($self) `,` type($some) `,` type($compute_uv) `,` type($U) `,` type($S) `,` type($V) `->` type($U) `,` type($S) `,` type($V)"
-
-
-@irdl_op_definition
 class Torch_AtenSymNumelOp(IRDLOperation):
     name = "torch.aten.sym_numel"
     self = operand_def(BaseAttr(TensorType))
@@ -8187,7 +8171,6 @@ TorchDialect = Dialect(
         Torch_AtenSubIntFloatOp,
         Torch_AtenSubIntOp,
         Torch_AtenSvdOp,
-        Torch_AtenSvdUOp,
         Torch_AtenSymNumelOp,
         Torch_AtenSymSizeIntOp,
         Torch_AtenSymStorageOffsetOp,
