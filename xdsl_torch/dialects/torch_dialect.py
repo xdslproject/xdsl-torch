@@ -2919,21 +2919,6 @@ class Torch_AtenLinalgHouseholderProductOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenLinalgInvExInverseOp(IRDLOperation):
-    name = "torch.aten.linalg_inv_ex.inverse"
-    A = operand_def(BaseAttr(TensorType))
-    check_errors = operand_def(
-        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
-    )
-    inverse = operand_def(BaseAttr(TensorType))
-    info = operand_def(BaseAttr(TensorType))
-    inverse = result_def(BaseAttr(TensorType))
-    info = result_def(BaseAttr(TensorType))
-
-    assembly_format = "$A `,` $check_errors `,` $inverse `,` $info attr-dict `:` type($A) `,` type($check_errors) `,` type($inverse) `,` type($info) `->` type($inverse) `,` type($info)"
-
-
-@irdl_op_definition
 class Torch_AtenLinalgInvExOp(IRDLOperation):
     name = "torch.aten.linalg_inv_ex"
     A = operand_def(BaseAttr(TensorType))
@@ -8014,7 +7999,6 @@ TorchDialect = Dialect(
         Torch_AtenLinalgEigOp,
         Torch_AtenLinalgEigvalsOp,
         Torch_AtenLinalgHouseholderProductOp,
-        Torch_AtenLinalgInvExInverseOp,
         Torch_AtenLinalgInvExOp,
         Torch_AtenLinalgLdlFactorExOp,
         Torch_AtenLinalgLdlSolveOp,

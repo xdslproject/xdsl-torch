@@ -59,6 +59,7 @@ def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
         "torch.aten._linalg_det.result",
         "torch.aten.kthvalue.values",
         "torch.aten.linalg_cholesky_ex.L",
+        "torch.aten.linalg_inv_ex.inverse",
     ]:
         # Ops have argument and return named the same way => we get an error
         return None, None

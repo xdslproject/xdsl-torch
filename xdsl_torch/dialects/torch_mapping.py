@@ -341,7 +341,6 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.linalg_eigvals.default: Torch_AtenLinalgEigvalsOp,  # type: ignore
     torch.ops.aten.linalg_householder_product.default: Torch_AtenLinalgHouseholderProductOp,  # type: ignore
     torch.ops.aten.linalg_inv_ex.default: Torch_AtenLinalgInvExOp,  # type: ignore
-    torch.ops.aten.linalg_inv_ex.inverse: Torch_AtenLinalgInvExInverseOp,  # type: ignore
     torch.ops.aten.linalg_ldl_factor_ex.default: Torch_AtenLinalgLdlFactorExOp,  # type: ignore
     torch.ops.aten.linalg_ldl_solve.default: Torch_AtenLinalgLdlSolveOp,  # type: ignore
     torch.ops.aten.linalg_lu.default: Torch_AtenLinalgLuOp,  # type: ignore
