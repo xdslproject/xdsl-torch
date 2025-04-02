@@ -15,6 +15,7 @@ from xdsl.irdl import (
     GenericAttrConstraint,
     OpDef,
     OperandDef,
+    OptOperandDef,
     ResultDef,
 )
 from xdsl.utils.dialect_codegen import dump_dialect_pyfile
@@ -48,6 +49,11 @@ def format_name(name: str):
     return new_name
 
 
+def get_operand(operand_type: str) -> OperandDef:
+    def_func = OptOperandDef if "?" in operand_type else OperandDef
+    return def_func(TORCH_TYPE_TO_ODS_TYPE[operand_type.strip("?")])
+
+
 def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
     full_op_name = f"torch.{ns}.{op_name}{'.' if overload_name else ''}{overload_name}"
     if "out" in full_op_name:
@@ -76,12 +82,16 @@ def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
     )
 
     # Parse arguments
-    if any(str(arg.type) not in TORCH_TYPE_TO_ODS_TYPE for arg in schema.arguments):
+    for arg in schema.arguments:
+        if "?" in str(arg.type):
+            print(arg.type)
+            raise Exception()
+    if any(
+        arg_type not in TORCH_TYPE_TO_ODS_TYPE
+        for arg_type in [str(arg.type).strip("?") for arg in schema.arguments]
+    ):
         return None, None
-    operands = [
-        (arg.name, OperandDef(TORCH_TYPE_TO_ODS_TYPE[str(arg.type)]))
-        for arg in schema.arguments
-    ]
+    operands = [(arg.name, get_operand(str(arg.type))) for arg in schema.arguments]
 
     # Parse results
     if any(str(out.type) not in TORCH_TYPE_TO_ODS_TYPE for out in schema.returns):
