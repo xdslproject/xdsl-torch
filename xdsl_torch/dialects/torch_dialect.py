@@ -4939,20 +4939,6 @@ class Torch_AtenSortOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenSortValuesOp(IRDLOperation):
-    name = "torch.aten.sort.values"
-    self = operand_def(BaseAttr(TensorType))
-    dim = operand_def(BaseAttr(IntegerType))
-    descending = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
-    values = operand_def(BaseAttr(TensorType))
-    indices = operand_def(BaseAttr(TensorType))
-    values = result_def(BaseAttr(TensorType))
-    indices = result_def(BaseAttr(TensorType))
-
-    assembly_format = "$self `,` $dim `,` $descending `,` $values `,` $indices attr-dict `:` type($self) `,` type($dim) `,` type($descending) `,` type($values) `,` type($indices) `->` type($values) `,` type($indices)"
-
-
-@irdl_op_definition
 class Torch_AtenSparseDimOp(IRDLOperation):
     name = "torch.aten.sparse_dim"
     self = operand_def(BaseAttr(TensorType))
@@ -8147,7 +8133,6 @@ TorchDialect = Dialect(
         Torch_AtenSoftMarginLossBackwardOp,
         Torch_AtenSoftMarginLossOp,
         Torch_AtenSortOp,
-        Torch_AtenSortValuesOp,
         Torch_AtenSparseDimOp,
         Torch_AtenSpecialAiryAiOp,
         Torch_AtenSpecialBesselJ0Op,

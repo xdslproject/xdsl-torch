@@ -530,7 +530,6 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.soft_margin_loss_backward.default: Torch_AtenSoftMarginLossBackwardOp,  # type: ignore
     torch.ops.aten.soft_margin_loss_backward.grad_input: Torch_AtenSoftMarginLossBackwardGradInputOp,  # type: ignore
     torch.ops.aten.sort.default: Torch_AtenSortOp,  # type: ignore
-    torch.ops.aten.sort.values: Torch_AtenSortValuesOp,  # type: ignore
     torch.ops.aten.sparse_dim.default: Torch_AtenSparseDimOp,  # type: ignore
     torch.ops.aten.special_airy_ai.default: Torch_AtenSpecialAiryAiOp,  # type: ignore
     torch.ops.aten.special_bessel_j0.default: Torch_AtenSpecialBesselJ0Op,  # type: ignore
