@@ -1,7 +1,7 @@
 import torch
 from xdsl.dialects.builtin import f64
 
-from xdsl_torch.dialects.torch_dialect import Torch_AtenMulTensorOp
+from xdsl_torch.dialects.torch_generated_ops import Torch_AtenMulTensorOp
 from xdsl_torch.dialects.torch_mapping import REVERSE_XDSL_TORCH_OPS, XDSL_TORCH_OPS
 from xdsl_torch.utils.type_mapping import TORCH_DTYPE_TO_XDSL_TYPE
 
