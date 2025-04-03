@@ -62,3 +62,6 @@ python_files = ["tests/*test_*.py", "docs/*test_*.py"]
 python_classes = "Test_*"
 python_functions = "test_*"
 addopts = ["--durations=20", "--maxfail=5"]
+
+[tool.uv.sources]
+xdsl = { git = "https://github.com/xdslproject/xdsl", rev = "ad947b1cd767a212e117c84bb221df8a285d9466" }
