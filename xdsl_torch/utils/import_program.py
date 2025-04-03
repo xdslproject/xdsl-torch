@@ -35,7 +35,7 @@ def create_constant_op_with_value(value: Any) -> tuple[str, arith.ConstantOp]:
     return new_name, new_const
 
 
-def get_op_operands(
+def create_op_operands(
     node: torch.fx.Node, xdsl_nodes: dict[str, SSAValue], builder: Builder
 ) -> list[SSAValue]:
     """
@@ -113,7 +113,7 @@ def import_program(
                 raise NotImplementedError(
                     f"Unimplemented: target={node.target}, {node.meta}"
                 )
-            operands = get_op_operands(node, xdsl_nodes, builder)
+            operands = create_op_operands(node, xdsl_nodes, builder)
             new_op = XDSL_TORCH_OPS[node.target](
                 operands=operands,
                 result_types=[
