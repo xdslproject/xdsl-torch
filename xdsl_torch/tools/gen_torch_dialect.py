@@ -13,10 +13,12 @@ from xdsl.irdl import (
     BaseAttr,
     EqAttrConstraint,
     GenericAttrConstraint,
+    IRDLOption,
     OpDef,
     OperandDef,
     OptOperandDef,
     ResultDef,
+    SameVariadicOperandSize,
 )
 from xdsl.utils.dialect_codegen import dump_dialect_pyfile
 
@@ -55,7 +57,7 @@ def get_base_type(type_str: str) -> str:
     return type_str
 
 
-def get_operand_def(type_str: str) -> OperandDef:
+def get_operand_def(type_str: str) -> OperandDef | OptOperandDef:
     def_func = OptOperandDef if "Optional" in type_str else OperandDef
     return def_func(TORCH_TYPE_TO_ODS_TYPE[get_base_type(type_str)])
 
@@ -79,6 +81,7 @@ def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
         "torch.aten.svd.U",
         "torch.aten.topk.values",
         "torch.aten._linalg_solve_ex.result",
+        "torch.aten.sort.values_stable",
     ]:
         # Ops have argument and return named the same way => we get an error
         return None, None
@@ -124,8 +127,17 @@ def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
         + (" `->` " + outs_types_asm if results_names else "")
     )
 
+    num_optional_operands = sum([type(op[1]) is OptOperandDef for op in operands])
+    options: list[IRDLOption] = (
+        [SameVariadicOperandSize()] if num_optional_operands > 1 else []
+    )
+
     op_def = OpDef(
-        name=full_op_name, operands=operands, results=results, assembly_format=asm
+        name=full_op_name,
+        operands=operands,
+        results=results,
+        assembly_format=asm,
+        options=options,
     )
 
     return class_name, op_def
