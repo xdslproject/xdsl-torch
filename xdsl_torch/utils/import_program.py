@@ -2,16 +2,17 @@ from itertools import zip_longest
 from typing import Any
 
 import torch
-from xdsl.builder import ImplicitBuilder
+from xdsl.builder import Builder
 from xdsl.dialects import arith, func
 from xdsl.dialects.builtin import BoolAttr, FloatAttr, IntegerAttr, TensorType
 from xdsl.ir import SSAValue
+from xdsl.rewriter import InsertPoint
 
 from xdsl_torch.dialects.torch_mapping import XDSL_TORCH_OPS
 from xdsl_torch.utils.type_mapping import TORCH_DTYPE_TO_XDSL_TYPE
 
 
-def literal_to_ssa(value: Any) -> tuple[str, SSAValue]:
+def create_constant_op_with_value(value: Any) -> tuple[str, arith.ConstantOp]:
     """
     Construct a ConstantOp for a scalar value.
     """
@@ -31,11 +32,11 @@ def literal_to_ssa(value: Any) -> tuple[str, SSAValue]:
     new_name = f"{type(value).__name__}{value}"
     new_const.result.name_hint = new_name
 
-    return new_name, new_const.result
+    return new_name, new_const
 
 
 def get_op_operands(
-    node: torch.fx.Node, xdsl_nodes: dict[str, SSAValue]
+    node: torch.fx.Node, xdsl_nodes: dict[str, SSAValue], builder: Builder
 ) -> list[SSAValue]:
     """
     Construct a list of operands for a target operation defined by `node`.
@@ -63,9 +64,10 @@ def get_op_operands(
         else:
             value = arg_value
 
-        new_name, new_const = literal_to_ssa(value)
-        xdsl_nodes[new_name] = new_const
-        operands.append(new_const)
+        new_name, new_const = create_constant_op_with_value(value)
+        xdsl_nodes[new_name] = new_const.result
+        operands.append(new_const.result)
+        builder.insert(new_const)
 
     return operands
 
@@ -98,36 +100,39 @@ def import_program(
 
     # Build a FuncOp
     func_op = func.FuncOp(func_name, (inp_sign, out_sign))
+    builder = Builder(InsertPoint.at_end(func_op.body.block))
 
-    with ImplicitBuilder(func_op.body) as args:
-        xdsl_nodes: dict[str, SSAValue] = {}
-        for i, original_arg in enumerate(prog.graph_signature.input_specs):
-            args[i].name_hint = original_arg.arg.name
-            xdsl_nodes[original_arg.arg.name] = args[i]
+    xdsl_nodes: dict[str, SSAValue] = {}
+    for i, original_arg in enumerate(prog.graph_signature.input_specs):
+        func_op.args[i].name_hint = original_arg.arg.name
+        xdsl_nodes[original_arg.arg.name] = func_op.args[i]
 
-        for node in prog.graph.nodes:
-            if node.op == "call_function":
-                if node.target not in XDSL_TORCH_OPS:
-                    raise NotImplementedError(
-                        f"Unimplemented: target={node.target}, {node.meta}"
-                    )
-                operands = get_op_operands(node, xdsl_nodes)
-                new_op = XDSL_TORCH_OPS[node.target](
-                    operands=operands,
-                    result_types=[
-                        TensorType(
-                            TORCH_DTYPE_TO_XDSL_TYPE[node.meta["tensor_meta"].dtype],
-                            node.meta["tensor_meta"].shape,
-                        )
-                    ],  # we currently think that everything returns a single tensor
+    for node in prog.graph.nodes:
+        if node.op == "call_function":
+            if node.target not in XDSL_TORCH_OPS:
+                raise NotImplementedError(
+                    f"Unimplemented: target={node.target}, {node.meta}"
                 )
-                new_op.result.name_hint = node.name
-                xdsl_nodes[node.name] = new_op
+            operands = get_op_operands(node, xdsl_nodes, builder)
+            new_op = XDSL_TORCH_OPS[node.target](
+                operands=operands,
+                result_types=[
+                    TensorType(
+                        TORCH_DTYPE_TO_XDSL_TYPE[node.meta["tensor_meta"].dtype],
+                        node.meta["tensor_meta"].shape,
+                    )
+                ],  # we currently think that everything returns a single tensor
+            )
+            builder.insert(new_op)
+            new_op.result.name_hint = node.name
+            xdsl_nodes[node.name] = new_op
+    builder.insert(
         func.ReturnOp(
             *[
                 xdsl_nodes[out_node.arg.name]
                 for out_node in prog.graph_signature.output_specs
             ]
         )
+    )
 
     return func_op
