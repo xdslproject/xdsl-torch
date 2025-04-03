@@ -5,7 +5,14 @@ from typing import Any
 import torch
 from xdsl.builder import Builder
 from xdsl.dialects import arith, func
-from xdsl.dialects.builtin import BoolAttr, FloatAttr, IntegerAttr, NoneType, TensorType
+from xdsl.dialects.builtin import (
+    BoolAttr,
+    FloatAttr,
+    IntegerAttr,
+    NoneType,
+    TensorType,
+    VectorType,
+)
 from xdsl.ir import SSAValue
 from xdsl.rewriter import InsertPoint
 
@@ -84,7 +91,8 @@ def create_op_operands(
                 elements.append(new_const.result)
             new_name = "list"
             new_const = Torch_PrimListConstructOp(
-                operands=[elements], result_types=[elements[0].type]
+                operands=[elements],
+                result_types=[VectorType(elements[0].type, [len(elements)])],
             )
         else:
             new_name, new_const = create_constant_op_with_value(value)
