@@ -17,12 +17,12 @@ def create_constant_op_with_value(value: Any) -> tuple[str, arith.ConstantOp]:
     Construct a ConstantOp for a scalar value.
     """
     match value:
+        case bool():
+            attr = BoolAttr.from_bool(value)
         case int():
             attr = IntegerAttr.from_int_and_width(value, 32)
         case float():
             attr = FloatAttr(value, 32)
-        case bool():
-            attr = BoolAttr.from_bool(value)
         case _:
             raise NotImplementedError(
                 f"Default values not implemented for type {type(value)}"

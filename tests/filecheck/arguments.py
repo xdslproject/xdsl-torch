@@ -49,6 +49,6 @@ exported_program: torch.export.ExportedProgram = export(
 
 # CHECK:        %float3.0 = arith.constant 3.000000e+00 : f32
 # CHECK-NEXT:   %float0.1 = arith.constant 1.000000e-01 : f32
-# CHECK-NEXT:   %boolTrue = arith.constant True : i32
-# CHECK-NEXT:   %pairwise_distance = torch.aten.pairwise_distance %x, %y, %float3.0, %float0.1, %boolTrue : tensor<10xf32>, tensor<10xf32>, f32, f32, i32 -> tensor<1xf32>
+# CHECK-NEXT:   %boolTrue = arith.constant true
+# CHECK-NEXT:   %pairwise_distance = torch.aten.pairwise_distance %x, %y, %float3.0, %float0.1, %boolTrue : tensor<10xf32>, tensor<10xf32>, f32, f32, i1 -> tensor<1xf32>
 print(import_program(exported_program))
