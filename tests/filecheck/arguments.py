@@ -67,3 +67,28 @@ exported_program: torch.export.ExportedProgram = export(
 # CHECK-NEXT:  %boolTrue = arith.constant true
 # CHECK-NEXT:  %argmin = torch.aten.argmin %x, %none, %boolTrue : tensor<10xf32>, none, i1 -> tensor<1xi64>
 print(import_program(exported_program))
+
+
+class AvgPool(torch.nn.Module):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return torch.nn.AvgPool2d(3)(x)
+
+
+exported_program: torch.export.ExportedProgram = export(
+    AvgPool(), args=(torch.randn(1, 16, 50, 100),)
+)
+
+# CHECK:        %int3 = arith.constant 3 : i32
+# CHECK-NEXT:   %int3_1 = arith.constant 3 : i32
+# CHECK-NEXT:   %0 = torch.prim.ListConstruct %int3, %int3_1 : (i32, i32) -> i32
+# CHECK-NEXT:   %int3_2 = arith.constant 3 : i32
+# CHECK-NEXT:   %int3_3 = arith.constant 3 : i32
+# CHECK-NEXT:   %1 = torch.prim.ListConstruct %int3_2, %int3_3 : (i32, i32) -> i32
+# CHECK-NEXT:   %int0 = arith.constant 0 : i32
+# CHECK-NEXT:   %int0_1 = arith.constant 0 : i32
+# CHECK-NEXT:   %2 = torch.prim.ListConstruct %int0, %int0_1 : (i32, i32) -> i32
+# CHECK-NEXT:   %boolFalse = arith.constant false
+# CHECK-NEXT:   %boolTrue = arith.constant true
+# CHECK-NEXT:   %none = torch.constant.none
+# CHECK-NEXT:   %avg_pool2d = torch.aten.avg_pool2d %x, %0, %1, %2, %boolFalse, %boolTrue, %none : tensor<1x16x50x100xf32>, i32, i32, i32, i1, i1, none -> tensor<1x16x16x33xf32>
+print(import_program(exported_program))
