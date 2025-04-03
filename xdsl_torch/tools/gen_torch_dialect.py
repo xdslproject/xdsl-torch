@@ -163,7 +163,7 @@ def create_op_class_mapping_file(op_class_mapping: dict[str, str]) -> str:
     imports = """
 from typing import Dict, Any
 import torch
-from xdsl_torch.dialects.torch_dialect import *
+from xdsl_torch.dialects.torch_generated_ops import *
     """
     dict_strings = [
         f"{torch_class}: {xdsl_class},  # type: ignore"
@@ -199,7 +199,7 @@ REVERSE_XDSL_TORCH_OPS = {
 ops, op_class_mapping = generate_ops()
 ops.sort(key=lambda x: x[0])
 
-with open("xdsl_torch/dialects/torch_dialect.py", "w+") as f:
+with open("xdsl_torch/dialects/torch_generated_ops.py", "w+") as f:
     print(preamble, file=f)
     dump_dialect_pyfile("torch", ops, out=f)  # type: ignore
 

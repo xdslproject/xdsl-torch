@@ -5,7 +5,7 @@
 
 from typing import Dict, Any
 import torch
-from xdsl_torch.dialects.torch_dialect import *
+from xdsl_torch.dialects.torch_generated_ops import *
 
 XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.__and__.Tensor: Torch_Aten_And_TensorOp,  # type: ignore

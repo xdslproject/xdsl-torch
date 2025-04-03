@@ -35,7 +35,7 @@ reportImportCycles = false
 typeCheckingMode = "strict"
 include = ["xdsl_torch"]
 "ignore" = [
-    "xdsl_torch/dialects/torch_dialect.py",
+    "xdsl_torch/dialects/torch_generated_ops.py",
     "xdsl_torch/dialects/torch_mapping.py"
 ]
 
@@ -54,7 +54,7 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "**/filecheck/*" = ["F811", "F841", "E501"]
-"**/torch_dialect.py" = ["ALL"]
+"**/torch_generated_ops.py" = ["ALL"]
 "**/torch_mapping.py" = ["ALL"]
 
 [tool.pytest.ini_options]
