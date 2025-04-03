@@ -28,7 +28,7 @@ def create_constant_op_with_value(value: Any) -> tuple[str, arith.ConstantOp]:
                 f"Default values not implemented for type {type(value)}"
             )
 
-    new_const = arith.ConstantOp(attr, attr.get_type())
+    new_const = arith.ConstantOp(attr)
     new_name = f"{type(value).__name__}{value}"
     new_const.result.name_hint = new_name
 
