@@ -14062,6 +14062,17 @@ class Torch_ConstantNoneOp(IRDLOperation):
     assembly_format = "attr-dict"
 
 
+@irdl_op_definition
+class Torch_PrimListConstructOp(IRDLOperation):
+    name = "torch.prim.ListConstruct"
+    elements = var_operand_def(AnyAttr())
+    result = result_def(ContainerOf(elem_constr=AnyAttr()))
+
+    traits = traits_def(Pure())
+
+    assembly_format = "$elements attr-dict `:` functional-type($elements, $result)"
+
+
 TorchDialect = Dialect(
     "torch",
     [
@@ -15098,6 +15109,7 @@ TorchDialect = Dialect(
         Torch_QuantizedInstanceNormOp,
         Torch_QuantizedLayerNormOp,
         Torch_ConstantNoneOp,
+        Torch_PrimListConstructOp,
     ],
     [],
 )

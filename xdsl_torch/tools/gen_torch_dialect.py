@@ -11,6 +11,7 @@ from xdsl.dialects.builtin import (
     Signedness,
 )
 from xdsl.irdl import (
+    AnyAttr,
     Attribute,
     BaseAttr,
     EqAttrConstraint,
@@ -21,6 +22,7 @@ from xdsl.irdl import (
     OptOperandDef,
     ResultDef,
     SameVariadicOperandSize,
+    VarOperandDef,
     traits_def,
 )
 from xdsl.traits import (
@@ -55,6 +57,16 @@ custom_ops = [
             results=[("result", ResultDef(EqAttrConstraint(NoneType())))],
             traits=traits_def(ConstantLike(), Pure()),
             assembly_format="attr-dict",
+        ),
+    ),
+    (
+        "Torch_PrimListConstructOp",
+        OpDef(
+            name="torch.prim.ListConstruct",
+            operands=[("elements", VarOperandDef(AnyAttr()))],
+            results=[("result", ResultDef(ContainerOf(AnyAttr())))],
+            traits=traits_def(Pure()),
+            assembly_format="$elements attr-dict `:` functional-type($elements, $result)",  # noqa: E501
         ),
     ),
 ]
