@@ -7,6 +7,7 @@ from xdsl.dialects.builtin import (
     ContainerOf,
     Float64Type,
     IntegerType,
+    NoneType,
     Signedness,
 )
 from xdsl.irdl import (
@@ -20,6 +21,11 @@ from xdsl.irdl import (
     OptOperandDef,
     ResultDef,
     SameVariadicOperandSize,
+    traits_def,
+)
+from xdsl.traits import (
+    ConstantLike,
+    Pure,
 )
 from xdsl.utils.dialect_codegen import dump_dialect_pyfile
 
@@ -39,6 +45,20 @@ preamble = """###
 # Please don't edit it manually!
 ###
 """
+
+### These ops will live in a separate file
+custom_ops = [
+    (
+        "Torch_ConstantNoneOp",
+        OpDef(
+            name="torch.constant.none",
+            results=[("result", ResultDef(EqAttrConstraint(NoneType())))],
+            traits=traits_def(ConstantLike(), Pure()),
+            assembly_format="attr-dict",
+        ),
+    ),
+]
+###
 
 
 def format_name(name: str):
@@ -206,7 +226,7 @@ ops.sort(key=lambda x: x[0])
 
 with open("xdsl_torch/dialects/torch_dialect.py", "w+") as f:
     print(preamble, file=f)
-    dump_dialect_pyfile("torch", ops, out=f)  # type: ignore
+    dump_dialect_pyfile("torch", ops + custom_ops, out=f)  # type: ignore
 
 with open("xdsl_torch/dialects/torch_mapping.py", "w+") as f:
     print(preamble, file=f)
