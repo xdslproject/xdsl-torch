@@ -52,3 +52,18 @@ exported_program: torch.export.ExportedProgram = export(
 # CHECK-NEXT:   %boolTrue = arith.constant true
 # CHECK-NEXT:   %pairwise_distance = torch.aten.pairwise_distance %x, %y, %float3.0, %float0.1, %boolTrue : tensor<10xf32>, tensor<10xf32>, f32, f32, i1 -> tensor<1xf32>
 print(import_program(exported_program))
+
+
+class ArgMin(torch.nn.Module):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return torch.argmin(x, keepdim=True)
+
+
+exported_program: torch.export.ExportedProgram = export(
+    ArgMin(), args=(torch.randn(10),)
+)
+
+# CHECK:       %none = torch.constant.none
+# CHECK-NEXT:  %boolTrue = arith.constant true
+# CHECK-NEXT:  %argmin = torch.aten.argmin %x, %none, %boolTrue : tensor<10xf32>, none, i1 -> tensor<1xi64>
+print(import_program(exported_program))

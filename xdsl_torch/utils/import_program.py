@@ -4,18 +4,26 @@ from typing import Any
 import torch
 from xdsl.builder import Builder
 from xdsl.dialects import arith, func
-from xdsl.dialects.builtin import BoolAttr, FloatAttr, IntegerAttr, TensorType
+from xdsl.dialects.builtin import BoolAttr, FloatAttr, IntegerAttr, NoneType, TensorType
 from xdsl.ir import SSAValue
 from xdsl.rewriter import InsertPoint
 
+from xdsl_torch.dialects.torch_dialect import Torch_ConstantNoneOp
 from xdsl_torch.dialects.torch_mapping import XDSL_TORCH_OPS
 from xdsl_torch.utils.type_mapping import TORCH_DTYPE_TO_XDSL_TYPE
 
 
-def create_constant_op_with_value(value: Any) -> tuple[str, arith.ConstantOp]:
+def create_constant_op_with_value(
+    value: Any,
+) -> tuple[str, arith.ConstantOp | Torch_ConstantNoneOp]:
     """
     Construct a ConstantOp for a scalar value.
     """
+    if value is None:
+        new_const = Torch_ConstantNoneOp(result_types=[NoneType()])
+        new_const.result.name_hint = "none"
+        return "none", new_const
+
     match value:
         case bool():
             attr = BoolAttr.from_bool(value)
@@ -59,7 +67,6 @@ def create_op_operands(
             assert (
                 arg_spec.has_default_value()
             ), "A non provided argument must have a default value"
-            assert arg_spec.default_value is not None, "Inconsistency inside a spec"
             value = arg_spec.default_value
         else:
             value = arg_value
