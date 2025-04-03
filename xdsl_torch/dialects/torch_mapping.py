@@ -17,11 +17,13 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.__irshift__.Tensor: Torch_Aten_Irshift_TensorOp,  # type: ignore
     torch.ops.aten.__ixor__.Tensor: Torch_Aten_Ixor_TensorOp,  # type: ignore
     torch.ops.aten.__lshift__.Tensor: Torch_Aten_Lshift_TensorOp,  # type: ignore
+    torch.ops.aten.__lshift__.Tensor_out: Torch_Aten_Lshift_TensorOutOp,  # type: ignore
     torch.ops.aten.__lshift__.int: Torch_Aten_Lshift_IntOp,  # type: ignore
     torch.ops.aten.__or__.Tensor: Torch_Aten_Or_TensorOp,  # type: ignore
     torch.ops.aten.__or__.bool: Torch_Aten_Or_BoolOp,  # type: ignore
     torch.ops.aten.__or__.int: Torch_Aten_Or_IntOp,  # type: ignore
     torch.ops.aten.__rshift__.Tensor: Torch_Aten_Rshift_TensorOp,  # type: ignore
+    torch.ops.aten.__rshift__.Tensor_out: Torch_Aten_Rshift_TensorOutOp,  # type: ignore
     torch.ops.aten.__rshift__.int: Torch_Aten_Rshift_IntOp,  # type: ignore
     torch.ops.aten.__xor__.Tensor: Torch_Aten_Xor_TensorOp,  # type: ignore
     torch.ops.aten.__xor__.bool: Torch_Aten_Xor_BoolOp,  # type: ignore
@@ -58,6 +60,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten._flash_attention_forward.default: Torch_Aten_FlashAttentionForwardOp,  # type: ignore
     torch.ops.aten._fused_adam.default: Torch_Aten_FusedAdamOp,  # type: ignore
     torch.ops.aten._fused_adam.tensor_lr: Torch_Aten_FusedAdamTensorLrOp,  # type: ignore
+    torch.ops.aten._fused_adam.tensor_lr_out: Torch_Aten_FusedAdamTensorLrOutOp,  # type: ignore
     torch.ops.aten._fused_adam_.default: Torch_Aten_FusedAdam_Op,  # type: ignore
     torch.ops.aten._fused_adam_.tensor_lr: Torch_Aten_FusedAdam_TensorLrOp,  # type: ignore
     torch.ops.aten._fused_adamw_.default: Torch_Aten_FusedAdamw_Op,  # type: ignore
@@ -75,6 +78,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten._masked_scale.default: Torch_Aten_MaskedScaleOp,  # type: ignore
     torch.ops.aten._native_batch_norm_legit.default: Torch_Aten_NativeBatchNormLegitOp,  # type: ignore
     torch.ops.aten._native_batch_norm_legit.no_stats: Torch_Aten_NativeBatchNormLegitNoStatsOp,  # type: ignore
+    torch.ops.aten._native_batch_norm_legit.no_stats_out: Torch_Aten_NativeBatchNormLegitNoStatsOutOp,  # type: ignore
     torch.ops.aten._native_batch_norm_legit_functional.default: Torch_Aten_NativeBatchNormLegitFunctionalOp,  # type: ignore
     torch.ops.aten._native_batch_norm_legit_no_training.default: Torch_Aten_NativeBatchNormLegitNoTrainingOp,  # type: ignore
     torch.ops.aten._nested_view_from_buffer.default: Torch_Aten_NestedViewFromBufferOp,  # type: ignore
@@ -146,22 +150,27 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.affine_grid_generator.default: Torch_AtenAffineGridGeneratorOp,  # type: ignore
     torch.ops.aten.alias.default: Torch_AtenAliasOp,  # type: ignore
     torch.ops.aten.alias_copy.default: Torch_AtenAliasCopyOp,  # type: ignore
+    torch.ops.aten.all.all_out: Torch_AtenAllAllOutOp,  # type: ignore
     torch.ops.aten.all.bool: Torch_AtenAllBoolOp,  # type: ignore
     torch.ops.aten.all.default: Torch_AtenAllOp,  # type: ignore
     torch.ops.aten.all.dim: Torch_AtenAllDimOp,  # type: ignore
     torch.ops.aten.all.dims: Torch_AtenAllDimsOp,  # type: ignore
+    torch.ops.aten.all.dims_out: Torch_AtenAllDimsOutOp,  # type: ignore
     torch.ops.aten.all.float: Torch_AtenAllFloatOp,  # type: ignore
     torch.ops.aten.all.int: Torch_AtenAllIntOp,  # type: ignore
+    torch.ops.aten.alpha_dropout.default: Torch_AtenAlphaDropoutOp,  # type: ignore
     torch.ops.aten.amax.default: Torch_AtenAmaxOp,  # type: ignore
     torch.ops.aten.amin.default: Torch_AtenAminOp,  # type: ignore
     torch.ops.aten.aminmax.default: Torch_AtenAminmaxOp,  # type: ignore
     torch.ops.aten.angle.default: Torch_AtenAngleOp,  # type: ignore
     torch.ops.aten.angle.float: Torch_AtenAngleFloatOp,  # type: ignore
     torch.ops.aten.angle.int: Torch_AtenAngleIntOp,  # type: ignore
+    torch.ops.aten.any.all_out: Torch_AtenAnyAllOutOp,  # type: ignore
     torch.ops.aten.any.bool: Torch_AtenAnyBoolOp,  # type: ignore
     torch.ops.aten.any.default: Torch_AtenAnyOp,  # type: ignore
     torch.ops.aten.any.dim: Torch_AtenAnyDimOp,  # type: ignore
     torch.ops.aten.any.dims: Torch_AtenAnyDimsOp,  # type: ignore
+    torch.ops.aten.any.dims_out: Torch_AtenAnyDimsOutOp,  # type: ignore
     torch.ops.aten.any.float: Torch_AtenAnyFloatOp,  # type: ignore
     torch.ops.aten.any.int: Torch_AtenAnyIntOp,  # type: ignore
     torch.ops.aten.arccos.default: Torch_AtenArccosOp,  # type: ignore
@@ -218,21 +227,27 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.binary_cross_entropy_backward.grad_input: Torch_AtenBinaryCrossEntropyBackwardGradInputOp,  # type: ignore
     torch.ops.aten.binary_cross_entropy_with_logits.default: Torch_AtenBinaryCrossEntropyWithLogitsOp,  # type: ignore
     torch.ops.aten.bitwise_and.Tensor: Torch_AtenBitwiseAndTensorOp,  # type: ignore
+    torch.ops.aten.bitwise_and.Tensor_out: Torch_AtenBitwiseAndTensorOutOp,  # type: ignore
     torch.ops.aten.bitwise_and_.Tensor: Torch_AtenBitwiseAnd_TensorOp,  # type: ignore
     torch.ops.aten.bitwise_left_shift.Tensor: Torch_AtenBitwiseLeftShiftTensorOp,  # type: ignore
+    torch.ops.aten.bitwise_left_shift.Tensor_out: Torch_AtenBitwiseLeftShiftTensorOutOp,  # type: ignore
     torch.ops.aten.bitwise_left_shift_.Tensor: Torch_AtenBitwiseLeftShift_TensorOp,  # type: ignore
     torch.ops.aten.bitwise_not.default: Torch_AtenBitwiseNotOp,  # type: ignore
     torch.ops.aten.bitwise_not_.default: Torch_AtenBitwiseNot_Op,  # type: ignore
     torch.ops.aten.bitwise_or.Tensor: Torch_AtenBitwiseOrTensorOp,  # type: ignore
+    torch.ops.aten.bitwise_or.Tensor_out: Torch_AtenBitwiseOrTensorOutOp,  # type: ignore
     torch.ops.aten.bitwise_or_.Tensor: Torch_AtenBitwiseOr_TensorOp,  # type: ignore
     torch.ops.aten.bitwise_right_shift.Tensor: Torch_AtenBitwiseRightShiftTensorOp,  # type: ignore
+    torch.ops.aten.bitwise_right_shift.Tensor_out: Torch_AtenBitwiseRightShiftTensorOutOp,  # type: ignore
     torch.ops.aten.bitwise_right_shift_.Tensor: Torch_AtenBitwiseRightShift_TensorOp,  # type: ignore
     torch.ops.aten.bitwise_xor.Tensor: Torch_AtenBitwiseXorTensorOp,  # type: ignore
+    torch.ops.aten.bitwise_xor.Tensor_out: Torch_AtenBitwiseXorTensorOutOp,  # type: ignore
     torch.ops.aten.bitwise_xor_.Tensor: Torch_AtenBitwiseXor_TensorOp,  # type: ignore
     torch.ops.aten.block_diag.default: Torch_AtenBlockDiagOp,  # type: ignore
     torch.ops.aten.bmm.default: Torch_AtenBmmOp,  # type: ignore
     torch.ops.aten.broadcast_tensors.default: Torch_AtenBroadcastTensorsOp,  # type: ignore
     torch.ops.aten.bucketize.Tensor: Torch_AtenBucketizeTensorOp,  # type: ignore
+    torch.ops.aten.bucketize.Tensor_out: Torch_AtenBucketizeTensorOutOp,  # type: ignore
     torch.ops.aten.cat.default: Torch_AtenCatOp,  # type: ignore
     torch.ops.aten.ceil.default: Torch_AtenCeilOp,  # type: ignore
     torch.ops.aten.ceil.float: Torch_AtenCeilFloatOp,  # type: ignore
@@ -243,12 +258,16 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.cholesky_inverse.default: Torch_AtenCholeskyInverseOp,  # type: ignore
     torch.ops.aten.cholesky_solve.default: Torch_AtenCholeskySolveOp,  # type: ignore
     torch.ops.aten.clamp.Tensor: Torch_AtenClampTensorOp,  # type: ignore
+    torch.ops.aten.clamp.Tensor_out: Torch_AtenClampTensorOutOp,  # type: ignore
     torch.ops.aten.clamp_.Tensor: Torch_AtenClamp_TensorOp,  # type: ignore
     torch.ops.aten.clamp_max.Tensor: Torch_AtenClampMaxTensorOp,  # type: ignore
+    torch.ops.aten.clamp_max.Tensor_out: Torch_AtenClampMaxTensorOutOp,  # type: ignore
     torch.ops.aten.clamp_max_.Tensor: Torch_AtenClampMax_TensorOp,  # type: ignore
     torch.ops.aten.clamp_min.Tensor: Torch_AtenClampMinTensorOp,  # type: ignore
+    torch.ops.aten.clamp_min.Tensor_out: Torch_AtenClampMinTensorOutOp,  # type: ignore
     torch.ops.aten.clamp_min_.Tensor: Torch_AtenClampMin_TensorOp,  # type: ignore
     torch.ops.aten.clip.Tensor: Torch_AtenClipTensorOp,  # type: ignore
+    torch.ops.aten.clip.Tensor_out: Torch_AtenClipTensorOutOp,  # type: ignore
     torch.ops.aten.clip_.Tensor: Torch_AtenClip_TensorOp,  # type: ignore
     torch.ops.aten.clone.default: Torch_AtenCloneOp,  # type: ignore
     torch.ops.aten.col2im.default: Torch_AtenCol2ImOp,  # type: ignore
@@ -280,6 +299,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.cosh_.default: Torch_AtenCosh_Op,  # type: ignore
     torch.ops.aten.count_nonzero.default: Torch_AtenCountNonzeroOp,  # type: ignore
     torch.ops.aten.count_nonzero.dim_IntList: Torch_AtenCountNonzeroDimIntlistOp,  # type: ignore
+    torch.ops.aten.count_nonzero.dim_IntList_out: Torch_AtenCountNonzeroDimIntlistOutOp,  # type: ignore
     torch.ops.aten.cudnn_batch_norm.default: Torch_AtenCudnnBatchNormOp,  # type: ignore
     torch.ops.aten.cudnn_batch_norm_backward.default: Torch_AtenCudnnBatchNormBackwardOp,  # type: ignore
     torch.ops.aten.cummax.default: Torch_AtenCummaxOp,  # type: ignore
@@ -308,10 +328,12 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.divide.Tensor: Torch_AtenDivideTensorOp,  # type: ignore
     torch.ops.aten.divide_.Tensor: Torch_AtenDivide_TensorOp,  # type: ignore
     torch.ops.aten.dot.default: Torch_AtenDotOp,  # type: ignore
+    torch.ops.aten.dropout.default: Torch_AtenDropoutOp,  # type: ignore
     torch.ops.aten.embedding.default: Torch_AtenEmbeddingOp,  # type: ignore
     torch.ops.aten.embedding_dense_backward.default: Torch_AtenEmbeddingDenseBackwardOp,  # type: ignore
     torch.ops.aten.eq.Tensor: Torch_AtenEqTensorOp,  # type: ignore
     torch.ops.aten.eq.Tensor_list: Torch_AtenEqTensorListOp,  # type: ignore
+    torch.ops.aten.eq.Tensor_out: Torch_AtenEqTensorOutOp,  # type: ignore
     torch.ops.aten.eq.bool: Torch_AtenEqBoolOp,  # type: ignore
     torch.ops.aten.eq.bool_list: Torch_AtenEqBoolListOp,  # type: ignore
     torch.ops.aten.eq.float: Torch_AtenEqFloatOp,  # type: ignore
@@ -343,9 +365,11 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.expm1.float: Torch_AtenExpm1FloatOp,  # type: ignore
     torch.ops.aten.expm1.int: Torch_AtenExpm1IntOp,  # type: ignore
     torch.ops.aten.expm1_.default: Torch_AtenExpm1_Op,  # type: ignore
+    torch.ops.aten.eye.m_out: Torch_AtenEyeMOutOp,  # type: ignore
     torch.ops.aten.fft_fftshift.default: Torch_AtenFftFftshiftOp,  # type: ignore
     torch.ops.aten.fft_ifftshift.default: Torch_AtenFftIfftshiftOp,  # type: ignore
     torch.ops.aten.fill.Tensor: Torch_AtenFillTensorOp,  # type: ignore
+    torch.ops.aten.fill.Tensor_out: Torch_AtenFillTensorOutOp,  # type: ignore
     torch.ops.aten.fill_.Tensor: Torch_AtenFill_TensorOp,  # type: ignore
     torch.ops.aten.fix.default: Torch_AtenFixOp,  # type: ignore
     torch.ops.aten.fix_.default: Torch_AtenFix_Op,  # type: ignore
@@ -360,6 +384,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.fmax.default: Torch_AtenFmaxOp,  # type: ignore
     torch.ops.aten.fmin.default: Torch_AtenFminOp,  # type: ignore
     torch.ops.aten.fmod.Tensor: Torch_AtenFmodTensorOp,  # type: ignore
+    torch.ops.aten.fmod.Tensor_out: Torch_AtenFmodTensorOutOp,  # type: ignore
     torch.ops.aten.fmod.float: Torch_AtenFmodFloatOp,  # type: ignore
     torch.ops.aten.fmod.float_int: Torch_AtenFmodFloatIntOp,  # type: ignore
     torch.ops.aten.fmod.int: Torch_AtenFmodIntOp,  # type: ignore
@@ -368,13 +393,16 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.frac.default: Torch_AtenFracOp,  # type: ignore
     torch.ops.aten.frac_.default: Torch_AtenFrac_Op,  # type: ignore
     torch.ops.aten.fractional_max_pool2d.default: Torch_AtenFractionalMaxPool2DOp,  # type: ignore
+    torch.ops.aten.fractional_max_pool2d.output: Torch_AtenFractionalMaxPool2DOutputOp,  # type: ignore
     torch.ops.aten.frexp.Tensor: Torch_AtenFrexpTensorOp,  # type: ignore
+    torch.ops.aten.frexp.Tensor_out: Torch_AtenFrexpTensorOutOp,  # type: ignore
     torch.ops.aten.frexp.default: Torch_AtenFrexpOp,  # type: ignore
     torch.ops.aten.gather.default: Torch_AtenGatherOp,  # type: ignore
     torch.ops.aten.gcd.default: Torch_AtenGcdOp,  # type: ignore
     torch.ops.aten.gcd.int: Torch_AtenGcdIntOp,  # type: ignore
     torch.ops.aten.gcd_.default: Torch_AtenGcd_Op,  # type: ignore
     torch.ops.aten.ge.Tensor: Torch_AtenGeTensorOp,  # type: ignore
+    torch.ops.aten.ge.Tensor_out: Torch_AtenGeTensorOutOp,  # type: ignore
     torch.ops.aten.ge.float: Torch_AtenGeFloatOp,  # type: ignore
     torch.ops.aten.ge.float_int: Torch_AtenGeFloatIntOp,  # type: ignore
     torch.ops.aten.ge.int: Torch_AtenGeIntOp,  # type: ignore
@@ -384,8 +412,10 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.glu_backward.default: Torch_AtenGluBackwardOp,  # type: ignore
     torch.ops.aten.glu_backward.grad_input: Torch_AtenGluBackwardGradInputOp,  # type: ignore
     torch.ops.aten.greater.Tensor: Torch_AtenGreaterTensorOp,  # type: ignore
+    torch.ops.aten.greater.Tensor_out: Torch_AtenGreaterTensorOutOp,  # type: ignore
     torch.ops.aten.greater_.Tensor: Torch_AtenGreater_TensorOp,  # type: ignore
     torch.ops.aten.greater_equal.Tensor: Torch_AtenGreaterEqualTensorOp,  # type: ignore
+    torch.ops.aten.greater_equal.Tensor_out: Torch_AtenGreaterEqualTensorOutOp,  # type: ignore
     torch.ops.aten.greater_equal_.Tensor: Torch_AtenGreaterEqual_TensorOp,  # type: ignore
     torch.ops.aten.grid_sampler_2d.default: Torch_AtenGridSampler2DOp,  # type: ignore
     torch.ops.aten.grid_sampler_2d_backward.default: Torch_AtenGridSampler2DBackwardOp,  # type: ignore
@@ -394,6 +424,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.gru.data: Torch_AtenGruDataOp,  # type: ignore
     torch.ops.aten.gru.input: Torch_AtenGruInputOp,  # type: ignore
     torch.ops.aten.gt.Tensor: Torch_AtenGtTensorOp,  # type: ignore
+    torch.ops.aten.gt.Tensor_out: Torch_AtenGtTensorOutOp,  # type: ignore
     torch.ops.aten.gt.float: Torch_AtenGtFloatOp,  # type: ignore
     torch.ops.aten.gt.float_int: Torch_AtenGtFloatIntOp,  # type: ignore
     torch.ops.aten.gt.int: Torch_AtenGtIntOp,  # type: ignore
@@ -429,6 +460,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.index_copy.default: Torch_AtenIndexCopyOp,  # type: ignore
     torch.ops.aten.index_copy_.default: Torch_AtenIndexCopy_Op,  # type: ignore
     torch.ops.aten.index_fill.int_Tensor: Torch_AtenIndexFillIntTensorOp,  # type: ignore
+    torch.ops.aten.index_fill.int_Tensor_out: Torch_AtenIndexFillIntTensorOutOp,  # type: ignore
     torch.ops.aten.index_fill_.int_Tensor: Torch_AtenIndexFill_IntTensorOp,  # type: ignore
     torch.ops.aten.index_put.hacked_twin: Torch_AtenIndexPutHackedTwinOp,  # type: ignore
     torch.ops.aten.index_put_.hacked_twin: Torch_AtenIndexPut_HackedTwinOp,  # type: ignore
@@ -443,6 +475,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.isfinite.default: Torch_AtenIsfiniteOp,  # type: ignore
     torch.ops.aten.isfinite.float: Torch_AtenIsfiniteFloatOp,  # type: ignore
     torch.ops.aten.isin.Tensor_Tensor: Torch_AtenIsinTensorTensorOp,  # type: ignore
+    torch.ops.aten.isin.Tensor_Tensor_out: Torch_AtenIsinTensorTensorOutOp,  # type: ignore
     torch.ops.aten.isinf.default: Torch_AtenIsinfOp,  # type: ignore
     torch.ops.aten.isinf.float: Torch_AtenIsinfFloatOp,  # type: ignore
     torch.ops.aten.isnan.default: Torch_AtenIsnanOp,  # type: ignore
@@ -454,16 +487,20 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.lcm.default: Torch_AtenLcmOp,  # type: ignore
     torch.ops.aten.lcm_.default: Torch_AtenLcm_Op,  # type: ignore
     torch.ops.aten.le.Tensor: Torch_AtenLeTensorOp,  # type: ignore
+    torch.ops.aten.le.Tensor_out: Torch_AtenLeTensorOutOp,  # type: ignore
     torch.ops.aten.le.float: Torch_AtenLeFloatOp,  # type: ignore
     torch.ops.aten.le.float_int: Torch_AtenLeFloatIntOp,  # type: ignore
     torch.ops.aten.le.int: Torch_AtenLeIntOp,  # type: ignore
     torch.ops.aten.le.int_float: Torch_AtenLeIntFloatOp,  # type: ignore
     torch.ops.aten.le_.Tensor: Torch_AtenLe_TensorOp,  # type: ignore
     torch.ops.aten.lerp.Tensor: Torch_AtenLerpTensorOp,  # type: ignore
+    torch.ops.aten.lerp.Tensor_out: Torch_AtenLerpTensorOutOp,  # type: ignore
     torch.ops.aten.lerp_.Tensor: Torch_AtenLerp_TensorOp,  # type: ignore
     torch.ops.aten.less.Tensor: Torch_AtenLessTensorOp,  # type: ignore
+    torch.ops.aten.less.Tensor_out: Torch_AtenLessTensorOutOp,  # type: ignore
     torch.ops.aten.less_.Tensor: Torch_AtenLess_TensorOp,  # type: ignore
     torch.ops.aten.less_equal.Tensor: Torch_AtenLessEqualTensorOp,  # type: ignore
+    torch.ops.aten.less_equal.Tensor_out: Torch_AtenLessEqualTensorOutOp,  # type: ignore
     torch.ops.aten.less_equal_.Tensor: Torch_AtenLessEqual_TensorOp,  # type: ignore
     torch.ops.aten.lgamma.default: Torch_AtenLgammaOp,  # type: ignore
     torch.ops.aten.lgamma.float: Torch_AtenLgammaFloatOp,  # type: ignore
@@ -487,6 +524,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.linalg_solve_triangular.default: Torch_AtenLinalgSolveTriangularOp,  # type: ignore
     torch.ops.aten.linear.default: Torch_AtenLinearOp,  # type: ignore
     torch.ops.aten.linear_backward.default: Torch_AtenLinearBackwardOp,  # type: ignore
+    torch.ops.aten.linspace.Tensor_Tensor_out: Torch_AtenLinspaceTensorTensorOutOp,  # type: ignore
     torch.ops.aten.log.default: Torch_AtenLogOp,  # type: ignore
     torch.ops.aten.log.float: Torch_AtenLogFloatOp,  # type: ignore
     torch.ops.aten.log.float_float: Torch_AtenLogFloatFloatOp,  # type: ignore
@@ -508,6 +546,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.log_sigmoid_backward.default: Torch_AtenLogSigmoidBackwardOp,  # type: ignore
     torch.ops.aten.log_sigmoid_backward.grad_input: Torch_AtenLogSigmoidBackwardGradInputOp,  # type: ignore
     torch.ops.aten.log_sigmoid_forward.default: Torch_AtenLogSigmoidForwardOp,  # type: ignore
+    torch.ops.aten.log_sigmoid_forward.output: Torch_AtenLogSigmoidForwardOutputOp,  # type: ignore
     torch.ops.aten.logaddexp.default: Torch_AtenLogaddexpOp,  # type: ignore
     torch.ops.aten.logaddexp2.default: Torch_AtenLogaddexp2Op,  # type: ignore
     torch.ops.aten.logcumsumexp.default: Torch_AtenLogcumsumexpOp,  # type: ignore
@@ -523,10 +562,12 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.logit_.default: Torch_AtenLogit_Op,  # type: ignore
     torch.ops.aten.logit_backward.default: Torch_AtenLogitBackwardOp,  # type: ignore
     torch.ops.aten.logit_backward.grad_input: Torch_AtenLogitBackwardGradInputOp,  # type: ignore
+    torch.ops.aten.logspace.Tensor_Tensor_out: Torch_AtenLogspaceTensorTensorOutOp,  # type: ignore
     torch.ops.aten.logsumexp.default: Torch_AtenLogsumexpOp,  # type: ignore
     torch.ops.aten.lstm.data: Torch_AtenLstmDataOp,  # type: ignore
     torch.ops.aten.lstm.input: Torch_AtenLstmInputOp,  # type: ignore
     torch.ops.aten.lt.Tensor: Torch_AtenLtTensorOp,  # type: ignore
+    torch.ops.aten.lt.Tensor_out: Torch_AtenLtTensorOutOp,  # type: ignore
     torch.ops.aten.lt.float: Torch_AtenLtFloatOp,  # type: ignore
     torch.ops.aten.lt.float_int: Torch_AtenLtFloatIntOp,  # type: ignore
     torch.ops.aten.lt.int: Torch_AtenLtIntOp,  # type: ignore
@@ -535,6 +576,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.lu_unpack.default: Torch_AtenLuUnpackOp,  # type: ignore
     torch.ops.aten.margin_ranking_loss.default: Torch_AtenMarginRankingLossOp,  # type: ignore
     torch.ops.aten.masked_fill.Tensor: Torch_AtenMaskedFillTensorOp,  # type: ignore
+    torch.ops.aten.masked_fill.Tensor_out: Torch_AtenMaskedFillTensorOutOp,  # type: ignore
     torch.ops.aten.masked_fill_.Tensor: Torch_AtenMaskedFill_TensorOp,  # type: ignore
     torch.ops.aten.masked_scatter.default: Torch_AtenMaskedScatterOp,  # type: ignore
     torch.ops.aten.masked_scatter_.default: Torch_AtenMaskedScatter_Op,  # type: ignore
@@ -545,6 +587,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.max.dim: Torch_AtenMaxDimOp,  # type: ignore
     torch.ops.aten.max.dim_max: Torch_AtenMaxDimMaxOp,  # type: ignore
     torch.ops.aten.max.other: Torch_AtenMaxOtherOp,  # type: ignore
+    torch.ops.aten.max.unary_out: Torch_AtenMaxUnaryOutOp,  # type: ignore
     torch.ops.aten.max_pool2d_with_indices.default: Torch_AtenMaxPool2DWithIndicesOp,  # type: ignore
     torch.ops.aten.max_pool2d_with_indices_backward.default: Torch_AtenMaxPool2DWithIndicesBackwardOp,  # type: ignore
     torch.ops.aten.max_pool2d_with_indices_backward.grad_input: Torch_AtenMaxPool2DWithIndicesBackwardGradInputOp,  # type: ignore
@@ -556,6 +599,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.maximum.default: Torch_AtenMaximumOp,  # type: ignore
     torch.ops.aten.mean.default: Torch_AtenMeanOp,  # type: ignore
     torch.ops.aten.mean.dim: Torch_AtenMeanDimOp,  # type: ignore
+    torch.ops.aten.mean.dtype_out: Torch_AtenMeanDtypeOutOp,  # type: ignore
     torch.ops.aten.median.default: Torch_AtenMedianOp,  # type: ignore
     torch.ops.aten.median.dim: Torch_AtenMedianDimOp,  # type: ignore
     torch.ops.aten.meshgrid.default: Torch_AtenMeshgridOp,  # type: ignore
@@ -563,6 +607,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.min.dim: Torch_AtenMinDimOp,  # type: ignore
     torch.ops.aten.min.dim_min: Torch_AtenMinDimMinOp,  # type: ignore
     torch.ops.aten.min.other: Torch_AtenMinOtherOp,  # type: ignore
+    torch.ops.aten.min.unary_out: Torch_AtenMinUnaryOutOp,  # type: ignore
     torch.ops.aten.minimum.default: Torch_AtenMinimumOp,  # type: ignore
     torch.ops.aten.miopen_batch_norm.default: Torch_AtenMiopenBatchNormOp,  # type: ignore
     torch.ops.aten.miopen_batch_norm_backward.default: Torch_AtenMiopenBatchNormBackwardOp,  # type: ignore
@@ -583,6 +628,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.mul.int_float: Torch_AtenMulIntFloatOp,  # type: ignore
     torch.ops.aten.mul_.Tensor: Torch_AtenMul_TensorOp,  # type: ignore
     torch.ops.aten.multilabel_margin_loss_forward.default: Torch_AtenMultilabelMarginLossForwardOp,  # type: ignore
+    torch.ops.aten.multilabel_margin_loss_forward.output: Torch_AtenMultilabelMarginLossForwardOutputOp,  # type: ignore
     torch.ops.aten.multiply.Tensor: Torch_AtenMultiplyTensorOp,  # type: ignore
     torch.ops.aten.multiply_.Tensor: Torch_AtenMultiply_TensorOp,  # type: ignore
     torch.ops.aten.mv.default: Torch_AtenMvOp,  # type: ignore
@@ -598,12 +644,15 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.narrow_copy.default: Torch_AtenNarrowCopyOp,  # type: ignore
     torch.ops.aten.native_batch_norm.default: Torch_AtenNativeBatchNormOp,  # type: ignore
     torch.ops.aten.native_batch_norm_backward.default: Torch_AtenNativeBatchNormBackwardOp,  # type: ignore
+    torch.ops.aten.native_dropout.default: Torch_AtenNativeDropoutOp,  # type: ignore
+    torch.ops.aten.native_dropout_backward.default: Torch_AtenNativeDropoutBackwardOp,  # type: ignore
     torch.ops.aten.native_group_norm.default: Torch_AtenNativeGroupNormOp,  # type: ignore
     torch.ops.aten.native_group_norm_backward.default: Torch_AtenNativeGroupNormBackwardOp,  # type: ignore
     torch.ops.aten.native_layer_norm.default: Torch_AtenNativeLayerNormOp,  # type: ignore
     torch.ops.aten.native_layer_norm_backward.default: Torch_AtenNativeLayerNormBackwardOp,  # type: ignore
     torch.ops.aten.ne.Tensor: Torch_AtenNeTensorOp,  # type: ignore
     torch.ops.aten.ne.Tensor_list: Torch_AtenNeTensorListOp,  # type: ignore
+    torch.ops.aten.ne.Tensor_out: Torch_AtenNeTensorOutOp,  # type: ignore
     torch.ops.aten.ne.bool: Torch_AtenNeBoolOp,  # type: ignore
     torch.ops.aten.ne.bool_list: Torch_AtenNeBoolListOp,  # type: ignore
     torch.ops.aten.ne.float: Torch_AtenNeFloatOp,  # type: ignore
@@ -625,13 +674,16 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.nll_loss2d_backward.default: Torch_AtenNllLoss2DBackwardOp,  # type: ignore
     torch.ops.aten.nll_loss2d_backward.grad_input: Torch_AtenNllLoss2DBackwardGradInputOp,  # type: ignore
     torch.ops.aten.nll_loss2d_forward.default: Torch_AtenNllLoss2DForwardOp,  # type: ignore
+    torch.ops.aten.nll_loss2d_forward.output: Torch_AtenNllLoss2DForwardOutputOp,  # type: ignore
     torch.ops.aten.nll_loss_backward.default: Torch_AtenNllLossBackwardOp,  # type: ignore
     torch.ops.aten.nll_loss_backward.grad_input: Torch_AtenNllLossBackwardGradInputOp,  # type: ignore
     torch.ops.aten.nll_loss_forward.default: Torch_AtenNllLossForwardOp,  # type: ignore
+    torch.ops.aten.nll_loss_forward.output: Torch_AtenNllLossForwardOutputOp,  # type: ignore
     torch.ops.aten.nonzero.default: Torch_AtenNonzeroOp,  # type: ignore
     torch.ops.aten.nonzero_numpy.default: Torch_AtenNonzeroNumpyOp,  # type: ignore
     torch.ops.aten.nonzero_static.default: Torch_AtenNonzeroStaticOp,  # type: ignore
     torch.ops.aten.not_equal.Tensor: Torch_AtenNotEqualTensorOp,  # type: ignore
+    torch.ops.aten.not_equal.Tensor_out: Torch_AtenNotEqualTensorOutOp,  # type: ignore
     torch.ops.aten.not_equal_.Tensor: Torch_AtenNotEqual_TensorOp,  # type: ignore
     torch.ops.aten.numel.default: Torch_AtenNumelOp,  # type: ignore
     torch.ops.aten.ormqr.default: Torch_AtenOrmqrOp,  # type: ignore
@@ -645,6 +697,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.polygamma.default: Torch_AtenPolygammaOp,  # type: ignore
     torch.ops.aten.positive.default: Torch_AtenPositiveOp,  # type: ignore
     torch.ops.aten.pow.Tensor_Tensor: Torch_AtenPowTensorTensorOp,  # type: ignore
+    torch.ops.aten.pow.Tensor_Tensor_out: Torch_AtenPowTensorTensorOutOp,  # type: ignore
     torch.ops.aten.pow.float: Torch_AtenPowFloatOp,  # type: ignore
     torch.ops.aten.pow.float_int: Torch_AtenPowFloatIntOp,  # type: ignore
     torch.ops.aten.pow.int: Torch_AtenPowIntOp,  # type: ignore
@@ -654,12 +707,15 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.prelu.default: Torch_AtenPreluOp,  # type: ignore
     torch.ops.aten.prod.default: Torch_AtenProdOp,  # type: ignore
     torch.ops.aten.prod.dim_int: Torch_AtenProdDimIntOp,  # type: ignore
+    torch.ops.aten.prod.int_out: Torch_AtenProdIntOutOp,  # type: ignore
     torch.ops.aten.quantized_gru.data_legacy: Torch_AtenQuantizedGruDataLegacyOp,  # type: ignore
     torch.ops.aten.quantized_gru.input_legacy: Torch_AtenQuantizedGruInputLegacyOp,  # type: ignore
     torch.ops.aten.quantized_lstm.data_legacy: Torch_AtenQuantizedLstmDataLegacyOp,  # type: ignore
     torch.ops.aten.quantized_lstm.input_legacy: Torch_AtenQuantizedLstmInputLegacyOp,  # type: ignore
     torch.ops.aten.rad2deg.default: Torch_AtenRad2DegOp,  # type: ignore
     torch.ops.aten.rad2deg_.default: Torch_AtenRad2Deg_Op,  # type: ignore
+    torch.ops.aten.randint.low_out: Torch_AtenRandintLowOutOp,  # type: ignore
+    torch.ops.aten.randint_like.low_dtype_out: Torch_AtenRandintLikeLowDtypeOutOp,  # type: ignore
     torch.ops.aten.real.default: Torch_AtenRealOp,  # type: ignore
     torch.ops.aten.reciprocal.default: Torch_AtenReciprocalOp,  # type: ignore
     torch.ops.aten.reciprocal_.default: Torch_AtenReciprocal_Op,  # type: ignore
@@ -676,6 +732,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.relu6.default: Torch_AtenRelu6Op,  # type: ignore
     torch.ops.aten.relu_.default: Torch_AtenRelu_Op,  # type: ignore
     torch.ops.aten.remainder.Tensor: Torch_AtenRemainderTensorOp,  # type: ignore
+    torch.ops.aten.remainder.Tensor_out: Torch_AtenRemainderTensorOutOp,  # type: ignore
     torch.ops.aten.remainder.float: Torch_AtenRemainderFloatOp,  # type: ignore
     torch.ops.aten.remainder.float_int: Torch_AtenRemainderFloatIntOp,  # type: ignore
     torch.ops.aten.remainder.int: Torch_AtenRemainderIntOp,  # type: ignore
@@ -683,6 +740,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.remainder_.Tensor: Torch_AtenRemainder_TensorOp,  # type: ignore
     torch.ops.aten.repeat.default: Torch_AtenRepeatOp,  # type: ignore
     torch.ops.aten.repeat_interleave.Tensor: Torch_AtenRepeatInterleaveTensorOp,  # type: ignore
+    torch.ops.aten.repeat_interleave.Tensor_out: Torch_AtenRepeatInterleaveTensorOutOp,  # type: ignore
     torch.ops.aten.repeat_interleave.self_Tensor: Torch_AtenRepeatInterleaveSelfTensorOp,  # type: ignore
     torch.ops.aten.repeat_interleave.self_int: Torch_AtenRepeatInterleaveSelfIntOp,  # type: ignore
     torch.ops.aten.replication_pad1d.default: Torch_AtenReplicationPad1DOp,  # type: ignore
@@ -705,6 +763,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.roll.default: Torch_AtenRollOp,  # type: ignore
     torch.ops.aten.rot90.default: Torch_AtenRot90Op,  # type: ignore
     torch.ops.aten.round.decimals: Torch_AtenRoundDecimalsOp,  # type: ignore
+    torch.ops.aten.round.decimals_out: Torch_AtenRoundDecimalsOutOp,  # type: ignore
     torch.ops.aten.round.default: Torch_AtenRoundOp,  # type: ignore
     torch.ops.aten.round.float: Torch_AtenRoundFloatOp,  # type: ignore
     torch.ops.aten.round.int: Torch_AtenRoundIntOp,  # type: ignore
@@ -713,6 +772,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.rsqrt.default: Torch_AtenRsqrtOp,  # type: ignore
     torch.ops.aten.rsqrt_.default: Torch_AtenRsqrt_Op,  # type: ignore
     torch.ops.aten.scatter.src: Torch_AtenScatterSrcOp,  # type: ignore
+    torch.ops.aten.scatter.src_out: Torch_AtenScatterSrcOutOp,  # type: ignore
     torch.ops.aten.scatter_.src: Torch_AtenScatter_SrcOp,  # type: ignore
     torch.ops.aten.scatter_add.default: Torch_AtenScatterAddOp,  # type: ignore
     torch.ops.aten.scatter_add_.default: Torch_AtenScatterAdd_Op,  # type: ignore
@@ -815,7 +875,9 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.squeeze.dims: Torch_AtenSqueezeDimsOp,  # type: ignore
     torch.ops.aten.squeeze_copy.default: Torch_AtenSqueezeCopyOp,  # type: ignore
     torch.ops.aten.squeeze_copy.dim: Torch_AtenSqueezeCopyDimOp,  # type: ignore
+    torch.ops.aten.squeeze_copy.dim_out: Torch_AtenSqueezeCopyDimOutOp,  # type: ignore
     torch.ops.aten.squeeze_copy.dims: Torch_AtenSqueezeCopyDimsOp,  # type: ignore
+    torch.ops.aten.squeeze_copy.dims_out: Torch_AtenSqueezeCopyDimsOutOp,  # type: ignore
     torch.ops.aten.stack.default: Torch_AtenStackOp,  # type: ignore
     torch.ops.aten.std.default: Torch_AtenStdOp,  # type: ignore
     torch.ops.aten.std.dim: Torch_AtenStdDimOp,  # type: ignore
@@ -829,6 +891,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.sub.float_int: Torch_AtenSubFloatIntOp,  # type: ignore
     torch.ops.aten.sub.int: Torch_AtenSubIntOp,  # type: ignore
     torch.ops.aten.sub.int_float: Torch_AtenSubIntFloatOp,  # type: ignore
+    torch.ops.aten.sum.IntList_out: Torch_AtenSumIntlistOutOp,  # type: ignore
     torch.ops.aten.sum.bool: Torch_AtenSumBoolOp,  # type: ignore
     torch.ops.aten.sum.default: Torch_AtenSumOp,  # type: ignore
     torch.ops.aten.sum.dim_IntList: Torch_AtenSumDimIntlistOp,  # type: ignore
@@ -867,6 +930,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.transpose.int: Torch_AtenTransposeIntOp,  # type: ignore
     torch.ops.aten.transpose_.default: Torch_AtenTranspose_Op,  # type: ignore
     torch.ops.aten.transpose_copy.int: Torch_AtenTransposeCopyIntOp,  # type: ignore
+    torch.ops.aten.transpose_copy.int_out: Torch_AtenTransposeCopyIntOutOp,  # type: ignore
     torch.ops.aten.triangular_solve.X: Torch_AtenTriangularSolveXOp,  # type: ignore
     torch.ops.aten.triangular_solve.default: Torch_AtenTriangularSolveOp,  # type: ignore
     torch.ops.aten.tril.default: Torch_AtenTrilOp,  # type: ignore
@@ -884,6 +948,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.unique_dim.default: Torch_AtenUniqueDimOp,  # type: ignore
     torch.ops.aten.unsafe_chunk.default: Torch_AtenUnsafeChunkOp,  # type: ignore
     torch.ops.aten.unsafe_split.Tensor: Torch_AtenUnsafeSplitTensorOp,  # type: ignore
+    torch.ops.aten.unsafe_split.Tensor_out: Torch_AtenUnsafeSplitTensorOutOp,  # type: ignore
     torch.ops.aten.unsafe_split_with_sizes.default: Torch_AtenUnsafeSplitWithSizesOp,  # type: ignore
     torch.ops.aten.unsqueeze.default: Torch_AtenUnsqueezeOp,  # type: ignore
     torch.ops.aten.unsqueeze_.default: Torch_AtenUnsqueeze_Op,  # type: ignore
@@ -892,12 +957,14 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.upsample_bicubic2d.vec: Torch_AtenUpsampleBicubic2DVecOp,  # type: ignore
     torch.ops.aten.upsample_bilinear2d.default: Torch_AtenUpsampleBilinear2DOp,  # type: ignore
     torch.ops.aten.upsample_bilinear2d.vec: Torch_AtenUpsampleBilinear2DVecOp,  # type: ignore
+    torch.ops.aten.upsample_bilinear2d.vec_out: Torch_AtenUpsampleBilinear2DVecOutOp,  # type: ignore
     torch.ops.aten.upsample_linear1d.default: Torch_AtenUpsampleLinear1DOp,  # type: ignore
     torch.ops.aten.upsample_linear1d.vec: Torch_AtenUpsampleLinear1DVecOp,  # type: ignore
     torch.ops.aten.upsample_nearest1d.default: Torch_AtenUpsampleNearest1DOp,  # type: ignore
     torch.ops.aten.upsample_nearest1d.vec: Torch_AtenUpsampleNearest1DVecOp,  # type: ignore
     torch.ops.aten.upsample_nearest2d.default: Torch_AtenUpsampleNearest2DOp,  # type: ignore
     torch.ops.aten.upsample_nearest2d.vec: Torch_AtenUpsampleNearest2DVecOp,  # type: ignore
+    torch.ops.aten.upsample_nearest2d.vec_out: Torch_AtenUpsampleNearest2DVecOutOp,  # type: ignore
     torch.ops.aten.upsample_nearest2d_backward.default: Torch_AtenUpsampleNearest2DBackwardOp,  # type: ignore
     torch.ops.aten.upsample_nearest2d_backward.grad_input: Torch_AtenUpsampleNearest2DBackwardGradInputOp,  # type: ignore
     torch.ops.aten.upsample_nearest3d.default: Torch_AtenUpsampleNearest3DOp,  # type: ignore
@@ -915,8 +982,10 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.view_as_real.default: Torch_AtenViewAsRealOp,  # type: ignore
     torch.ops.aten.view_copy.default: Torch_AtenViewCopyOp,  # type: ignore
     torch.ops.aten.view_copy.dtype: Torch_AtenViewCopyDtypeOp,  # type: ignore
+    torch.ops.aten.view_copy.dtype_out: Torch_AtenViewCopyDtypeOutOp,  # type: ignore
     torch.ops.aten.where.default: Torch_AtenWhereOp,  # type: ignore
     torch.ops.aten.where.self: Torch_AtenWhereSelfOp,  # type: ignore
+    torch.ops.aten.where.self_out: Torch_AtenWhereSelfOutOp,  # type: ignore
     torch.ops.aten.xlogy.OutTensor: Torch_AtenXlogyOuttensorOp,  # type: ignore
     torch.ops.aten.xlogy.Tensor: Torch_AtenXlogyTensorOp,  # type: ignore
     torch.ops.aten.xlogy_.Tensor: Torch_AtenXlogy_TensorOp,  # type: ignore

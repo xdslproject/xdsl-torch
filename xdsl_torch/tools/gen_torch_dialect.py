@@ -103,7 +103,7 @@ def get_operand_def(type_str: str) -> OperandDef:
 
 def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
     full_op_name = f"torch.{ns}.{op_name}{'.' if overload_name else ''}{overload_name}"
-    if "out" in full_op_name:
+    if overload_name == "out":
         # These are ops that store their results in a given argument-buffer
         # Should be delt with separately
         return None, None
