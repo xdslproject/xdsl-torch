@@ -4,6 +4,7 @@ from typing import Any
 import torch
 from xdsl.dialects.builtin import (
     AnyTensorTypeConstr,
+    ContainerOf,
     Float64Type,
     IntegerType,
     Signedness,
@@ -24,9 +25,13 @@ from xdsl.utils.dialect_codegen import dump_dialect_pyfile
 
 TORCH_TYPE_TO_ODS_TYPE: dict[str, GenericAttrConstraint[Attribute]] = {
     "Tensor": AnyTensorTypeConstr,
+    "List[Tensor]": ContainerOf(AnyTensorTypeConstr),
     "int": BaseAttr(IntegerType),
+    "List[int]": ContainerOf(IntegerType),
     "float": BaseAttr(Float64Type),
+    "List[float]": ContainerOf(BaseAttr(Float64Type)),
     "bool": EqAttrConstraint(IntegerType(1, Signedness.UNSIGNED)),
+    "List[bool]": ContainerOf(EqAttrConstraint(IntegerType(1, Signedness.UNSIGNED))),
 }
 
 preamble = """###
