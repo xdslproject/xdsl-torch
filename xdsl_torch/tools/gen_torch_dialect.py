@@ -82,9 +82,11 @@ def get_base_type(type_str: str) -> str:
     return type_str
 
 
-def get_operand_def(type_str: str) -> OperandDef | OptOperandDef:
-    def_func = OptOperandDef if "Optional" in type_str else OperandDef
-    return def_func(TORCH_TYPE_TO_ODS_TYPE[get_base_type(type_str)])
+def get_operand_def(type_str: str) -> OperandDef:
+    xdsl_type = TORCH_TYPE_TO_ODS_TYPE[get_base_type(type_str)]
+    if "Optional" in type_str:
+        xdsl_type |= EqAttrConstraint(NoneType())
+    return OperandDef(xdsl_type)
 
 
 def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
