@@ -40,6 +40,8 @@ TORCH_TYPE_TO_ODS_TYPE: dict[str, GenericAttrConstraint[Attribute]] = {
     "List[float]": ContainerOf(BaseAttr(Float64Type)),
     "bool": EqAttrConstraint(IntegerType(1, Signedness.UNSIGNED)),
     "List[bool]": ContainerOf(EqAttrConstraint(IntegerType(1, Signedness.UNSIGNED))),
+    "number": BaseAttr(IntegerType) | BaseAttr(Float64Type),
+    "List[number]": ContainerOf(BaseAttr(IntegerType) | BaseAttr(Float64Type)),
 }
 
 preamble = """###
@@ -121,6 +123,7 @@ def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
         "torch.aten.topk.values",
         "torch.aten._linalg_solve_ex.result",
         "torch.aten.sort.values_stable",
+        "torch.aten.frexp.Tensor_out",
     ]:
         # Ops have argument and return named the same way => we get an error
         return None, None
