@@ -52,3 +52,64 @@ exported_program: torch.export.ExportedProgram = export(
 # CHECK-NEXT:   %boolTrue = arith.constant true
 # CHECK-NEXT:   %pairwise_distance = torch.aten.pairwise_distance %x, %y, %float3.0, %float0.1, %boolTrue : tensor<10xf32>, tensor<10xf32>, f32, f32, i1 -> tensor<1xf32>
 print(import_program(exported_program))
+
+
+class ArgMin(torch.nn.Module):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return torch.argmin(x, keepdim=True)
+
+
+exported_program: torch.export.ExportedProgram = export(
+    ArgMin(), args=(torch.randn(10),)
+)
+
+# CHECK:       %none = torch.constant.none
+# CHECK-NEXT:  %boolTrue = arith.constant true
+# CHECK-NEXT:  %argmin = torch.aten.argmin %x, %none, %boolTrue : tensor<10xf32>, none, i1 -> tensor<1xi64>
+print(import_program(exported_program))
+
+
+class AvgPool(torch.nn.Module):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return torch.nn.AvgPool2d(3)(x)
+
+
+exported_program: torch.export.ExportedProgram = export(
+    AvgPool(), args=(torch.randn(1, 16, 50, 100),)
+)
+
+# CHECK:        %int3 = arith.constant 3 : i32
+# CHECK-NEXT:   %int3_1 = arith.constant 3 : i32
+# CHECK-NEXT:   %0 = torch.prim.ListConstruct %int3, %int3_1 : (i32, i32) -> vector<2xi32>
+# CHECK-NEXT:   %int3_2 = arith.constant 3 : i32
+# CHECK-NEXT:   %int3_3 = arith.constant 3 : i32
+# CHECK-NEXT:   %1 = torch.prim.ListConstruct %int3_2, %int3_3 : (i32, i32) -> vector<2xi32>
+# CHECK-NEXT:   %int0 = arith.constant 0 : i32
+# CHECK-NEXT:   %int0_1 = arith.constant 0 : i32
+# CHECK-NEXT:   %2 = torch.prim.ListConstruct %int0, %int0_1 : (i32, i32) -> vector<2xi32>
+# CHECK-NEXT:   %boolFalse = arith.constant false
+# CHECK-NEXT:   %boolTrue = arith.constant true
+# CHECK-NEXT:   %none = torch.constant.none
+# CHECK-NEXT:   %avg_pool2d = torch.aten.avg_pool2d %x, %0, %1, %2, %boolFalse, %boolTrue, %none : tensor<1x16x50x100xf32>, vector<2xi32>, vector<2xi32>, vector<2xi32>, i1, i1, none -> tensor<1x16x16x33xf32>
+print(import_program(exported_program))
+
+
+class Linear(torch.nn.Module):
+    def __init__(self):
+        super().__init__()  # type: ignore
+        self.l = torch.nn.Linear(20, 30)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return self.l(x)
+
+
+exported_program: torch.export.ExportedProgram = export(
+    Linear(), args=(torch.randn(10, 20),)
+)
+
+# not consistent with torch mlir - weights should be torch.vtensor.literal
+# CHECK:       func.func @main(%p_l_weight : tensor<30x20xf32>, %p_l_bias : tensor<30xf32>, %x : tensor<10x20xf32>) -> tensor<10x30xf32> {
+# CHECK-NEXT:    %linear = torch.aten.linear %x, %p_l_weight, %p_l_bias : tensor<10x20xf32>, tensor<30x20xf32>, tensor<30xf32> -> tensor<10x30xf32>
+# CHECK-NEXT:    func.return %linear : tensor<10x30xf32>
+# CHECK-NEXT:  }
+print(import_program(exported_program))

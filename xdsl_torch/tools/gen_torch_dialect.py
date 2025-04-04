@@ -7,9 +7,11 @@ from xdsl.dialects.builtin import (
     ContainerOf,
     Float64Type,
     IntegerType,
+    NoneType,
     Signedness,
 )
 from xdsl.irdl import (
+    AnyAttr,
     Attribute,
     BaseAttr,
     EqAttrConstraint,
@@ -20,6 +22,12 @@ from xdsl.irdl import (
     OptOperandDef,
     ResultDef,
     SameVariadicOperandSize,
+    VarOperandDef,
+    traits_def,
+)
+from xdsl.traits import (
+    ConstantLike,
+    Pure,
 )
 from xdsl.utils.dialect_codegen import dump_dialect_pyfile
 
@@ -32,6 +40,8 @@ TORCH_TYPE_TO_ODS_TYPE: dict[str, GenericAttrConstraint[Attribute]] = {
     "List[float]": ContainerOf(BaseAttr(Float64Type)),
     "bool": EqAttrConstraint(IntegerType(1, Signedness.UNSIGNED)),
     "List[bool]": ContainerOf(EqAttrConstraint(IntegerType(1, Signedness.UNSIGNED))),
+    "number": BaseAttr(IntegerType) | BaseAttr(Float64Type),
+    "List[number]": ContainerOf(BaseAttr(IntegerType) | BaseAttr(Float64Type)),
 }
 
 preamble = """###
@@ -39,6 +49,30 @@ preamble = """###
 # Please don't edit it manually!
 ###
 """
+
+### These ops will live in a separate file
+custom_ops = [
+    (
+        "Torch_ConstantNoneOp",
+        OpDef(
+            name="torch.constant.none",
+            results=[("result", ResultDef(EqAttrConstraint(NoneType())))],
+            traits=traits_def(ConstantLike(), Pure()),
+            assembly_format="attr-dict",
+        ),
+    ),
+    (
+        "Torch_PrimListConstructOp",
+        OpDef(
+            name="torch.prim.ListConstruct",
+            operands=[("elements", VarOperandDef(AnyAttr()))],
+            results=[("result", ResultDef(ContainerOf(AnyAttr())))],
+            traits=traits_def(Pure()),
+            assembly_format="$elements attr-dict `:` functional-type($elements, $result)",  # noqa: E501
+        ),
+    ),
+]
+###
 
 
 def format_name(name: str):
@@ -62,14 +96,16 @@ def get_base_type(type_str: str) -> str:
     return type_str
 
 
-def get_operand_def(type_str: str) -> OperandDef | OptOperandDef:
-    def_func = OptOperandDef if "Optional" in type_str else OperandDef
-    return def_func(TORCH_TYPE_TO_ODS_TYPE[get_base_type(type_str)])
+def get_operand_def(type_str: str) -> OperandDef:
+    xdsl_type = TORCH_TYPE_TO_ODS_TYPE[get_base_type(type_str)]
+    if "Optional" in type_str:
+        xdsl_type |= EqAttrConstraint(NoneType())
+    return OperandDef(xdsl_type)
 
 
 def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
     full_op_name = f"torch.{ns}.{op_name}{'.' if overload_name else ''}{overload_name}"
-    if "out" in full_op_name:
+    if overload_name == "out":
         # These are ops that store their results in a given argument-buffer
         # Should be delt with separately
         return None, None
@@ -87,6 +123,7 @@ def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
         "torch.aten.topk.values",
         "torch.aten._linalg_solve_ex.result",
         "torch.aten.sort.values_stable",
+        "torch.aten.frexp.Tensor_out",
     ]:
         # Ops have argument and return named the same way => we get an error
         return None, None
@@ -151,6 +188,14 @@ def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
 def generate_ops() -> tuple[list[tuple[str, OpDef]], dict[str, str]]:
     op_class_mapping: dict[str, str] = {}
     ops: list[tuple[str, OpDef]] = []
+
+    ## This is very weird, for some reason this op
+    ## gets added to ns only after being accessed
+    _ = torch.ops.aten.batch_norm  # type: ignore
+    _ = torch.ops.aten.adaptive_avg_pool2d.default  # type: ignore
+    _ = torch.ops.aten.flatten.using_ints  # type: ignore
+    ##
+
     for ns in map(str, torch.ops):
         for op_name in getattr(torch.ops, ns):
             opoverloadpacket = getattr(getattr(torch.ops, ns), op_name)
@@ -206,7 +251,7 @@ ops.sort(key=lambda x: x[0])
 
 with open("xdsl_torch/dialects/torch_dialect.py", "w+") as f:
     print(preamble, file=f)
-    dump_dialect_pyfile("torch", ops, out=f)  # type: ignore
+    dump_dialect_pyfile("torch", ops + custom_ops, out=f)  # type: ignore
 
 with open("xdsl_torch/dialects/torch_mapping.py", "w+") as f:
     print(preamble, file=f)
