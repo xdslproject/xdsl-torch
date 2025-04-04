@@ -142,6 +142,16 @@ class Torch_AtenAcosh_Op(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenAdaptiveAvgPool2DOp(IRDLOperation):
+    name = "torch.aten.adaptive_avg_pool2d"
+    self = operand_def(BaseAttr(TensorType))
+    output_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $output_size attr-dict `:` type($self) `,` type($output_size) `->` type($result)"
+
+
+@irdl_op_definition
 class Torch_AtenAdaptiveMaxPool2DBackwardGradInputOp(IRDLOperation):
     name = "torch.aten.adaptive_max_pool2d_backward.grad_input"
     grad_output = operand_def(BaseAttr(TensorType))
@@ -1589,6 +1599,53 @@ class Torch_AtenBatchNormBackwardOp(IRDLOperation):
     result2 = result_def(BaseAttr(TensorType))
 
     assembly_format = "$grad_out `,` $input `,` $weight `,` $running_mean `,` $running_var `,` $save_mean `,` $save_var `,` $update `,` $eps `,` $output_mask `,` $reserve attr-dict `:` type($grad_out) `,` type($input) `,` type($weight) `,` type($running_mean) `,` type($running_var) `,` type($save_mean) `,` type($save_var) `,` type($update) `,` type($eps) `,` type($output_mask) `,` type($reserve) `->` type($result0) `,` type($result1) `,` type($result2)"
+
+
+@irdl_op_definition
+class Torch_AtenBatchNormOp(IRDLOperation):
+    name = "torch.aten.batch_norm"
+    input = operand_def(BaseAttr(TensorType))
+    weight = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(TensorType),
+                EqAttrConstraint(attr=NoneType(parameters=())),
+            )
+        )
+    )
+    bias = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(TensorType),
+                EqAttrConstraint(attr=NoneType(parameters=())),
+            )
+        )
+    )
+    running_mean = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(TensorType),
+                EqAttrConstraint(attr=NoneType(parameters=())),
+            )
+        )
+    )
+    running_var = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(TensorType),
+                EqAttrConstraint(attr=NoneType(parameters=())),
+            )
+        )
+    )
+    training = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    momentum = operand_def(BaseAttr(Float64Type))
+    eps = operand_def(BaseAttr(Float64Type))
+    cudnn_enabled = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$input `,` $weight `,` $bias `,` $running_mean `,` $running_var `,` $training `,` $momentum `,` $eps `,` $cudnn_enabled attr-dict `:` type($input) `,` type($weight) `,` type($bias) `,` type($running_mean) `,` type($running_var) `,` type($training) `,` type($momentum) `,` type($eps) `,` type($cudnn_enabled) `->` type($result)"
 
 
 @irdl_op_definition
@@ -4458,6 +4515,17 @@ class Torch_AtenFix_Op(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenFlattenUsingIntsOp(IRDLOperation):
+    name = "torch.aten.flatten.using_ints"
+    self = operand_def(BaseAttr(TensorType))
+    start_dim = operand_def(BaseAttr(IntegerType))
+    end_dim = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $start_dim `,` $end_dim attr-dict `:` type($self) `,` type($start_dim) `,` type($end_dim) `->` type($result)"
 
 
 @irdl_op_definition
@@ -19852,6 +19920,7 @@ TorchDialect = Dialect(
         Torch_AtenAcoshOp,
         Torch_AtenAcoshScalarOp,
         Torch_AtenAcosh_Op,
+        Torch_AtenAdaptiveAvgPool2DOp,
         Torch_AtenAdaptiveMaxPool2DBackwardGradInputOp,
         Torch_AtenAdaptiveMaxPool2DBackwardOp,
         Torch_AtenAdaptiveMaxPool2DOp,
@@ -19963,6 +20032,7 @@ TorchDialect = Dialect(
         Torch_AtenBaddbmmOp,
         Torch_AtenBaddbmm_Op,
         Torch_AtenBatchNormBackwardOp,
+        Torch_AtenBatchNormOp,
         Torch_AtenBinaryCrossEntropyBackwardGradInputOp,
         Torch_AtenBinaryCrossEntropyBackwardOp,
         Torch_AtenBinaryCrossEntropyOp,
@@ -20181,6 +20251,7 @@ TorchDialect = Dialect(
         Torch_AtenFill_TensorOp,
         Torch_AtenFixOp,
         Torch_AtenFix_Op,
+        Torch_AtenFlattenUsingIntsOp,
         Torch_AtenFlipOp,
         Torch_AtenFloatPower_ScalarOp,
         Torch_AtenFloatPower_TensorOp,

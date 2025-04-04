@@ -159,6 +159,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.acosh.float: Torch_AtenAcoshFloatOp,  # type: ignore
     torch.ops.aten.acosh.int: Torch_AtenAcoshIntOp,  # type: ignore
     torch.ops.aten.acosh_.default: Torch_AtenAcosh_Op,  # type: ignore
+    torch.ops.aten.adaptive_avg_pool2d.default: Torch_AtenAdaptiveAvgPool2DOp,  # type: ignore
     torch.ops.aten.adaptive_max_pool2d.default: Torch_AtenAdaptiveMaxPool2DOp,  # type: ignore
     torch.ops.aten.adaptive_max_pool2d_backward.default: Torch_AtenAdaptiveMaxPool2DBackwardOp,  # type: ignore
     torch.ops.aten.adaptive_max_pool2d_backward.grad_input: Torch_AtenAdaptiveMaxPool2DBackwardGradInputOp,  # type: ignore
@@ -269,6 +270,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.avg_pool3d_backward.grad_input: Torch_AtenAvgPool3DBackwardGradInputOp,  # type: ignore
     torch.ops.aten.baddbmm.default: Torch_AtenBaddbmmOp,  # type: ignore
     torch.ops.aten.baddbmm_.default: Torch_AtenBaddbmm_Op,  # type: ignore
+    torch.ops.aten.batch_norm.default: Torch_AtenBatchNormOp,  # type: ignore
     torch.ops.aten.batch_norm_backward.default: Torch_AtenBatchNormBackwardOp,  # type: ignore
     torch.ops.aten.binary_cross_entropy.default: Torch_AtenBinaryCrossEntropyOp,  # type: ignore
     torch.ops.aten.binary_cross_entropy_backward.default: Torch_AtenBinaryCrossEntropyBackwardOp,  # type: ignore
@@ -488,6 +490,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.fill_.Tensor: Torch_AtenFill_TensorOp,  # type: ignore
     torch.ops.aten.fix.default: Torch_AtenFixOp,  # type: ignore
     torch.ops.aten.fix_.default: Torch_AtenFix_Op,  # type: ignore
+    torch.ops.aten.flatten.using_ints: Torch_AtenFlattenUsingIntsOp,  # type: ignore
     torch.ops.aten.flip.default: Torch_AtenFlipOp,  # type: ignore
     torch.ops.aten.float_power_.Scalar: Torch_AtenFloatPower_ScalarOp,  # type: ignore
     torch.ops.aten.float_power_.Tensor: Torch_AtenFloatPower_TensorOp,  # type: ignore

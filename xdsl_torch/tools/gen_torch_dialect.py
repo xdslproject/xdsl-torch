@@ -188,6 +188,14 @@ def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
 def generate_ops() -> tuple[list[tuple[str, OpDef]], dict[str, str]]:
     op_class_mapping: dict[str, str] = {}
     ops: list[tuple[str, OpDef]] = []
+
+    ## This is very weird, for some reason this op
+    ## gets added to ns only after being accessed
+    _ = torch.ops.aten.batch_norm  # type: ignore
+    _ = torch.ops.aten.adaptive_avg_pool2d.default  # type: ignore
+    _ = torch.ops.aten.flatten.using_ints  # type: ignore
+    ##
+
     for ns in map(str, torch.ops):
         for op_name in getattr(torch.ops, ns):
             opoverloadpacket = getattr(getattr(torch.ops, ns), op_name)
