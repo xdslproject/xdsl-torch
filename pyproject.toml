@@ -64,4 +64,4 @@ python_functions = "test_*"
 addopts = ["--durations=20", "--maxfail=5"]
 
 [tool.uv.sources]
-xdsl = { git = "https://github.com/xdslproject/xdsl", rev = "935ec80a81f86e6fec3d85beab6ae435f785ec11" }
+xdsl = { git = "https://github.com/xdslproject/xdsl", rev = "f4edec3d0134f1e2ab666e172672c0b8098ddb4b" }
