@@ -4,12 +4,20 @@ from typing import Any
 import torch
 from xdsl.builder import Builder
 from xdsl.dialects import arith, func
-from xdsl.dialects.builtin import BoolAttr, FloatAttr, IntegerAttr, NoneType, TensorType
+from xdsl.dialects.builtin import (
+    BoolAttr,
+    FloatAttr,
+    IntegerAttr,
+    NoneType,
+    TensorType,
+    VectorType,
+)
 from xdsl.ir import SSAValue
 from xdsl.rewriter import InsertPoint
 
 from xdsl_torch.dialects.torch_dialect import (
     Torch_ConstantNoneOp,
+    Torch_PrimListConstructOp,
 )
 from xdsl_torch.dialects.torch_mapping import XDSL_TORCH_OPS
 from xdsl_torch.utils.type_mapping import TORCH_DTYPE_TO_XDSL_TYPE
@@ -73,7 +81,21 @@ def create_op_operands(
         else:
             value = arg_value
 
-        new_name, new_const = create_constant_op_with_value(value)
+        if isinstance(value, list):
+            elements: list[SSAValue] = []
+            for v in value:  # type: ignore
+                new_name, new_const = create_constant_op_with_value(v)
+                builder.insert(new_const)
+                xdsl_nodes[new_name] = new_const.result
+                elements.append(new_const.result)
+            new_name = "list"
+            new_const = Torch_PrimListConstructOp(
+                operands=[elements],
+                result_types=[VectorType(elements[0].type, [len(elements)])],
+            )
+        else:
+            new_name, new_const = create_constant_op_with_value(value)
+
         xdsl_nodes[new_name] = new_const.result
         operands.append(new_const.result)
         builder.insert(new_const)
