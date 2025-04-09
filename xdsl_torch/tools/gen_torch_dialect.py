@@ -37,6 +37,8 @@ TORCH_TYPE_TO_ODS_TYPE: dict[str, GenericAttrConstraint[Attribute]] = {
     "List[float]": ContainerOf(BaseAttr(Float64Type)),
     "bool": EqAttrConstraint(IntegerType(1, Signedness.UNSIGNED)),
     "List[bool]": ContainerOf(EqAttrConstraint(IntegerType(1, Signedness.UNSIGNED))),
+    "number": BaseAttr(IntegerType) | BaseAttr(Float64Type),
+    "List[number]": ContainerOf(BaseAttr(IntegerType) | BaseAttr(Float64Type)),
 }
 
 #### Non aten ops
@@ -100,7 +102,7 @@ def get_operand_def(type_str: str) -> OperandDef:
 
 def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
     full_op_name = f"torch.{ns}.{op_name}{'.' if overload_name else ''}{overload_name}"
-    if "out" in full_op_name:
+    if overload_name == "out":
         # These are ops that store their results in a given argument-buffer
         # Should be delt with separately
         return None, None
@@ -118,6 +120,7 @@ def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
         "torch.aten.topk.values",
         "torch.aten._linalg_solve_ex.result",
         "torch.aten.sort.values_stable",
+        "torch.aten.frexp.Tensor_out",
     ]:
         # Ops have argument and return named the same way => we get an error
         return None, None
@@ -174,6 +177,14 @@ def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
 
 
 def generate_ops() -> tuple[list[tuple[str, OpDef]], dict[str, str]]:
+    ## This is temporary solution
+    ## Not all ops are added to the registry by default
+    ## We'll come up with something better later
+    _ = torch.ops.aten.batch_norm  # type: ignore
+    _ = torch.ops.aten.adaptive_avg_pool2d.default  # type: ignore
+    _ = torch.ops.aten.flatten.using_ints  # type: ignore
+    ##
+
     op_class_mapping: dict[str, str] = {}
     ops: list[tuple[str, OpDef]] = []
     for ns in map(str, torch.ops):
