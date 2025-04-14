@@ -1,3 +1,4 @@
+import os
 import subprocess
 from typing import Any
 
@@ -74,8 +75,16 @@ preamble = """###
 
 
 def warmup_ops_cache():
+    """
+    Iterate over all aten ops and add them to the ops.aten cache
+    """
+    torch_path = os.environ.get("TORCH_PATH")
+    if torch_path is None:
+        print("Not warming up cache. Set $TORCH_PATH env variable to get all ops.")
+        return
+
     with open(
-        "/Users/manainen/Documents/pytorch/aten/src/ATen/native/native_functions.yaml"
+        os.path.join(torch_path, "aten/src/ATen/native/native_functions.yaml")
     ) as f:
         functions = yaml.safe_load(f)
         for func in functions:
