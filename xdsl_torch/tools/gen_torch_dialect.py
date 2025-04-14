@@ -1,7 +1,9 @@
+import os
 import subprocess
 from typing import Any
 
 import torch
+import yaml
 from xdsl.dialects.builtin import (
     AnyTensorTypeConstr,
     ContainerOf,
@@ -72,6 +74,26 @@ preamble = """###
 """
 
 
+def warmup_ops_cache():
+    """
+    Iterate over all aten ops and add them to the ops.aten cache
+    """
+    torch_path = os.environ.get("TORCH_PATH")
+    if torch_path is None:
+        print("Not warming up cache. Set $TORCH_PATH env variable to get all ops.")
+        return
+
+    with open(
+        os.path.join(torch_path, "aten/src/ATen/native/native_functions.yaml")
+    ) as f:
+        functions = yaml.safe_load(f)
+        for func in functions:
+            try:
+                getattr(torch.ops.aten, func["func"].split("(")[0])
+            except Exception:
+                pass
+
+
 def format_name(name: str):
     """
     Format operation name consistent with torch-mlir.
@@ -121,6 +143,10 @@ def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
         "torch.aten._linalg_solve_ex.result",
         "torch.aten.sort.values_stable",
         "torch.aten.frexp.Tensor_out",
+        # this op has a field named "from" which brakes parsing
+        "torch.aten._has_compatible_shallow_copy_type",
+        "torch.aten.geqrf.a",
+        "torch.aten.qr.Q",
     ]:
         # Ops have argument and return named the same way => we get an error
         return None, None
@@ -180,9 +206,7 @@ def generate_ops() -> tuple[list[tuple[str, OpDef]], dict[str, str]]:
     ## This is temporary solution
     ## Not all ops are added to the registry by default
     ## We'll come up with something better later
-    _ = torch.ops.aten.batch_norm  # type: ignore
-    _ = torch.ops.aten.adaptive_avg_pool2d.default  # type: ignore
-    _ = torch.ops.aten.flatten.using_ints  # type: ignore
+    warmup_ops_cache()
     ##
 
     op_class_mapping: dict[str, str] = {}
