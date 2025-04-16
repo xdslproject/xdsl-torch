@@ -1,4 +1,5 @@
 import subprocess
+import warnings
 from typing import Any
 
 import torch
@@ -199,7 +200,7 @@ def generate_ops() -> tuple[list[tuple[str, OpDef]], dict[str, str]]:
         full_name += f".{overload_name if overload_name else "default"}"
 
         if not opdef or not class_name:
-            print(f"Couldn't generate {full_name}")
+            warnings.warn(f"Couldn't generate {full_name}")
             continue
 
         ops.append((class_name, opdef))
