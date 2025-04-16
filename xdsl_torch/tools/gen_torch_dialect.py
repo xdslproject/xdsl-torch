@@ -176,6 +176,18 @@ def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
     return class_name, op_def
 
 
+def get_core_op_list() -> list[tuple[str, str, str, Any]]:
+    core_ops: list[tuple[str, str, str, Any]] = []
+    for ns in map(str, torch.ops):
+        for op_name in getattr(torch.ops, ns):
+            opoverloadpacket = getattr(getattr(torch.ops, ns), op_name)
+            for overload_name in opoverloadpacket._dir:
+                op = getattr(opoverloadpacket, overload_name)
+                if torch.Tag.core in op._tags:
+                    core_ops.append((ns, op_name, overload_name, op._schema))
+    return core_ops
+
+
 def generate_ops() -> tuple[list[tuple[str, OpDef]], dict[str, str]]:
     ## This is temporary solution
     ## Not all ops are added to the registry by default
@@ -187,16 +199,19 @@ def generate_ops() -> tuple[list[tuple[str, OpDef]], dict[str, str]]:
 
     op_class_mapping: dict[str, str] = {}
     ops: list[tuple[str, OpDef]] = []
-    for ns in map(str, torch.ops):
-        for op_name in getattr(torch.ops, ns):
-            opoverloadpacket = getattr(getattr(torch.ops, ns), op_name)
-            for overload_name, schema in opoverloadpacket._schemas.items():
-                class_name, opdef = gen_irdl_op(ns, op_name, overload_name, schema)
-                if opdef and class_name:
-                    ops.append((class_name, opdef))
-                    full_name = f"torch.ops.{ns}.{op_name}"
-                    full_name += f".{overload_name if overload_name else "default"}"
-                    op_class_mapping[full_name] = class_name
+
+    for ns, op_name, overload_name, schema in get_core_op_list():
+        class_name, opdef = gen_irdl_op(ns, op_name, overload_name, schema)
+        full_name = f"torch.ops.{ns}.{op_name}"
+        full_name += f".{overload_name if overload_name else "default"}"
+
+        if not opdef or not class_name:
+            print(f"Couldn't generate {full_name}")
+            continue
+
+        ops.append((class_name, opdef))
+        op_class_mapping[full_name] = class_name
+
     return ops, op_class_mapping
 
 
