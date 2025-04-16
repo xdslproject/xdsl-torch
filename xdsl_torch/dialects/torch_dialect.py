@@ -12,8 +12,8 @@ from xdsl.traits import *
 
 
 @irdl_op_definition
-class Torch_AtenAbsDefaultOp(IRDLOperation):
-    name = "torch.aten.abs.default"
+class Torch_AtenAbsOp(IRDLOperation):
+    name = "torch.aten.abs"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -21,8 +21,8 @@ class Torch_AtenAbsDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenAcosDefaultOp(IRDLOperation):
-    name = "torch.aten.acos.default"
+class Torch_AtenAcosOp(IRDLOperation):
+    name = "torch.aten.acos"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -30,8 +30,8 @@ class Torch_AtenAcosDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenAcoshDefaultOp(IRDLOperation):
-    name = "torch.aten.acosh.default"
+class Torch_AtenAcoshOp(IRDLOperation):
+    name = "torch.aten.acosh"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -67,8 +67,8 @@ class Torch_AtenAddTensorOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenAddmmDefaultOp(IRDLOperation):
-    name = "torch.aten.addmm.default"
+class Torch_AtenAddmmOp(IRDLOperation):
+    name = "torch.aten.addmm"
     self = operand_def(BaseAttr(TensorType))
     mat1 = operand_def(BaseAttr(TensorType))
     mat2 = operand_def(BaseAttr(TensorType))
@@ -84,8 +84,8 @@ class Torch_AtenAddmmDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenAliasDefaultOp(IRDLOperation):
-    name = "torch.aten.alias.default"
+class Torch_AtenAliasOp(IRDLOperation):
+    name = "torch.aten.alias"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -93,8 +93,8 @@ class Torch_AtenAliasDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenAmaxDefaultOp(IRDLOperation):
-    name = "torch.aten.amax.default"
+class Torch_AtenAmaxOp(IRDLOperation):
+    name = "torch.aten.amax"
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
@@ -104,23 +104,14 @@ class Torch_AtenAmaxDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenAminDefaultOp(IRDLOperation):
-    name = "torch.aten.amin.default"
+class Torch_AtenAminOp(IRDLOperation):
+    name = "torch.aten.amin"
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $dim `,` $keepdim attr-dict `:` type($self) `,` type($dim) `,` type($keepdim) `->` type($result)"
-
-
-@irdl_op_definition
-class Torch_AtenAnyDefaultOp(IRDLOperation):
-    name = "torch.aten.any.default"
-    self = operand_def(BaseAttr(TensorType))
-    result = result_def(BaseAttr(TensorType))
-
-    assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
 
 
 @irdl_op_definition
@@ -153,8 +144,17 @@ class Torch_AtenAnyDimsOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenArgmaxDefaultOp(IRDLOperation):
-    name = "torch.aten.argmax.default"
+class Torch_AtenAnyOp(IRDLOperation):
+    name = "torch.aten.any"
+    self = operand_def(BaseAttr(TensorType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self attr-dict `:` type($self) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenArgmaxOp(IRDLOperation):
+    name = "torch.aten.argmax"
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(
         AnyOf(
@@ -171,8 +171,8 @@ class Torch_AtenArgmaxDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenArgminDefaultOp(IRDLOperation):
-    name = "torch.aten.argmin.default"
+class Torch_AtenArgminOp(IRDLOperation):
+    name = "torch.aten.argmin"
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(
         AnyOf(
@@ -189,8 +189,8 @@ class Torch_AtenArgminDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenAsStridedDefaultOp(IRDLOperation):
-    name = "torch.aten.as_strided.default"
+class Torch_AtenAsStridedOp(IRDLOperation):
+    name = "torch.aten.as_strided"
     self = operand_def(BaseAttr(TensorType))
     size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     stride = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
@@ -208,8 +208,8 @@ class Torch_AtenAsStridedDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenAsinDefaultOp(IRDLOperation):
-    name = "torch.aten.asin.default"
+class Torch_AtenAsinOp(IRDLOperation):
+    name = "torch.aten.asin"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -217,8 +217,8 @@ class Torch_AtenAsinDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenAsinhDefaultOp(IRDLOperation):
-    name = "torch.aten.asinh.default"
+class Torch_AtenAsinhOp(IRDLOperation):
+    name = "torch.aten.asinh"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -226,8 +226,8 @@ class Torch_AtenAsinhDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenAtan2DefaultOp(IRDLOperation):
-    name = "torch.aten.atan2.default"
+class Torch_AtenAtan2Op(IRDLOperation):
+    name = "torch.aten.atan2"
     self = operand_def(BaseAttr(TensorType))
     other = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
@@ -238,8 +238,8 @@ class Torch_AtenAtan2DefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenAtanDefaultOp(IRDLOperation):
-    name = "torch.aten.atan.default"
+class Torch_AtenAtanOp(IRDLOperation):
+    name = "torch.aten.atan"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -247,8 +247,8 @@ class Torch_AtenAtanDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenAtanhDefaultOp(IRDLOperation):
-    name = "torch.aten.atanh.default"
+class Torch_AtenAtanhOp(IRDLOperation):
+    name = "torch.aten.atanh"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -256,8 +256,8 @@ class Torch_AtenAtanhDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenAvgPool2DBackwardDefaultOp(IRDLOperation):
-    name = "torch.aten.avg_pool2d_backward.default"
+class Torch_AtenAvgPool2DBackwardOp(IRDLOperation):
+    name = "torch.aten.avg_pool2d_backward"
     grad_output = operand_def(BaseAttr(TensorType))
     self = operand_def(BaseAttr(TensorType))
     kernel_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
@@ -281,8 +281,8 @@ class Torch_AtenAvgPool2DBackwardDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenAvgPool2DDefaultOp(IRDLOperation):
-    name = "torch.aten.avg_pool2d.default"
+class Torch_AtenAvgPool2DOp(IRDLOperation):
+    name = "torch.aten.avg_pool2d"
     self = operand_def(BaseAttr(TensorType))
     kernel_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     stride = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
@@ -305,8 +305,8 @@ class Torch_AtenAvgPool2DDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenAvgPool3DDefaultOp(IRDLOperation):
-    name = "torch.aten.avg_pool3d.default"
+class Torch_AtenAvgPool3DOp(IRDLOperation):
+    name = "torch.aten.avg_pool3d"
     self = operand_def(BaseAttr(TensorType))
     kernel_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     stride = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
@@ -355,8 +355,8 @@ class Torch_AtenBitwiseAndTensorOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenBitwiseNotDefaultOp(IRDLOperation):
-    name = "torch.aten.bitwise_not.default"
+class Torch_AtenBitwiseNotOp(IRDLOperation):
+    name = "torch.aten.bitwise_not"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -416,8 +416,8 @@ class Torch_AtenBitwiseXorTensorOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenBmmDefaultOp(IRDLOperation):
-    name = "torch.aten.bmm.default"
+class Torch_AtenBmmOp(IRDLOperation):
+    name = "torch.aten.bmm"
     self = operand_def(BaseAttr(TensorType))
     mat2 = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
@@ -428,8 +428,8 @@ class Torch_AtenBmmDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenCatDefaultOp(IRDLOperation):
-    name = "torch.aten.cat.default"
+class Torch_AtenCatOp(IRDLOperation):
+    name = "torch.aten.cat"
     tensors = operand_def(ContainerOf(elem_constr=BaseAttr(TensorType)))
     dim = operand_def(BaseAttr(IntegerType))
     result = result_def(BaseAttr(TensorType))
@@ -438,8 +438,8 @@ class Torch_AtenCatDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenCeilDefaultOp(IRDLOperation):
-    name = "torch.aten.ceil.default"
+class Torch_AtenCeilOp(IRDLOperation):
+    name = "torch.aten.ceil"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -447,8 +447,8 @@ class Torch_AtenCeilDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenClampDefaultOp(IRDLOperation):
-    name = "torch.aten.clamp.default"
+class Torch_AtenClampOp(IRDLOperation):
+    name = "torch.aten.clamp"
     self = operand_def(BaseAttr(TensorType))
     min = operand_def(
         AnyOf(
@@ -499,8 +499,8 @@ class Torch_AtenClampTensorOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenCloneDefaultOp(IRDLOperation):
-    name = "torch.aten.clone.default"
+class Torch_AtenCloneOp(IRDLOperation):
+    name = "torch.aten.clone"
     self = operand_def(BaseAttr(TensorType))
     memory_format = operand_def(
         AnyOf(
@@ -516,8 +516,8 @@ class Torch_AtenCloneDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenCol2ImDefaultOp(IRDLOperation):
-    name = "torch.aten.col2im.default"
+class Torch_AtenCol2ImOp(IRDLOperation):
+    name = "torch.aten.col2im"
     self = operand_def(BaseAttr(TensorType))
     output_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     kernel_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
@@ -530,8 +530,8 @@ class Torch_AtenCol2ImDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenConstantPadNdDefaultOp(IRDLOperation):
-    name = "torch.aten.constant_pad_nd.default"
+class Torch_AtenConstantPadNdOp(IRDLOperation):
+    name = "torch.aten.constant_pad_nd"
     self = operand_def(BaseAttr(TensorType))
     pad = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     value = operand_def(
@@ -543,8 +543,8 @@ class Torch_AtenConstantPadNdDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenConvolutionBackwardDefaultOp(IRDLOperation):
-    name = "torch.aten.convolution_backward.default"
+class Torch_AtenConvolutionBackwardOp(IRDLOperation):
+    name = "torch.aten.convolution_backward"
     grad_output = operand_def(BaseAttr(TensorType))
     input = operand_def(BaseAttr(TensorType))
     weight = operand_def(BaseAttr(TensorType))
@@ -575,8 +575,8 @@ class Torch_AtenConvolutionBackwardDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenConvolutionDefaultOp(IRDLOperation):
-    name = "torch.aten.convolution.default"
+class Torch_AtenConvolutionOp(IRDLOperation):
+    name = "torch.aten.convolution"
     input = operand_def(BaseAttr(TensorType))
     weight = operand_def(BaseAttr(TensorType))
     bias = operand_def(
@@ -599,8 +599,8 @@ class Torch_AtenConvolutionDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenCopyDefaultOp(IRDLOperation):
-    name = "torch.aten.copy.default"
+class Torch_AtenCopyOp(IRDLOperation):
+    name = "torch.aten.copy"
     self = operand_def(BaseAttr(TensorType))
     src = operand_def(BaseAttr(TensorType))
     non_blocking = operand_def(
@@ -612,8 +612,8 @@ class Torch_AtenCopyDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenCosDefaultOp(IRDLOperation):
-    name = "torch.aten.cos.default"
+class Torch_AtenCosOp(IRDLOperation):
+    name = "torch.aten.cos"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -621,8 +621,8 @@ class Torch_AtenCosDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenCoshDefaultOp(IRDLOperation):
-    name = "torch.aten.cosh.default"
+class Torch_AtenCoshOp(IRDLOperation):
+    name = "torch.aten.cosh"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -630,8 +630,8 @@ class Torch_AtenCoshDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenCumsumDefaultOp(IRDLOperation):
-    name = "torch.aten.cumsum.default"
+class Torch_AtenCumsumOp(IRDLOperation):
+    name = "torch.aten.cumsum"
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(BaseAttr(IntegerType))
     dtype = operand_def(
@@ -648,8 +648,8 @@ class Torch_AtenCumsumDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenDiagonalDefaultOp(IRDLOperation):
-    name = "torch.aten.diagonal.default"
+class Torch_AtenDiagonalOp(IRDLOperation):
+    name = "torch.aten.diagonal"
     self = operand_def(BaseAttr(TensorType))
     offset = operand_def(BaseAttr(IntegerType))
     dim1 = operand_def(BaseAttr(IntegerType))
@@ -686,23 +686,8 @@ class Torch_AtenDivTensorOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenEmbeddingDefaultOp(IRDLOperation):
-    name = "torch.aten.embedding.default"
-    weight = operand_def(BaseAttr(TensorType))
-    indices = operand_def(BaseAttr(TensorType))
-    padding_idx = operand_def(BaseAttr(IntegerType))
-    scale_grad_by_freq = operand_def(
-        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
-    )
-    sparse = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
-    result = result_def(BaseAttr(TensorType))
-
-    assembly_format = "$weight `,` $indices `,` $padding_idx `,` $scale_grad_by_freq `,` $sparse attr-dict `:` type($weight) `,` type($indices) `,` type($padding_idx) `,` type($scale_grad_by_freq) `,` type($sparse) `->` type($result)"
-
-
-@irdl_op_definition
-class Torch_AtenEmbeddingDenseBackwardDefaultOp(IRDLOperation):
-    name = "torch.aten.embedding_dense_backward.default"
+class Torch_AtenEmbeddingDenseBackwardOp(IRDLOperation):
+    name = "torch.aten.embedding_dense_backward"
     grad_output = operand_def(BaseAttr(TensorType))
     indices = operand_def(BaseAttr(TensorType))
     num_weights = operand_def(BaseAttr(IntegerType))
@@ -713,6 +698,21 @@ class Torch_AtenEmbeddingDenseBackwardDefaultOp(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$grad_output `,` $indices `,` $num_weights `,` $padding_idx `,` $scale_grad_by_freq attr-dict `:` type($grad_output) `,` type($indices) `,` type($num_weights) `,` type($padding_idx) `,` type($scale_grad_by_freq) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_AtenEmbeddingOp(IRDLOperation):
+    name = "torch.aten.embedding"
+    weight = operand_def(BaseAttr(TensorType))
+    indices = operand_def(BaseAttr(TensorType))
+    padding_idx = operand_def(BaseAttr(IntegerType))
+    scale_grad_by_freq = operand_def(
+        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+    )
+    sparse = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$weight `,` $indices `,` $padding_idx `,` $scale_grad_by_freq `,` $sparse attr-dict `:` type($weight) `,` type($indices) `,` type($padding_idx) `,` type($scale_grad_by_freq) `,` type($sparse) `->` type($result)"
 
 
 @irdl_op_definition
@@ -742,8 +742,8 @@ class Torch_AtenEqTensorOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenErfDefaultOp(IRDLOperation):
-    name = "torch.aten.erf.default"
+class Torch_AtenErfOp(IRDLOperation):
+    name = "torch.aten.erf"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -751,8 +751,8 @@ class Torch_AtenErfDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenExpDefaultOp(IRDLOperation):
-    name = "torch.aten.exp.default"
+class Torch_AtenExpOp(IRDLOperation):
+    name = "torch.aten.exp"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -760,8 +760,8 @@ class Torch_AtenExpDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenExpandDefaultOp(IRDLOperation):
-    name = "torch.aten.expand.default"
+class Torch_AtenExpandOp(IRDLOperation):
+    name = "torch.aten.expand"
     self = operand_def(BaseAttr(TensorType))
     size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     implicit = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
@@ -771,8 +771,8 @@ class Torch_AtenExpandDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenExpm1DefaultOp(IRDLOperation):
-    name = "torch.aten.expm1.default"
+class Torch_AtenExpm1Op(IRDLOperation):
+    name = "torch.aten.expm1"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -794,8 +794,8 @@ class Torch_AtenFillScalarOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenFlipDefaultOp(IRDLOperation):
-    name = "torch.aten.flip.default"
+class Torch_AtenFlipOp(IRDLOperation):
+    name = "torch.aten.flip"
     self = operand_def(BaseAttr(TensorType))
     dims = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     result = result_def(BaseAttr(TensorType))
@@ -806,8 +806,8 @@ class Torch_AtenFlipDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenFloorDefaultOp(IRDLOperation):
-    name = "torch.aten.floor.default"
+class Torch_AtenFloorOp(IRDLOperation):
+    name = "torch.aten.floor"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -841,8 +841,8 @@ class Torch_AtenFmodTensorOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenGatherDefaultOp(IRDLOperation):
-    name = "torch.aten.gather.default"
+class Torch_AtenGatherOp(IRDLOperation):
+    name = "torch.aten.gather"
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(BaseAttr(IntegerType))
     index = operand_def(BaseAttr(TensorType))
@@ -881,8 +881,8 @@ class Torch_AtenGeTensorOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenGridSampler2DDefaultOp(IRDLOperation):
-    name = "torch.aten.grid_sampler_2d.default"
+class Torch_AtenGridSampler2DOp(IRDLOperation):
+    name = "torch.aten.grid_sampler_2d"
     input = operand_def(BaseAttr(TensorType))
     grid = operand_def(BaseAttr(TensorType))
     interpolation_mode = operand_def(BaseAttr(IntegerType))
@@ -922,8 +922,8 @@ class Torch_AtenGtTensorOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenHardtanhDefaultOp(IRDLOperation):
-    name = "torch.aten.hardtanh.default"
+class Torch_AtenHardtanhOp(IRDLOperation):
+    name = "torch.aten.hardtanh"
     self = operand_def(BaseAttr(TensorType))
     min_val = operand_def(
         AnyOf(attr_constrs=(BaseAttr(IntegerType), BaseAttr(Float64Type)))
@@ -937,8 +937,8 @@ class Torch_AtenHardtanhDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenIndexSelectDefaultOp(IRDLOperation):
-    name = "torch.aten.index_select.default"
+class Torch_AtenIndexSelectOp(IRDLOperation):
+    name = "torch.aten.index_select"
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(BaseAttr(IntegerType))
     index = operand_def(BaseAttr(TensorType))
@@ -948,8 +948,8 @@ class Torch_AtenIndexSelectDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenIsinfDefaultOp(IRDLOperation):
-    name = "torch.aten.isinf.default"
+class Torch_AtenIsinfOp(IRDLOperation):
+    name = "torch.aten.isinf"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -957,8 +957,8 @@ class Torch_AtenIsinfDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenIsnanDefaultOp(IRDLOperation):
-    name = "torch.aten.isnan.default"
+class Torch_AtenIsnanOp(IRDLOperation):
+    name = "torch.aten.isnan"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -992,8 +992,8 @@ class Torch_AtenLeTensorOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenLeakyReluDefaultOp(IRDLOperation):
-    name = "torch.aten.leaky_relu.default"
+class Torch_AtenLeakyReluOp(IRDLOperation):
+    name = "torch.aten.leaky_relu"
     self = operand_def(BaseAttr(TensorType))
     negative_slope = operand_def(
         AnyOf(attr_constrs=(BaseAttr(IntegerType), BaseAttr(Float64Type)))
@@ -1004,8 +1004,8 @@ class Torch_AtenLeakyReluDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenLog10DefaultOp(IRDLOperation):
-    name = "torch.aten.log10.default"
+class Torch_AtenLog10Op(IRDLOperation):
+    name = "torch.aten.log10"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1013,8 +1013,8 @@ class Torch_AtenLog10DefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenLog1PDefaultOp(IRDLOperation):
-    name = "torch.aten.log1p.default"
+class Torch_AtenLog1POp(IRDLOperation):
+    name = "torch.aten.log1p"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1022,8 +1022,8 @@ class Torch_AtenLog1PDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenLog2DefaultOp(IRDLOperation):
-    name = "torch.aten.log2.default"
+class Torch_AtenLog2Op(IRDLOperation):
+    name = "torch.aten.log2"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1031,8 +1031,8 @@ class Torch_AtenLog2DefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenLogDefaultOp(IRDLOperation):
-    name = "torch.aten.log.default"
+class Torch_AtenLogOp(IRDLOperation):
+    name = "torch.aten.log"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1040,8 +1040,8 @@ class Torch_AtenLogDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenLogicalAndDefaultOp(IRDLOperation):
-    name = "torch.aten.logical_and.default"
+class Torch_AtenLogicalAndOp(IRDLOperation):
+    name = "torch.aten.logical_and"
     self = operand_def(BaseAttr(TensorType))
     other = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
@@ -1052,8 +1052,8 @@ class Torch_AtenLogicalAndDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenLogicalNotDefaultOp(IRDLOperation):
-    name = "torch.aten.logical_not.default"
+class Torch_AtenLogicalNotOp(IRDLOperation):
+    name = "torch.aten.logical_not"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1061,8 +1061,8 @@ class Torch_AtenLogicalNotDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenLogicalOrDefaultOp(IRDLOperation):
-    name = "torch.aten.logical_or.default"
+class Torch_AtenLogicalOrOp(IRDLOperation):
+    name = "torch.aten.logical_or"
     self = operand_def(BaseAttr(TensorType))
     other = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
@@ -1073,8 +1073,8 @@ class Torch_AtenLogicalOrDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenLogicalXorDefaultOp(IRDLOperation):
-    name = "torch.aten.logical_xor.default"
+class Torch_AtenLogicalXorOp(IRDLOperation):
+    name = "torch.aten.logical_xor"
     self = operand_def(BaseAttr(TensorType))
     other = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
@@ -1111,8 +1111,8 @@ class Torch_AtenLtTensorOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenMaskedScatterDefaultOp(IRDLOperation):
-    name = "torch.aten.masked_scatter.default"
+class Torch_AtenMaskedScatterOp(IRDLOperation):
+    name = "torch.aten.masked_scatter"
     self = operand_def(BaseAttr(TensorType))
     mask = operand_def(BaseAttr(TensorType))
     source = operand_def(BaseAttr(TensorType))
@@ -1134,8 +1134,8 @@ class Torch_AtenMaxDimOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenMaxPool2DWithIndicesBackwardDefaultOp(IRDLOperation):
-    name = "torch.aten.max_pool2d_with_indices_backward.default"
+class Torch_AtenMaxPool2DWithIndicesBackwardOp(IRDLOperation):
+    name = "torch.aten.max_pool2d_with_indices_backward"
     grad_output = operand_def(BaseAttr(TensorType))
     self = operand_def(BaseAttr(TensorType))
     kernel_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
@@ -1150,8 +1150,8 @@ class Torch_AtenMaxPool2DWithIndicesBackwardDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenMaxPool2DWithIndicesDefaultOp(IRDLOperation):
-    name = "torch.aten.max_pool2d_with_indices.default"
+class Torch_AtenMaxPool2DWithIndicesOp(IRDLOperation):
+    name = "torch.aten.max_pool2d_with_indices"
     self = operand_def(BaseAttr(TensorType))
     kernel_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     stride = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
@@ -1165,8 +1165,8 @@ class Torch_AtenMaxPool2DWithIndicesDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenMaxPool3DWithIndicesDefaultOp(IRDLOperation):
-    name = "torch.aten.max_pool3d_with_indices.default"
+class Torch_AtenMaxPool3DWithIndicesOp(IRDLOperation):
+    name = "torch.aten.max_pool3d_with_indices"
     self = operand_def(BaseAttr(TensorType))
     kernel_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     stride = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
@@ -1180,33 +1180,14 @@ class Torch_AtenMaxPool3DWithIndicesDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenMaximumDefaultOp(IRDLOperation):
-    name = "torch.aten.maximum.default"
+class Torch_AtenMaximumOp(IRDLOperation):
+    name = "torch.aten.maximum"
     self = operand_def(BaseAttr(TensorType))
     other = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = (
         "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
-    )
-
-
-@irdl_op_definition
-class Torch_AtenMeanDefaultOp(IRDLOperation):
-    name = "torch.aten.mean.default"
-    self = operand_def(BaseAttr(TensorType))
-    dtype = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
-    )
-    result = result_def(BaseAttr(TensorType))
-
-    assembly_format = (
-        "$self `,` $dtype attr-dict `:` type($self) `,` type($dtype) `->` type($result)"
     )
 
 
@@ -1237,6 +1218,25 @@ class Torch_AtenMeanDimOp(IRDLOperation):
 
 
 @irdl_op_definition
+class Torch_AtenMeanOp(IRDLOperation):
+    name = "torch.aten.mean"
+    self = operand_def(BaseAttr(TensorType))
+    dtype = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                EqAttrConstraint(attr=NoneType(parameters=())),
+            )
+        )
+    )
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $dtype attr-dict `:` type($self) `,` type($dtype) `->` type($result)"
+    )
+
+
+@irdl_op_definition
 class Torch_AtenMinDimOp(IRDLOperation):
     name = "torch.aten.min.dim"
     self = operand_def(BaseAttr(TensorType))
@@ -1249,8 +1249,8 @@ class Torch_AtenMinDimOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenMinimumDefaultOp(IRDLOperation):
-    name = "torch.aten.minimum.default"
+class Torch_AtenMinimumOp(IRDLOperation):
+    name = "torch.aten.minimum"
     self = operand_def(BaseAttr(TensorType))
     other = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
@@ -1261,8 +1261,8 @@ class Torch_AtenMinimumDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenMmDefaultOp(IRDLOperation):
-    name = "torch.aten.mm.default"
+class Torch_AtenMmOp(IRDLOperation):
+    name = "torch.aten.mm"
     self = operand_def(BaseAttr(TensorType))
     mat2 = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
@@ -1299,8 +1299,8 @@ class Torch_AtenMulTensorOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenNativeDropoutDefaultOp(IRDLOperation):
-    name = "torch.aten.native_dropout.default"
+class Torch_AtenNativeDropoutOp(IRDLOperation):
+    name = "torch.aten.native_dropout"
     input = operand_def(BaseAttr(TensorType))
     p = operand_def(BaseAttr(Float64Type))
     train = operand_def(
@@ -1318,8 +1318,8 @@ class Torch_AtenNativeDropoutDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenNativeGroupNormBackwardDefaultOp(IRDLOperation):
-    name = "torch.aten.native_group_norm_backward.default"
+class Torch_AtenNativeGroupNormBackwardOp(IRDLOperation):
+    name = "torch.aten.native_group_norm_backward"
     grad_out = operand_def(BaseAttr(TensorType))
     input = operand_def(BaseAttr(TensorType))
     mean = operand_def(BaseAttr(TensorType))
@@ -1349,8 +1349,8 @@ class Torch_AtenNativeGroupNormBackwardDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenNativeGroupNormDefaultOp(IRDLOperation):
-    name = "torch.aten.native_group_norm.default"
+class Torch_AtenNativeGroupNormOp(IRDLOperation):
+    name = "torch.aten.native_group_norm"
     input = operand_def(BaseAttr(TensorType))
     weight = operand_def(
         AnyOf(
@@ -1381,8 +1381,8 @@ class Torch_AtenNativeGroupNormDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenNativeLayerNormBackwardDefaultOp(IRDLOperation):
-    name = "torch.aten.native_layer_norm_backward.default"
+class Torch_AtenNativeLayerNormBackwardOp(IRDLOperation):
+    name = "torch.aten.native_layer_norm_backward"
     grad_out = operand_def(BaseAttr(TensorType))
     input = operand_def(BaseAttr(TensorType))
     normalized_shape = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
@@ -1417,8 +1417,8 @@ class Torch_AtenNativeLayerNormBackwardDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenNativeLayerNormDefaultOp(IRDLOperation):
-    name = "torch.aten.native_layer_norm.default"
+class Torch_AtenNativeLayerNormOp(IRDLOperation):
+    name = "torch.aten.native_layer_norm"
     input = operand_def(BaseAttr(TensorType))
     normalized_shape = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     weight = operand_def(
@@ -1472,8 +1472,8 @@ class Torch_AtenNeTensorOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenNegDefaultOp(IRDLOperation):
-    name = "torch.aten.neg.default"
+class Torch_AtenNegOp(IRDLOperation):
+    name = "torch.aten.neg"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1481,8 +1481,8 @@ class Torch_AtenNegDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenNonzeroDefaultOp(IRDLOperation):
-    name = "torch.aten.nonzero.default"
+class Torch_AtenNonzeroOp(IRDLOperation):
+    name = "torch.aten.nonzero"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1490,8 +1490,8 @@ class Torch_AtenNonzeroDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenPermuteDefaultOp(IRDLOperation):
-    name = "torch.aten.permute.default"
+class Torch_AtenPermuteOp(IRDLOperation):
+    name = "torch.aten.permute"
     self = operand_def(BaseAttr(TensorType))
     dims = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     result = result_def(BaseAttr(TensorType))
@@ -1536,25 +1536,6 @@ class Torch_AtenPowTensorTensorOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenProdDefaultOp(IRDLOperation):
-    name = "torch.aten.prod.default"
-    self = operand_def(BaseAttr(TensorType))
-    dtype = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
-    )
-    result = result_def(BaseAttr(TensorType))
-
-    assembly_format = (
-        "$self `,` $dtype attr-dict `:` type($self) `,` type($dtype) `->` type($result)"
-    )
-
-
-@irdl_op_definition
 class Torch_AtenProdDimIntOp(IRDLOperation):
     name = "torch.aten.prod.dim_int"
     self = operand_def(BaseAttr(TensorType))
@@ -1574,8 +1555,27 @@ class Torch_AtenProdDimIntOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenReciprocalDefaultOp(IRDLOperation):
-    name = "torch.aten.reciprocal.default"
+class Torch_AtenProdOp(IRDLOperation):
+    name = "torch.aten.prod"
+    self = operand_def(BaseAttr(TensorType))
+    dtype = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                EqAttrConstraint(attr=NoneType(parameters=())),
+            )
+        )
+    )
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = (
+        "$self `,` $dtype attr-dict `:` type($self) `,` type($dtype) `->` type($result)"
+    )
+
+
+@irdl_op_definition
+class Torch_AtenReciprocalOp(IRDLOperation):
+    name = "torch.aten.reciprocal"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1583,8 +1583,8 @@ class Torch_AtenReciprocalDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenReflectionPad1DDefaultOp(IRDLOperation):
-    name = "torch.aten.reflection_pad1d.default"
+class Torch_AtenReflectionPad1DOp(IRDLOperation):
+    name = "torch.aten.reflection_pad1d"
     self = operand_def(BaseAttr(TensorType))
     padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     result = result_def(BaseAttr(TensorType))
@@ -1593,8 +1593,8 @@ class Torch_AtenReflectionPad1DDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenReflectionPad2DDefaultOp(IRDLOperation):
-    name = "torch.aten.reflection_pad2d.default"
+class Torch_AtenReflectionPad2DOp(IRDLOperation):
+    name = "torch.aten.reflection_pad2d"
     self = operand_def(BaseAttr(TensorType))
     padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     result = result_def(BaseAttr(TensorType))
@@ -1603,8 +1603,8 @@ class Torch_AtenReflectionPad2DDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenReflectionPad3DDefaultOp(IRDLOperation):
-    name = "torch.aten.reflection_pad3d.default"
+class Torch_AtenReflectionPad3DOp(IRDLOperation):
+    name = "torch.aten.reflection_pad3d"
     self = operand_def(BaseAttr(TensorType))
     padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     result = result_def(BaseAttr(TensorType))
@@ -1613,8 +1613,8 @@ class Torch_AtenReflectionPad3DDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenReluDefaultOp(IRDLOperation):
-    name = "torch.aten.relu.default"
+class Torch_AtenReluOp(IRDLOperation):
+    name = "torch.aten.relu"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1648,8 +1648,8 @@ class Torch_AtenRemainderTensorOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenRepeatDefaultOp(IRDLOperation):
-    name = "torch.aten.repeat.default"
+class Torch_AtenRepeatOp(IRDLOperation):
+    name = "torch.aten.repeat"
     self = operand_def(BaseAttr(TensorType))
     repeats = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     result = result_def(BaseAttr(TensorType))
@@ -1658,8 +1658,8 @@ class Torch_AtenRepeatDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenReplicationPad2DDefaultOp(IRDLOperation):
-    name = "torch.aten.replication_pad2d.default"
+class Torch_AtenReplicationPad2DOp(IRDLOperation):
+    name = "torch.aten.replication_pad2d"
     self = operand_def(BaseAttr(TensorType))
     padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     result = result_def(BaseAttr(TensorType))
@@ -1668,8 +1668,8 @@ class Torch_AtenReplicationPad2DDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenReplicationPad3DDefaultOp(IRDLOperation):
-    name = "torch.aten.replication_pad3d.default"
+class Torch_AtenReplicationPad3DOp(IRDLOperation):
+    name = "torch.aten.replication_pad3d"
     self = operand_def(BaseAttr(TensorType))
     padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     result = result_def(BaseAttr(TensorType))
@@ -1678,8 +1678,8 @@ class Torch_AtenReplicationPad3DDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenRoundDefaultOp(IRDLOperation):
-    name = "torch.aten.round.default"
+class Torch_AtenRoundOp(IRDLOperation):
+    name = "torch.aten.round"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1687,8 +1687,8 @@ class Torch_AtenRoundDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenRsqrtDefaultOp(IRDLOperation):
-    name = "torch.aten.rsqrt.default"
+class Torch_AtenRsqrtOp(IRDLOperation):
+    name = "torch.aten.rsqrt"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1696,8 +1696,8 @@ class Torch_AtenRsqrtDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenScatterAddDefaultOp(IRDLOperation):
-    name = "torch.aten.scatter_add.default"
+class Torch_AtenScatterAddOp(IRDLOperation):
+    name = "torch.aten.scatter_add"
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(BaseAttr(IntegerType))
     index = operand_def(BaseAttr(TensorType))
@@ -1745,8 +1745,8 @@ class Torch_AtenSelectIntOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenSelectScatterDefaultOp(IRDLOperation):
-    name = "torch.aten.select_scatter.default"
+class Torch_AtenSelectScatterOp(IRDLOperation):
+    name = "torch.aten.select_scatter"
     self = operand_def(BaseAttr(TensorType))
     src = operand_def(BaseAttr(TensorType))
     dim = operand_def(BaseAttr(IntegerType))
@@ -1757,8 +1757,8 @@ class Torch_AtenSelectScatterDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenSigmoidDefaultOp(IRDLOperation):
-    name = "torch.aten.sigmoid.default"
+class Torch_AtenSigmoidOp(IRDLOperation):
+    name = "torch.aten.sigmoid"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1766,8 +1766,8 @@ class Torch_AtenSigmoidDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenSignDefaultOp(IRDLOperation):
-    name = "torch.aten.sign.default"
+class Torch_AtenSignOp(IRDLOperation):
+    name = "torch.aten.sign"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1775,8 +1775,8 @@ class Torch_AtenSignDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenSinDefaultOp(IRDLOperation):
-    name = "torch.aten.sin.default"
+class Torch_AtenSinOp(IRDLOperation):
+    name = "torch.aten.sin"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1784,8 +1784,8 @@ class Torch_AtenSinDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenSinhDefaultOp(IRDLOperation):
-    name = "torch.aten.sinh.default"
+class Torch_AtenSinhOp(IRDLOperation):
+    name = "torch.aten.sinh"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1793,8 +1793,8 @@ class Torch_AtenSinhDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenSliceScatterDefaultOp(IRDLOperation):
-    name = "torch.aten.slice_scatter.default"
+class Torch_AtenSliceScatterOp(IRDLOperation):
+    name = "torch.aten.slice_scatter"
     self = operand_def(BaseAttr(TensorType))
     src = operand_def(BaseAttr(TensorType))
     dim = operand_def(BaseAttr(IntegerType))
@@ -1848,8 +1848,8 @@ class Torch_AtenSliceTensorOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenSortDefaultOp(IRDLOperation):
-    name = "torch.aten.sort.default"
+class Torch_AtenSortOp(IRDLOperation):
+    name = "torch.aten.sort"
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(BaseAttr(IntegerType))
     descending = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
@@ -1860,8 +1860,8 @@ class Torch_AtenSortDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenSplitWithSizesDefaultOp(IRDLOperation):
-    name = "torch.aten.split_with_sizes.default"
+class Torch_AtenSplitWithSizesOp(IRDLOperation):
+    name = "torch.aten.split_with_sizes"
     self = operand_def(BaseAttr(TensorType))
     split_sizes = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     dim = operand_def(BaseAttr(IntegerType))
@@ -1871,8 +1871,8 @@ class Torch_AtenSplitWithSizesDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenSqrtDefaultOp(IRDLOperation):
-    name = "torch.aten.sqrt.default"
+class Torch_AtenSqrtOp(IRDLOperation):
+    name = "torch.aten.sqrt"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1958,8 +1958,8 @@ class Torch_AtenSumDimIntlistOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenSymNumelDefaultOp(IRDLOperation):
-    name = "torch.aten.sym_numel.default"
+class Torch_AtenSymNumelOp(IRDLOperation):
+    name = "torch.aten.sym_numel"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(IntegerType))
 
@@ -1967,8 +1967,8 @@ class Torch_AtenSymNumelDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenSymStorageOffsetDefaultOp(IRDLOperation):
-    name = "torch.aten.sym_storage_offset.default"
+class Torch_AtenSymStorageOffsetOp(IRDLOperation):
+    name = "torch.aten.sym_storage_offset"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(IntegerType))
 
@@ -1976,8 +1976,8 @@ class Torch_AtenSymStorageOffsetDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenTanDefaultOp(IRDLOperation):
-    name = "torch.aten.tan.default"
+class Torch_AtenTanOp(IRDLOperation):
+    name = "torch.aten.tan"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1985,8 +1985,8 @@ class Torch_AtenTanDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenTanhDefaultOp(IRDLOperation):
-    name = "torch.aten.tanh.default"
+class Torch_AtenTanhOp(IRDLOperation):
+    name = "torch.aten.tanh"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -1994,8 +1994,8 @@ class Torch_AtenTanhDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenTopkDefaultOp(IRDLOperation):
-    name = "torch.aten.topk.default"
+class Torch_AtenTopkOp(IRDLOperation):
+    name = "torch.aten.topk"
     self = operand_def(BaseAttr(TensorType))
     k = operand_def(BaseAttr(IntegerType))
     dim = operand_def(BaseAttr(IntegerType))
@@ -2008,8 +2008,8 @@ class Torch_AtenTopkDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenTruncDefaultOp(IRDLOperation):
-    name = "torch.aten.trunc.default"
+class Torch_AtenTruncOp(IRDLOperation):
+    name = "torch.aten.trunc"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
 
@@ -2017,8 +2017,8 @@ class Torch_AtenTruncDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenUnsqueezeDefaultOp(IRDLOperation):
-    name = "torch.aten.unsqueeze.default"
+class Torch_AtenUnsqueezeOp(IRDLOperation):
+    name = "torch.aten.unsqueeze"
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(BaseAttr(IntegerType))
     result = result_def(BaseAttr(TensorType))
@@ -2128,8 +2128,8 @@ class Torch_AtenVarDimOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_AtenViewDefaultOp(IRDLOperation):
-    name = "torch.aten.view.default"
+class Torch_AtenViewOp(IRDLOperation):
+    name = "torch.aten.view"
     self = operand_def(BaseAttr(TensorType))
     size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     result = result_def(BaseAttr(TensorType))
@@ -2151,8 +2151,8 @@ class Torch_AtenWhereSelfOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_Aten_AdaptiveAvgPool2DBackwardDefaultOp(IRDLOperation):
-    name = "torch.aten._adaptive_avg_pool2d_backward.default"
+class Torch_Aten_AdaptiveAvgPool2DBackwardOp(IRDLOperation):
+    name = "torch.aten._adaptive_avg_pool2d_backward"
     grad_output = operand_def(BaseAttr(TensorType))
     self = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
@@ -2161,8 +2161,8 @@ class Torch_Aten_AdaptiveAvgPool2DBackwardDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_Aten_AdaptiveAvgPool2DDefaultOp(IRDLOperation):
-    name = "torch.aten._adaptive_avg_pool2d.default"
+class Torch_Aten_AdaptiveAvgPool2DOp(IRDLOperation):
+    name = "torch.aten._adaptive_avg_pool2d"
     self = operand_def(BaseAttr(TensorType))
     output_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     result = result_def(BaseAttr(TensorType))
@@ -2171,8 +2171,8 @@ class Torch_Aten_AdaptiveAvgPool2DDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_Aten_AdaptiveAvgPool3DDefaultOp(IRDLOperation):
-    name = "torch.aten._adaptive_avg_pool3d.default"
+class Torch_Aten_AdaptiveAvgPool3DOp(IRDLOperation):
+    name = "torch.aten._adaptive_avg_pool3d"
     self = operand_def(BaseAttr(TensorType))
     output_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     result = result_def(BaseAttr(TensorType))
@@ -2181,8 +2181,8 @@ class Torch_Aten_AdaptiveAvgPool3DDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_Aten_CdistForwardDefaultOp(IRDLOperation):
-    name = "torch.aten._cdist_forward.default"
+class Torch_Aten_CdistForwardOp(IRDLOperation):
+    name = "torch.aten._cdist_forward"
     x1 = operand_def(BaseAttr(TensorType))
     x2 = operand_def(BaseAttr(TensorType))
     p = operand_def(BaseAttr(Float64Type))
@@ -2200,8 +2200,8 @@ class Torch_Aten_CdistForwardDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_Aten_EmbeddingBagDefaultOp(IRDLOperation):
-    name = "torch.aten._embedding_bag.default"
+class Torch_Aten_EmbeddingBagOp(IRDLOperation):
+    name = "torch.aten._embedding_bag"
     weight = operand_def(BaseAttr(TensorType))
     indices = operand_def(BaseAttr(TensorType))
     offsets = operand_def(BaseAttr(TensorType))
@@ -2231,8 +2231,8 @@ class Torch_Aten_EmbeddingBagDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_Aten_LocalScalarDenseDefaultOp(IRDLOperation):
-    name = "torch.aten._local_scalar_dense.default"
+class Torch_Aten_LocalScalarDenseOp(IRDLOperation):
+    name = "torch.aten._local_scalar_dense"
     self = operand_def(BaseAttr(TensorType))
     result = result_def(
         AnyOf(attr_constrs=(BaseAttr(IntegerType), BaseAttr(Float64Type)))
@@ -2242,8 +2242,8 @@ class Torch_Aten_LocalScalarDenseDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_Aten_LogSoftmaxDefaultOp(IRDLOperation):
-    name = "torch.aten._log_softmax.default"
+class Torch_Aten_LogSoftmaxOp(IRDLOperation):
+    name = "torch.aten._log_softmax"
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(BaseAttr(IntegerType))
     half_to_float = operand_def(
@@ -2252,38 +2252,6 @@ class Torch_Aten_LogSoftmaxDefaultOp(IRDLOperation):
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $dim `,` $half_to_float attr-dict `:` type($self) `,` type($dim) `,` type($half_to_float) `->` type($result)"
-
-
-@irdl_op_definition
-class Torch_Aten_NativeBatchNormLegitDefaultOp(IRDLOperation):
-    name = "torch.aten._native_batch_norm_legit.default"
-    input = operand_def(BaseAttr(TensorType))
-    weight = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
-    )
-    bias = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
-    )
-    running_mean = operand_def(BaseAttr(TensorType))
-    running_var = operand_def(BaseAttr(TensorType))
-    training = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
-    momentum = operand_def(BaseAttr(Float64Type))
-    eps = operand_def(BaseAttr(Float64Type))
-    result0 = result_def(BaseAttr(TensorType))
-    result1 = result_def(BaseAttr(TensorType))
-    result2 = result_def(BaseAttr(TensorType))
-
-    assembly_format = "$input `,` $weight `,` $bias `,` $running_mean `,` $running_var `,` $training `,` $momentum `,` $eps attr-dict `:` type($input) `,` type($weight) `,` type($bias) `,` type($running_mean) `,` type($running_var) `,` type($training) `,` type($momentum) `,` type($eps) `->` type($result0) `,` type($result1) `,` type($result2)"
 
 
 @irdl_op_definition
@@ -2317,8 +2285,8 @@ class Torch_Aten_NativeBatchNormLegitNoStatsOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_Aten_NativeBatchNormLegitNoTrainingDefaultOp(IRDLOperation):
-    name = "torch.aten._native_batch_norm_legit_no_training.default"
+class Torch_Aten_NativeBatchNormLegitNoTrainingOp(IRDLOperation):
+    name = "torch.aten._native_batch_norm_legit_no_training"
     input = operand_def(BaseAttr(TensorType))
     weight = operand_def(
         AnyOf(
@@ -2348,8 +2316,40 @@ class Torch_Aten_NativeBatchNormLegitNoTrainingDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_Aten_PdistForwardDefaultOp(IRDLOperation):
-    name = "torch.aten._pdist_forward.default"
+class Torch_Aten_NativeBatchNormLegitOp(IRDLOperation):
+    name = "torch.aten._native_batch_norm_legit"
+    input = operand_def(BaseAttr(TensorType))
+    weight = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(TensorType),
+                EqAttrConstraint(attr=NoneType(parameters=())),
+            )
+        )
+    )
+    bias = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(TensorType),
+                EqAttrConstraint(attr=NoneType(parameters=())),
+            )
+        )
+    )
+    running_mean = operand_def(BaseAttr(TensorType))
+    running_var = operand_def(BaseAttr(TensorType))
+    training = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    momentum = operand_def(BaseAttr(Float64Type))
+    eps = operand_def(BaseAttr(Float64Type))
+    result0 = result_def(BaseAttr(TensorType))
+    result1 = result_def(BaseAttr(TensorType))
+    result2 = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$input `,` $weight `,` $bias `,` $running_mean `,` $running_var `,` $training `,` $momentum `,` $eps attr-dict `:` type($input) `,` type($weight) `,` type($bias) `,` type($running_mean) `,` type($running_var) `,` type($training) `,` type($momentum) `,` type($eps) `->` type($result0) `,` type($result1) `,` type($result2)"
+
+
+@irdl_op_definition
+class Torch_Aten_PdistForwardOp(IRDLOperation):
+    name = "torch.aten._pdist_forward"
     self = operand_def(BaseAttr(TensorType))
     p = operand_def(BaseAttr(Float64Type))
     result = result_def(BaseAttr(TensorType))
@@ -2360,8 +2360,8 @@ class Torch_Aten_PdistForwardDefaultOp(IRDLOperation):
 
 
 @irdl_op_definition
-class Torch_Aten_SoftmaxDefaultOp(IRDLOperation):
-    name = "torch.aten._softmax.default"
+class Torch_Aten_SoftmaxOp(IRDLOperation):
+    name = "torch.aten._softmax"
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(BaseAttr(IntegerType))
     half_to_float = operand_def(
@@ -2396,173 +2396,173 @@ class Torch_PrimListConstructOp(IRDLOperation):
 TorchDialect = Dialect(
     "torch",
     [
-        Torch_AtenAbsDefaultOp,
-        Torch_AtenAcosDefaultOp,
-        Torch_AtenAcoshDefaultOp,
+        Torch_AtenAbsOp,
+        Torch_AtenAcosOp,
+        Torch_AtenAcoshOp,
         Torch_AtenAddScalarOp,
         Torch_AtenAddTensorOp,
-        Torch_AtenAddmmDefaultOp,
-        Torch_AtenAliasDefaultOp,
-        Torch_AtenAmaxDefaultOp,
-        Torch_AtenAminDefaultOp,
-        Torch_AtenAnyDefaultOp,
+        Torch_AtenAddmmOp,
+        Torch_AtenAliasOp,
+        Torch_AtenAmaxOp,
+        Torch_AtenAminOp,
         Torch_AtenAnyDimOp,
         Torch_AtenAnyDimsOp,
-        Torch_AtenArgmaxDefaultOp,
-        Torch_AtenArgminDefaultOp,
-        Torch_AtenAsStridedDefaultOp,
-        Torch_AtenAsinDefaultOp,
-        Torch_AtenAsinhDefaultOp,
-        Torch_AtenAtan2DefaultOp,
-        Torch_AtenAtanDefaultOp,
-        Torch_AtenAtanhDefaultOp,
-        Torch_AtenAvgPool2DBackwardDefaultOp,
-        Torch_AtenAvgPool2DDefaultOp,
-        Torch_AtenAvgPool3DDefaultOp,
+        Torch_AtenAnyOp,
+        Torch_AtenArgmaxOp,
+        Torch_AtenArgminOp,
+        Torch_AtenAsStridedOp,
+        Torch_AtenAsinOp,
+        Torch_AtenAsinhOp,
+        Torch_AtenAtan2Op,
+        Torch_AtenAtanOp,
+        Torch_AtenAtanhOp,
+        Torch_AtenAvgPool2DBackwardOp,
+        Torch_AtenAvgPool2DOp,
+        Torch_AtenAvgPool3DOp,
         Torch_AtenBitwiseAndScalarOp,
         Torch_AtenBitwiseAndTensorOp,
-        Torch_AtenBitwiseNotDefaultOp,
+        Torch_AtenBitwiseNotOp,
         Torch_AtenBitwiseOrScalarOp,
         Torch_AtenBitwiseOrTensorOp,
         Torch_AtenBitwiseXorScalarOp,
         Torch_AtenBitwiseXorTensorOp,
-        Torch_AtenBmmDefaultOp,
-        Torch_AtenCatDefaultOp,
-        Torch_AtenCeilDefaultOp,
-        Torch_AtenClampDefaultOp,
+        Torch_AtenBmmOp,
+        Torch_AtenCatOp,
+        Torch_AtenCeilOp,
+        Torch_AtenClampOp,
         Torch_AtenClampTensorOp,
-        Torch_AtenCloneDefaultOp,
-        Torch_AtenCol2ImDefaultOp,
-        Torch_AtenConstantPadNdDefaultOp,
-        Torch_AtenConvolutionBackwardDefaultOp,
-        Torch_AtenConvolutionDefaultOp,
-        Torch_AtenCopyDefaultOp,
-        Torch_AtenCosDefaultOp,
-        Torch_AtenCoshDefaultOp,
-        Torch_AtenCumsumDefaultOp,
-        Torch_AtenDiagonalDefaultOp,
+        Torch_AtenCloneOp,
+        Torch_AtenCol2ImOp,
+        Torch_AtenConstantPadNdOp,
+        Torch_AtenConvolutionBackwardOp,
+        Torch_AtenConvolutionOp,
+        Torch_AtenCopyOp,
+        Torch_AtenCosOp,
+        Torch_AtenCoshOp,
+        Torch_AtenCumsumOp,
+        Torch_AtenDiagonalOp,
         Torch_AtenDivScalarOp,
         Torch_AtenDivTensorOp,
-        Torch_AtenEmbeddingDefaultOp,
-        Torch_AtenEmbeddingDenseBackwardDefaultOp,
+        Torch_AtenEmbeddingDenseBackwardOp,
+        Torch_AtenEmbeddingOp,
         Torch_AtenEqScalarOp,
         Torch_AtenEqTensorOp,
-        Torch_AtenErfDefaultOp,
-        Torch_AtenExpDefaultOp,
-        Torch_AtenExpandDefaultOp,
-        Torch_AtenExpm1DefaultOp,
+        Torch_AtenErfOp,
+        Torch_AtenExpOp,
+        Torch_AtenExpandOp,
+        Torch_AtenExpm1Op,
         Torch_AtenFillScalarOp,
-        Torch_AtenFlipDefaultOp,
-        Torch_AtenFloorDefaultOp,
+        Torch_AtenFlipOp,
+        Torch_AtenFloorOp,
         Torch_AtenFmodScalarOp,
         Torch_AtenFmodTensorOp,
-        Torch_AtenGatherDefaultOp,
+        Torch_AtenGatherOp,
         Torch_AtenGeScalarOp,
         Torch_AtenGeTensorOp,
-        Torch_AtenGridSampler2DDefaultOp,
+        Torch_AtenGridSampler2DOp,
         Torch_AtenGtScalarOp,
         Torch_AtenGtTensorOp,
-        Torch_AtenHardtanhDefaultOp,
-        Torch_AtenIndexSelectDefaultOp,
-        Torch_AtenIsinfDefaultOp,
-        Torch_AtenIsnanDefaultOp,
+        Torch_AtenHardtanhOp,
+        Torch_AtenIndexSelectOp,
+        Torch_AtenIsinfOp,
+        Torch_AtenIsnanOp,
         Torch_AtenLeScalarOp,
         Torch_AtenLeTensorOp,
-        Torch_AtenLeakyReluDefaultOp,
-        Torch_AtenLog10DefaultOp,
-        Torch_AtenLog1PDefaultOp,
-        Torch_AtenLog2DefaultOp,
-        Torch_AtenLogDefaultOp,
-        Torch_AtenLogicalAndDefaultOp,
-        Torch_AtenLogicalNotDefaultOp,
-        Torch_AtenLogicalOrDefaultOp,
-        Torch_AtenLogicalXorDefaultOp,
+        Torch_AtenLeakyReluOp,
+        Torch_AtenLog10Op,
+        Torch_AtenLog1POp,
+        Torch_AtenLog2Op,
+        Torch_AtenLogOp,
+        Torch_AtenLogicalAndOp,
+        Torch_AtenLogicalNotOp,
+        Torch_AtenLogicalOrOp,
+        Torch_AtenLogicalXorOp,
         Torch_AtenLtScalarOp,
         Torch_AtenLtTensorOp,
-        Torch_AtenMaskedScatterDefaultOp,
+        Torch_AtenMaskedScatterOp,
         Torch_AtenMaxDimOp,
-        Torch_AtenMaxPool2DWithIndicesBackwardDefaultOp,
-        Torch_AtenMaxPool2DWithIndicesDefaultOp,
-        Torch_AtenMaxPool3DWithIndicesDefaultOp,
-        Torch_AtenMaximumDefaultOp,
-        Torch_AtenMeanDefaultOp,
+        Torch_AtenMaxPool2DWithIndicesBackwardOp,
+        Torch_AtenMaxPool2DWithIndicesOp,
+        Torch_AtenMaxPool3DWithIndicesOp,
+        Torch_AtenMaximumOp,
         Torch_AtenMeanDimOp,
+        Torch_AtenMeanOp,
         Torch_AtenMinDimOp,
-        Torch_AtenMinimumDefaultOp,
-        Torch_AtenMmDefaultOp,
+        Torch_AtenMinimumOp,
+        Torch_AtenMmOp,
         Torch_AtenMulScalarOp,
         Torch_AtenMulTensorOp,
-        Torch_AtenNativeDropoutDefaultOp,
-        Torch_AtenNativeGroupNormBackwardDefaultOp,
-        Torch_AtenNativeGroupNormDefaultOp,
-        Torch_AtenNativeLayerNormBackwardDefaultOp,
-        Torch_AtenNativeLayerNormDefaultOp,
+        Torch_AtenNativeDropoutOp,
+        Torch_AtenNativeGroupNormBackwardOp,
+        Torch_AtenNativeGroupNormOp,
+        Torch_AtenNativeLayerNormBackwardOp,
+        Torch_AtenNativeLayerNormOp,
         Torch_AtenNeScalarOp,
         Torch_AtenNeTensorOp,
-        Torch_AtenNegDefaultOp,
-        Torch_AtenNonzeroDefaultOp,
-        Torch_AtenPermuteDefaultOp,
+        Torch_AtenNegOp,
+        Torch_AtenNonzeroOp,
+        Torch_AtenPermuteOp,
         Torch_AtenPowScalarOp,
         Torch_AtenPowTensorScalarOp,
         Torch_AtenPowTensorTensorOp,
-        Torch_AtenProdDefaultOp,
         Torch_AtenProdDimIntOp,
-        Torch_AtenReciprocalDefaultOp,
-        Torch_AtenReflectionPad1DDefaultOp,
-        Torch_AtenReflectionPad2DDefaultOp,
-        Torch_AtenReflectionPad3DDefaultOp,
-        Torch_AtenReluDefaultOp,
+        Torch_AtenProdOp,
+        Torch_AtenReciprocalOp,
+        Torch_AtenReflectionPad1DOp,
+        Torch_AtenReflectionPad2DOp,
+        Torch_AtenReflectionPad3DOp,
+        Torch_AtenReluOp,
         Torch_AtenRemainderScalarOp,
         Torch_AtenRemainderTensorOp,
-        Torch_AtenRepeatDefaultOp,
-        Torch_AtenReplicationPad2DDefaultOp,
-        Torch_AtenReplicationPad3DDefaultOp,
-        Torch_AtenRoundDefaultOp,
-        Torch_AtenRsqrtDefaultOp,
-        Torch_AtenScatterAddDefaultOp,
+        Torch_AtenRepeatOp,
+        Torch_AtenReplicationPad2DOp,
+        Torch_AtenReplicationPad3DOp,
+        Torch_AtenRoundOp,
+        Torch_AtenRsqrtOp,
+        Torch_AtenScatterAddOp,
         Torch_AtenScatterSrcOp,
         Torch_AtenScatterValueOp,
         Torch_AtenSelectIntOp,
-        Torch_AtenSelectScatterDefaultOp,
-        Torch_AtenSigmoidDefaultOp,
-        Torch_AtenSignDefaultOp,
-        Torch_AtenSinDefaultOp,
-        Torch_AtenSinhDefaultOp,
-        Torch_AtenSliceScatterDefaultOp,
+        Torch_AtenSelectScatterOp,
+        Torch_AtenSigmoidOp,
+        Torch_AtenSignOp,
+        Torch_AtenSinOp,
+        Torch_AtenSinhOp,
+        Torch_AtenSliceScatterOp,
         Torch_AtenSliceTensorOp,
-        Torch_AtenSortDefaultOp,
-        Torch_AtenSplitWithSizesDefaultOp,
-        Torch_AtenSqrtDefaultOp,
+        Torch_AtenSortOp,
+        Torch_AtenSplitWithSizesOp,
+        Torch_AtenSqrtOp,
         Torch_AtenSqueezeDimOp,
         Torch_AtenSqueezeDimsOp,
         Torch_AtenSubScalarOp,
         Torch_AtenSubTensorOp,
         Torch_AtenSumDimIntlistOp,
-        Torch_AtenSymNumelDefaultOp,
-        Torch_AtenSymStorageOffsetDefaultOp,
-        Torch_AtenTanDefaultOp,
-        Torch_AtenTanhDefaultOp,
-        Torch_AtenTopkDefaultOp,
-        Torch_AtenTruncDefaultOp,
-        Torch_AtenUnsqueezeDefaultOp,
+        Torch_AtenSymNumelOp,
+        Torch_AtenSymStorageOffsetOp,
+        Torch_AtenTanOp,
+        Torch_AtenTanhOp,
+        Torch_AtenTopkOp,
+        Torch_AtenTruncOp,
+        Torch_AtenUnsqueezeOp,
         Torch_AtenUpsampleBilinear2DVecOp,
         Torch_AtenUpsampleNearest2DVecOp,
         Torch_AtenVarCorrectionOp,
         Torch_AtenVarDimOp,
-        Torch_AtenViewDefaultOp,
+        Torch_AtenViewOp,
         Torch_AtenWhereSelfOp,
-        Torch_Aten_AdaptiveAvgPool2DBackwardDefaultOp,
-        Torch_Aten_AdaptiveAvgPool2DDefaultOp,
-        Torch_Aten_AdaptiveAvgPool3DDefaultOp,
-        Torch_Aten_CdistForwardDefaultOp,
-        Torch_Aten_EmbeddingBagDefaultOp,
-        Torch_Aten_LocalScalarDenseDefaultOp,
-        Torch_Aten_LogSoftmaxDefaultOp,
-        Torch_Aten_NativeBatchNormLegitDefaultOp,
+        Torch_Aten_AdaptiveAvgPool2DBackwardOp,
+        Torch_Aten_AdaptiveAvgPool2DOp,
+        Torch_Aten_AdaptiveAvgPool3DOp,
+        Torch_Aten_CdistForwardOp,
+        Torch_Aten_EmbeddingBagOp,
+        Torch_Aten_LocalScalarDenseOp,
+        Torch_Aten_LogSoftmaxOp,
         Torch_Aten_NativeBatchNormLegitNoStatsOp,
-        Torch_Aten_NativeBatchNormLegitNoTrainingDefaultOp,
-        Torch_Aten_PdistForwardDefaultOp,
-        Torch_Aten_SoftmaxDefaultOp,
+        Torch_Aten_NativeBatchNormLegitNoTrainingOp,
+        Torch_Aten_NativeBatchNormLegitOp,
+        Torch_Aten_PdistForwardOp,
+        Torch_Aten_SoftmaxOp,
         Torch_ConstantNoneOp,
         Torch_PrimListConstructOp,
     ],

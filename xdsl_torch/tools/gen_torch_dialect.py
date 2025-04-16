@@ -184,19 +184,12 @@ def get_core_op_list() -> list[tuple[str, str, str, Any]]:
             for overload_name in opoverloadpacket._dir:
                 op = getattr(opoverloadpacket, overload_name)
                 if torch.Tag.core in op._tags:
+                    overload_name = "" if overload_name == "default" else overload_name
                     core_ops.append((ns, op_name, overload_name, op._schema))
     return core_ops
 
 
 def generate_ops() -> tuple[list[tuple[str, OpDef]], dict[str, str]]:
-    ## This is temporary solution
-    ## Not all ops are added to the registry by default
-    ## We'll come up with something better later
-    _ = torch.ops.aten.batch_norm  # type: ignore
-    _ = torch.ops.aten.adaptive_avg_pool2d.default  # type: ignore
-    _ = torch.ops.aten.flatten.using_ints  # type: ignore
-    ##
-
     op_class_mapping: dict[str, str] = {}
     ops: list[tuple[str, OpDef]] = []
 
