@@ -2,6 +2,10 @@ from itertools import zip_longest
 from typing import Any
 
 import torch
+from torch._subclasses import (
+    FakeTensor as TorchFakeTensor,
+)
+from torch.fx.passes.shape_prop import TensorMetadata
 from xdsl.builder import Builder
 from xdsl.dialects import arith, func
 from xdsl.dialects.builtin import (
@@ -12,7 +16,7 @@ from xdsl.dialects.builtin import (
     TensorType,
     VectorType,
 )
-from xdsl.ir import SSAValue
+from xdsl.ir import Attribute, SSAValue
 from xdsl.rewriter import InsertPoint
 
 from xdsl_torch.dialects.torch_dialect import (
@@ -103,6 +107,57 @@ def create_op_operands(
     return operands
 
 
+def get_tensor_type(shape: torch.Size, dtype: torch.dtype) -> TensorType:
+    return TensorType(
+        TORCH_DTYPE_TO_XDSL_TYPE[dtype],
+        shape,
+    )
+
+
+def value_info_to_type(
+    val: Any, tensor_meta: TensorMetadata | None = None
+) -> Attribute:
+    if tensor_meta is not None:
+        if isinstance(val, list):
+            raise NotImplementedError(
+                f"List metadata is currently not supported: {tensor_meta}"
+            )
+        return get_tensor_type(tensor_meta.shape, tensor_meta.dtype)
+
+    elif val is not None:
+        if isinstance(val, list):
+            raise NotImplementedError(f"List values are currently not supported: {val}")
+        if isinstance(val, TorchFakeTensor):
+            return get_tensor_type(val.shape, val.dtype)
+
+    raise NotImplementedError("Either value or tensor_meta should be defined")
+
+
+def node_val_to_type(node: torch.fx.Node) -> Attribute:
+    try:
+        tensor_meta = node.meta.get("tensor_meta")
+        val = node.meta.get("val")
+    except KeyError as e:
+        raise RuntimeError(
+            f"FIXME: Illegal access to torch.fx.Node.meta: {e} ({node.meta})"
+        )
+    return value_info_to_type(val, tensor_meta)
+
+
+def unpack_node_result_types(node: torch.fx.Node) -> list[Attribute]:
+    return_count = len(node.target._schema.returns)  # type: ignore
+    result_types: list[Attribute] = []
+
+    if return_count == 0:
+        result_types = []
+    elif return_count == 1:
+        result_types = [node_val_to_type(node)]
+    else:
+        result_types = [value_info_to_type(v) for v in node.meta["val"]]
+
+    return result_types
+
+
 def import_program(
     prog: torch.export.ExportedProgram, func_name: str = "main"
 ) -> func.FuncOp:
@@ -116,18 +171,14 @@ def import_program(
             all_producer_nodes[node.name] = node
 
     # Generate func signature
-    def make_tensor_type(
-        arg: torch.export.graph_signature.InputSpec
-        | torch.export.graph_signature.OutputSpec,
-    ):
-        tensor_meta = all_producer_nodes[arg.arg.name].meta["tensor_meta"]
-        return TensorType(
-            TORCH_DTYPE_TO_XDSL_TYPE[tensor_meta.dtype],
-            tensor_meta.shape,
-        )
-
-    inp_sign = list(map(make_tensor_type, prog.graph_signature.input_specs))
-    out_sign = list(map(make_tensor_type, prog.graph_signature.output_specs))
+    inp_sign = [
+        node_val_to_type(all_producer_nodes[arg.arg.name])
+        for arg in prog.graph_signature.input_specs
+    ]
+    out_sign = [
+        node_val_to_type(all_producer_nodes[arg.arg.name])
+        for arg in prog.graph_signature.output_specs
+    ]
 
     # Build a FuncOp
     func_op = func.FuncOp(func_name, (inp_sign, out_sign))
@@ -147,16 +198,12 @@ def import_program(
             operands = create_op_operands(node, xdsl_nodes, builder)
             new_op = XDSL_TORCH_OPS[node.target](
                 operands=operands,
-                result_types=[
-                    TensorType(
-                        TORCH_DTYPE_TO_XDSL_TYPE[node.meta["tensor_meta"].dtype],
-                        node.meta["tensor_meta"].shape,
-                    )
-                ],  # we currently think that everything returns a single tensor
+                result_types=unpack_node_result_types(node),
             )
             builder.insert(new_op)
             new_op.result.name_hint = node.name
             xdsl_nodes[node.name] = new_op
+
     builder.insert(
         func.ReturnOp(
             *[
