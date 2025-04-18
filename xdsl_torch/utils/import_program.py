@@ -1,7 +1,11 @@
+import operator
 from itertools import zip_longest
 from typing import Any
 
 import torch
+from torch._ops import (
+    OpOverload as TorchOpOverload,  # type: ignore
+)
 from torch._subclasses import (
     FakeTensor as TorchFakeTensor,
 )
@@ -25,6 +29,12 @@ from xdsl_torch.dialects.torch_dialect import (
 )
 from xdsl_torch.dialects.torch_mapping import XDSL_TORCH_OPS
 from xdsl_torch.utils.type_mapping import TORCH_DTYPE_TO_XDSL_TYPE
+
+
+def get_single(tup: tuple[Any, ...]) -> Any:
+    if len(tup) != 1:
+        raise ValueError(f"Tuple should have contained single value. Got: {tup}")
+    return tup[0]
 
 
 def create_constant_op_with_value(
@@ -58,7 +68,7 @@ def create_constant_op_with_value(
 
 
 def create_op_operands(
-    node: torch.fx.Node, xdsl_nodes: dict[str, SSAValue], builder: Builder
+    node: torch.fx.Node, xdsl_nodes: dict[str, tuple[SSAValue, ...]], builder: Builder
 ) -> list[SSAValue]:
     """
     Construct a list of operands for a target operation defined by `node`.
@@ -74,7 +84,7 @@ def create_op_operands(
             assert (
                 arg_value.name in xdsl_nodes
             ), f"Node {arg_value.name} should have been processed before"
-            operands.append(xdsl_nodes[arg_value.name])
+            operands.append(get_single(xdsl_nodes[arg_value.name]))
             continue
 
         if arg_value is None:
@@ -90,7 +100,7 @@ def create_op_operands(
             for v in value:  # type: ignore
                 new_name, new_const = create_constant_op_with_value(v)
                 builder.insert(new_const)
-                xdsl_nodes[new_name] = new_const.result
+                xdsl_nodes[new_name] = new_const.results
                 elements.append(new_const.result)
             new_name = "list"
             new_const = Torch_PrimListConstructOp(
@@ -100,7 +110,7 @@ def create_op_operands(
         else:
             new_name, new_const = create_constant_op_with_value(value)
 
-        xdsl_nodes[new_name] = new_const.result
+        xdsl_nodes[new_name] = new_const.results
         operands.append(new_const.result)
         builder.insert(new_const)
 
@@ -158,11 +168,47 @@ def unpack_node_result_types(node: torch.fx.Node) -> list[Attribute]:
     return result_types
 
 
+def import_torch_op_overload(
+    node: torch.fx.Node, xdsl_nodes: dict[str, tuple[SSAValue, ...]], builder: Builder
+):
+    if node.target not in XDSL_TORCH_OPS:
+        raise NotImplementedError(f"Unimplemented: target={node.target}, {node.meta}")
+
+    operands = create_op_operands(node, xdsl_nodes, builder)
+    result_types = unpack_node_result_types(node)
+    new_op = XDSL_TORCH_OPS[node.target](
+        operands=operands,
+        result_types=result_types,
+    )
+    print(new_op.results)
+    builder.insert(new_op)
+    xdsl_nodes[node.name] = new_op.results
+
+    if len(result_types) == 1:
+        new_op.result.name_hint = node.name
+
+
+def import_getitem(node: torch.fx.Node, xdsl_nodes: dict[str, tuple[SSAValue, ...]]):
+    ref_node, index = node.args
+    assert isinstance(
+        ref_node, torch.fx.Node
+    ), f"Unexpected getitem arguments: {node.args}"
+    assert isinstance(index, int), f"Unexpected getitem arguments: {node.args}"
+
+    if len(xdsl_nodes[ref_node.name]) > 1:
+        xdsl_nodes[node.name] = tuple([xdsl_nodes[ref_node.name][index]])
+    else:
+        raise NotImplementedError(
+            "getitem is currently only supported for multi output ops"
+        )
+
+
 def import_program(
     prog: torch.export.ExportedProgram, func_name: str = "main"
 ) -> func.FuncOp:
     placeholder_nodes: dict[str, torch.fx.Node] = {}
     all_producer_nodes: dict[str, torch.fx.Node] = {}
+
     for node in prog.graph.nodes:
         if node.op == "placeholder":
             placeholder_nodes[node.name] = node
@@ -184,30 +230,31 @@ def import_program(
     func_op = func.FuncOp(func_name, (inp_sign, out_sign))
     builder = Builder(InsertPoint.at_end(func_op.body.block))
 
-    xdsl_nodes: dict[str, SSAValue] = {}
+    xdsl_nodes: dict[str, tuple[SSAValue, ...]] = {}
     for i, original_arg in enumerate(prog.graph_signature.input_specs):
         func_op.args[i].name_hint = original_arg.arg.name
-        xdsl_nodes[original_arg.arg.name] = func_op.args[i]
+        xdsl_nodes[original_arg.arg.name] = tuple([func_op.args[i]])
 
     for node in prog.graph.nodes:
         if node.op == "call_function":
-            if node.target not in XDSL_TORCH_OPS:
+            if isinstance(node.target, TorchOpOverload):
+                import_torch_op_overload(node, xdsl_nodes, builder)
+            elif node.target == operator.getitem:
+                import_getitem(node, xdsl_nodes)
+            else:
                 raise NotImplementedError(
-                    f"Unimplemented: target={node.target}, {node.meta}"
+                    f"Target {node.target} is not supported in call_function"
                 )
-            operands = create_op_operands(node, xdsl_nodes, builder)
-            new_op = XDSL_TORCH_OPS[node.target](
-                operands=operands,
-                result_types=unpack_node_result_types(node),
-            )
-            builder.insert(new_op)
-            new_op.result.name_hint = node.name
-            xdsl_nodes[node.name] = new_op
+        elif node.op == "placeholder" or node.op == "output":
+            # we have already parsed this
+            continue
+        else:
+            raise NotImplementedError(f"Op {node.op} is not implemented")
 
     builder.insert(
         func.ReturnOp(
             *[
-                xdsl_nodes[out_node.arg.name]
+                get_single(xdsl_nodes[out_node.arg.name])
                 for out_node in prog.graph_signature.output_specs
             ]
         )

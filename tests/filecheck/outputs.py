@@ -15,10 +15,6 @@ exported_program: torch.export.ExportedProgram = export(
     MaxPool(), args=(torch.randn(1, 100, 100),)
 )
 
-print(exported_program.graph)
-
-# CHECK:        %int0 = arith.constant 0 : i32
-# CHECK-NEXT:   %int0_1 = arith.constant 0 : i32
-# CHECK-NEXT:   %int1 = arith.constant 1 : i32
-# CHECK-NEXT:   %diagonal = torch.aten.diagonal %x, %int0, %int0_1, %int1 : tensor<10x10xf32>, i32, i32, i32 -> tensor<10xf32>
+# CHECK:       %4, %5 = torch.aten.max_pool2d_with_indices %x, %0, %1, %2, %3, %boolFalse : tensor<1x100x100xf32>, vector<2xi32>, vector<2xi32>, vector<2xi32>, vector<2xi32>, i1 -> tensor<1x100x100xf32>, tensor<1x100x100xi64>
+# CHECK-NEXT:  func.return %4, %5 : tensor<1x100x100xf32>, tensor<1x100x100xi64>
 print(import_program(exported_program))
