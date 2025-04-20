@@ -180,7 +180,6 @@ def import_torch_op_overload(
         operands=operands,
         result_types=result_types,
     )
-    print(new_op.results)
     builder.insert(new_op)
     xdsl_nodes[node.name] = new_op.results
 
@@ -196,7 +195,7 @@ def import_getitem(node: torch.fx.Node, xdsl_nodes: dict[str, tuple[SSAValue, ..
     assert isinstance(index, int), f"Unexpected getitem arguments: {node.args}"
 
     if len(xdsl_nodes[ref_node.name]) > 1:
-        xdsl_nodes[node.name] = tuple([xdsl_nodes[ref_node.name][index]])
+        xdsl_nodes[node.name] = (xdsl_nodes[ref_node.name][index],)
     else:
         raise NotImplementedError(
             "getitem is currently only supported for multi output ops"
@@ -233,7 +232,7 @@ def import_program(
     xdsl_nodes: dict[str, tuple[SSAValue, ...]] = {}
     for i, original_arg in enumerate(prog.graph_signature.input_specs):
         func_op.args[i].name_hint = original_arg.arg.name
-        xdsl_nodes[original_arg.arg.name] = tuple([func_op.args[i]])
+        xdsl_nodes[original_arg.arg.name] = (func_op.args[i],)
 
     for node in prog.graph.nodes:
         if node.op == "call_function":
