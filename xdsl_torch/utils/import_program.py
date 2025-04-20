@@ -1,7 +1,15 @@
+import operator
 from itertools import zip_longest
 from typing import Any
 
 import torch
+from torch._ops import (
+    OpOverload as TorchOpOverload,  # type: ignore
+)
+from torch._subclasses import (
+    FakeTensor as TorchFakeTensor,
+)
+from torch.fx.passes.shape_prop import TensorMetadata
 from xdsl.builder import Builder
 from xdsl.dialects import arith, func
 from xdsl.dialects.builtin import (
@@ -12,7 +20,7 @@ from xdsl.dialects.builtin import (
     TensorType,
     VectorType,
 )
-from xdsl.ir import SSAValue
+from xdsl.ir import Attribute, SSAValue
 from xdsl.rewriter import InsertPoint
 
 from xdsl_torch.dialects.torch_dialect import (
@@ -21,6 +29,12 @@ from xdsl_torch.dialects.torch_dialect import (
 )
 from xdsl_torch.dialects.torch_mapping import XDSL_TORCH_OPS
 from xdsl_torch.utils.type_mapping import TORCH_DTYPE_TO_XDSL_TYPE
+
+
+def get_single(tup: tuple[Any, ...]) -> Any:
+    if len(tup) != 1:
+        raise ValueError(f"Tuple should have contained single value. Got: {tup}")
+    return tup[0]
 
 
 def create_constant_op_with_value(
@@ -54,7 +68,7 @@ def create_constant_op_with_value(
 
 
 def create_op_operands(
-    node: torch.fx.Node, xdsl_nodes: dict[str, SSAValue], builder: Builder
+    node: torch.fx.Node, xdsl_nodes: dict[str, tuple[SSAValue, ...]], builder: Builder
 ) -> list[SSAValue]:
     """
     Construct a list of operands for a target operation defined by `node`.
@@ -70,7 +84,7 @@ def create_op_operands(
             assert (
                 arg_value.name in xdsl_nodes
             ), f"Node {arg_value.name} should have been processed before"
-            operands.append(xdsl_nodes[arg_value.name])
+            operands.append(get_single(xdsl_nodes[arg_value.name]))
             continue
 
         if arg_value is None:
@@ -86,7 +100,7 @@ def create_op_operands(
             for v in value:  # type: ignore
                 new_name, new_const = create_constant_op_with_value(v)
                 builder.insert(new_const)
-                xdsl_nodes[new_name] = new_const.result
+                xdsl_nodes[new_name] = new_const.results
                 elements.append(new_const.result)
             new_name = "list"
             new_const = Torch_PrimListConstructOp(
@@ -96,11 +110,96 @@ def create_op_operands(
         else:
             new_name, new_const = create_constant_op_with_value(value)
 
-        xdsl_nodes[new_name] = new_const.result
+        xdsl_nodes[new_name] = new_const.results
         operands.append(new_const.result)
         builder.insert(new_const)
 
     return operands
+
+
+def get_tensor_type(shape: torch.Size, dtype: torch.dtype) -> TensorType:
+    return TensorType(
+        TORCH_DTYPE_TO_XDSL_TYPE[dtype],
+        shape,
+    )
+
+
+def value_info_to_type(
+    val: Any, tensor_meta: TensorMetadata | None = None
+) -> Attribute:
+    if tensor_meta is not None:
+        if isinstance(val, list):
+            raise NotImplementedError(
+                f"List metadata is currently not supported: {tensor_meta}"
+            )
+        return get_tensor_type(tensor_meta.shape, tensor_meta.dtype)
+
+    elif val is not None:
+        if isinstance(val, list):
+            raise NotImplementedError(f"List values are currently not supported: {val}")
+        if isinstance(val, TorchFakeTensor):
+            return get_tensor_type(val.shape, val.dtype)
+
+    raise NotImplementedError("Either value or tensor_meta should be defined")
+
+
+def node_val_to_type(node: torch.fx.Node) -> Attribute:
+    try:
+        tensor_meta = node.meta.get("tensor_meta")
+        val = node.meta.get("val")
+    except KeyError as e:
+        raise RuntimeError(
+            f"FIXME: Illegal access to torch.fx.Node.meta: {e} ({node.meta})"
+        )
+    return value_info_to_type(val, tensor_meta)
+
+
+def unpack_node_result_types(node: torch.fx.Node) -> list[Attribute]:
+    return_count = len(node.target._schema.returns)  # type: ignore
+    result_types: list[Attribute] = []
+
+    if return_count == 0:
+        result_types = []
+    elif return_count == 1:
+        result_types = [node_val_to_type(node)]
+    else:
+        result_types = [value_info_to_type(v) for v in node.meta["val"]]
+
+    return result_types
+
+
+def import_torch_op_overload(
+    node: torch.fx.Node, xdsl_nodes: dict[str, tuple[SSAValue, ...]], builder: Builder
+):
+    if node.target not in XDSL_TORCH_OPS:
+        raise NotImplementedError(f"Unimplemented: target={node.target}, {node.meta}")
+
+    operands = create_op_operands(node, xdsl_nodes, builder)
+    result_types = unpack_node_result_types(node)
+    new_op = XDSL_TORCH_OPS[node.target](
+        operands=operands,
+        result_types=result_types,
+    )
+    builder.insert(new_op)
+    xdsl_nodes[node.name] = new_op.results
+
+    if len(result_types) == 1:
+        new_op.result.name_hint = node.name
+
+
+def import_getitem(node: torch.fx.Node, xdsl_nodes: dict[str, tuple[SSAValue, ...]]):
+    ref_node, index = node.args
+    assert isinstance(
+        ref_node, torch.fx.Node
+    ), f"Unexpected getitem arguments: {node.args}"
+    assert isinstance(index, int), f"Unexpected getitem arguments: {node.args}"
+
+    if len(xdsl_nodes[ref_node.name]) > 1:
+        xdsl_nodes[node.name] = (xdsl_nodes[ref_node.name][index],)
+    else:
+        raise NotImplementedError(
+            "getitem is currently only supported for multi output ops"
+        )
 
 
 def import_program(
@@ -108,6 +207,7 @@ def import_program(
 ) -> func.FuncOp:
     placeholder_nodes: dict[str, torch.fx.Node] = {}
     all_producer_nodes: dict[str, torch.fx.Node] = {}
+
     for node in prog.graph.nodes:
         if node.op == "placeholder":
             placeholder_nodes[node.name] = node
@@ -116,51 +216,44 @@ def import_program(
             all_producer_nodes[node.name] = node
 
     # Generate func signature
-    def make_tensor_type(
-        arg: torch.export.graph_signature.InputSpec
-        | torch.export.graph_signature.OutputSpec,
-    ):
-        tensor_meta = all_producer_nodes[arg.arg.name].meta["tensor_meta"]
-        return TensorType(
-            TORCH_DTYPE_TO_XDSL_TYPE[tensor_meta.dtype],
-            tensor_meta.shape,
-        )
-
-    inp_sign = list(map(make_tensor_type, prog.graph_signature.input_specs))
-    out_sign = list(map(make_tensor_type, prog.graph_signature.output_specs))
+    inp_sign = [
+        node_val_to_type(all_producer_nodes[arg.arg.name])
+        for arg in prog.graph_signature.input_specs
+    ]
+    out_sign = [
+        node_val_to_type(all_producer_nodes[arg.arg.name])
+        for arg in prog.graph_signature.output_specs
+    ]
 
     # Build a FuncOp
     func_op = func.FuncOp(func_name, (inp_sign, out_sign))
     builder = Builder(InsertPoint.at_end(func_op.body.block))
 
-    xdsl_nodes: dict[str, SSAValue] = {}
+    xdsl_nodes: dict[str, tuple[SSAValue, ...]] = {}
     for i, original_arg in enumerate(prog.graph_signature.input_specs):
         func_op.args[i].name_hint = original_arg.arg.name
-        xdsl_nodes[original_arg.arg.name] = func_op.args[i]
+        xdsl_nodes[original_arg.arg.name] = (func_op.args[i],)
 
     for node in prog.graph.nodes:
         if node.op == "call_function":
-            if node.target not in XDSL_TORCH_OPS:
+            if isinstance(node.target, TorchOpOverload):
+                import_torch_op_overload(node, xdsl_nodes, builder)
+            elif node.target == operator.getitem:
+                import_getitem(node, xdsl_nodes)
+            else:
                 raise NotImplementedError(
-                    f"Unimplemented: target={node.target}, {node.meta}"
+                    f"Target {node.target} is not supported in call_function"
                 )
-            operands = create_op_operands(node, xdsl_nodes, builder)
-            new_op = XDSL_TORCH_OPS[node.target](
-                operands=operands,
-                result_types=[
-                    TensorType(
-                        TORCH_DTYPE_TO_XDSL_TYPE[node.meta["tensor_meta"].dtype],
-                        node.meta["tensor_meta"].shape,
-                    )
-                ],  # we currently think that everything returns a single tensor
-            )
-            builder.insert(new_op)
-            new_op.result.name_hint = node.name
-            xdsl_nodes[node.name] = new_op
+        elif node.op == "placeholder" or node.op == "output":
+            # we have already parsed this
+            continue
+        else:
+            raise NotImplementedError(f"Op {node.op} is not implemented")
+
     builder.insert(
         func.ReturnOp(
             *[
-                xdsl_nodes[out_node.arg.name]
+                get_single(xdsl_nodes[out_node.arg.name])
                 for out_node in prog.graph_signature.output_specs
             ]
         )
