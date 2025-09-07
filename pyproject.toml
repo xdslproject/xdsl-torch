@@ -15,7 +15,7 @@ xdsl-torch-opt = "xdsl_torch.tools.xdsl_torch_opt:main"
 
 [project.optional-dependencies]
 dev = [
-    "pyright==1.1.404",
+    "pyright==1.1.405",
     "lit<19.0.0",
     "pytest<8.5",
     "filecheck==1.0.3",
