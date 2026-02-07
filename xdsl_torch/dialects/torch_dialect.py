@@ -133,7 +133,7 @@ class Torch_AtenAnyDimsOp(IRDLOperation):
         AnyOf(
             attr_constrs=(
                 ContainerOf(elem_constr=BaseAttr(IntegerType)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -157,12 +157,7 @@ class Torch_AtenArgmaxOp(IRDLOperation):
     name = "torch.aten.argmax"
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     result = result_def(BaseAttr(TensorType))
@@ -175,12 +170,7 @@ class Torch_AtenArgminOp(IRDLOperation):
     name = "torch.aten.argmin"
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     result = result_def(BaseAttr(TensorType))
@@ -195,12 +185,7 @@ class Torch_AtenAsStridedOp(IRDLOperation):
     size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     stride = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     storage_offset = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -268,12 +253,7 @@ class Torch_AtenAvgPool2DBackwardOp(IRDLOperation):
         EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
     )
     divisor_override = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -292,12 +272,7 @@ class Torch_AtenAvgPool2DOp(IRDLOperation):
         EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
     )
     divisor_override = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -316,12 +291,7 @@ class Torch_AtenAvgPool3DOp(IRDLOperation):
         EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
     )
     divisor_override = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -455,7 +425,7 @@ class Torch_AtenClampOp(IRDLOperation):
             attr_constrs=(
                 BaseAttr(IntegerType),
                 BaseAttr(Float64Type),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -464,7 +434,7 @@ class Torch_AtenClampOp(IRDLOperation):
             attr_constrs=(
                 BaseAttr(IntegerType),
                 BaseAttr(Float64Type),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -478,20 +448,10 @@ class Torch_AtenClampTensorOp(IRDLOperation):
     name = "torch.aten.clamp.Tensor"
     self = operand_def(BaseAttr(TensorType))
     min = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     max = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -503,12 +463,7 @@ class Torch_AtenCloneOp(IRDLOperation):
     name = "torch.aten.clone"
     self = operand_def(BaseAttr(TensorType))
     memory_format = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -552,7 +507,7 @@ class Torch_AtenConvolutionBackwardOp(IRDLOperation):
         AnyOf(
             attr_constrs=(
                 ContainerOf(elem_constr=BaseAttr(IntegerType)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -580,12 +535,7 @@ class Torch_AtenConvolutionOp(IRDLOperation):
     input = operand_def(BaseAttr(TensorType))
     weight = operand_def(BaseAttr(TensorType))
     bias = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     stride = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
@@ -635,12 +585,7 @@ class Torch_AtenCumsumOp(IRDLOperation):
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(BaseAttr(IntegerType))
     dtype = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -1199,18 +1144,13 @@ class Torch_AtenMeanDimOp(IRDLOperation):
         AnyOf(
             attr_constrs=(
                 ContainerOf(elem_constr=BaseAttr(IntegerType)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
     keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     dtype = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -1222,12 +1162,7 @@ class Torch_AtenMeanOp(IRDLOperation):
     name = "torch.aten.mean"
     self = operand_def(BaseAttr(TensorType))
     dtype = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -1307,7 +1242,7 @@ class Torch_AtenNativeDropoutOp(IRDLOperation):
         AnyOf(
             attr_constrs=(
                 EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -1325,12 +1260,7 @@ class Torch_AtenNativeGroupNormBackwardOp(IRDLOperation):
     mean = operand_def(BaseAttr(TensorType))
     rstd = operand_def(BaseAttr(TensorType))
     weight = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     N = operand_def(BaseAttr(IntegerType))
     C = operand_def(BaseAttr(IntegerType))
@@ -1353,20 +1283,10 @@ class Torch_AtenNativeGroupNormOp(IRDLOperation):
     name = "torch.aten.native_group_norm"
     input = operand_def(BaseAttr(TensorType))
     weight = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     bias = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     N = operand_def(BaseAttr(IntegerType))
     C = operand_def(BaseAttr(IntegerType))
@@ -1389,20 +1309,10 @@ class Torch_AtenNativeLayerNormBackwardOp(IRDLOperation):
     mean = operand_def(BaseAttr(TensorType))
     rstd = operand_def(BaseAttr(TensorType))
     weight = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     bias = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     output_mask = operand_def(
         ContainerOf(
@@ -1422,20 +1332,10 @@ class Torch_AtenNativeLayerNormOp(IRDLOperation):
     input = operand_def(BaseAttr(TensorType))
     normalized_shape = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
     weight = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     bias = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     eps = operand_def(BaseAttr(Float64Type))
     result0 = result_def(BaseAttr(TensorType))
@@ -1542,12 +1442,7 @@ class Torch_AtenProdDimIntOp(IRDLOperation):
     dim = operand_def(BaseAttr(IntegerType))
     keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     dtype = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -1559,12 +1454,7 @@ class Torch_AtenProdOp(IRDLOperation):
     name = "torch.aten.prod"
     self = operand_def(BaseAttr(TensorType))
     dtype = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -1799,20 +1689,10 @@ class Torch_AtenSliceScatterOp(IRDLOperation):
     src = operand_def(BaseAttr(TensorType))
     dim = operand_def(BaseAttr(IntegerType))
     start = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     end = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     step = operand_def(BaseAttr(IntegerType))
     result = result_def(BaseAttr(TensorType))
@@ -1826,20 +1706,10 @@ class Torch_AtenSliceTensorOp(IRDLOperation):
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(BaseAttr(IntegerType))
     start = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     end = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     step = operand_def(BaseAttr(IntegerType))
     result = result_def(BaseAttr(TensorType))
@@ -1939,18 +1809,13 @@ class Torch_AtenSumDimIntlistOp(IRDLOperation):
         AnyOf(
             attr_constrs=(
                 ContainerOf(elem_constr=BaseAttr(IntegerType)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
     keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     dtype = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -2036,7 +1901,7 @@ class Torch_AtenUpsampleBilinear2DVecOp(IRDLOperation):
         AnyOf(
             attr_constrs=(
                 ContainerOf(elem_constr=BaseAttr(IntegerType)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -2047,7 +1912,7 @@ class Torch_AtenUpsampleBilinear2DVecOp(IRDLOperation):
         AnyOf(
             attr_constrs=(
                 ContainerOf(elem_constr=BaseAttr(Float64Type)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -2064,7 +1929,7 @@ class Torch_AtenUpsampleNearest2DVecOp(IRDLOperation):
         AnyOf(
             attr_constrs=(
                 ContainerOf(elem_constr=BaseAttr(IntegerType)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -2072,7 +1937,7 @@ class Torch_AtenUpsampleNearest2DVecOp(IRDLOperation):
         AnyOf(
             attr_constrs=(
                 ContainerOf(elem_constr=BaseAttr(Float64Type)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -2089,7 +1954,7 @@ class Torch_AtenVarCorrectionOp(IRDLOperation):
         AnyOf(
             attr_constrs=(
                 ContainerOf(elem_constr=BaseAttr(IntegerType)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -2098,7 +1963,7 @@ class Torch_AtenVarCorrectionOp(IRDLOperation):
             attr_constrs=(
                 BaseAttr(IntegerType),
                 BaseAttr(Float64Type),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -2116,7 +1981,7 @@ class Torch_AtenVarDimOp(IRDLOperation):
         AnyOf(
             attr_constrs=(
                 ContainerOf(elem_constr=BaseAttr(IntegerType)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -2187,12 +2052,7 @@ class Torch_Aten_CdistForwardOp(IRDLOperation):
     x2 = operand_def(BaseAttr(TensorType))
     p = operand_def(BaseAttr(Float64Type))
     compute_mode = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -2211,12 +2071,7 @@ class Torch_Aten_EmbeddingBagOp(IRDLOperation):
     mode = operand_def(BaseAttr(IntegerType))
     sparse = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     per_sample_weights = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     include_last_offset = operand_def(
         EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
@@ -2259,20 +2114,10 @@ class Torch_Aten_NativeBatchNormLegitNoStatsOp(IRDLOperation):
     name = "torch.aten._native_batch_norm_legit.no_stats"
     input = operand_def(BaseAttr(TensorType))
     weight = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     bias = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     training = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     momentum = operand_def(BaseAttr(Float64Type))
@@ -2289,20 +2134,10 @@ class Torch_Aten_NativeBatchNormLegitNoTrainingOp(IRDLOperation):
     name = "torch.aten._native_batch_norm_legit_no_training"
     input = operand_def(BaseAttr(TensorType))
     weight = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     bias = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     running_mean = operand_def(BaseAttr(TensorType))
     running_var = operand_def(BaseAttr(TensorType))
@@ -2320,20 +2155,10 @@ class Torch_Aten_NativeBatchNormLegitOp(IRDLOperation):
     name = "torch.aten._native_batch_norm_legit"
     input = operand_def(BaseAttr(TensorType))
     weight = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     bias = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     running_mean = operand_def(BaseAttr(TensorType))
     running_var = operand_def(BaseAttr(TensorType))
@@ -2375,9 +2200,9 @@ class Torch_Aten_SoftmaxOp(IRDLOperation):
 @irdl_op_definition
 class Torch_ConstantNoneOp(IRDLOperation):
     name = "torch.constant.none"
-    result = result_def(EqAttrConstraint(attr=NoneType(parameters=())))
+    result = result_def(EqAttrConstraint(attr=NoneType()))
 
-    traits = traits_def(ConstantLike(), Pure())
+    traits = traits_def(Pure())
 
     assembly_format = "attr-dict"
 
