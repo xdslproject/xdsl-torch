@@ -758,12 +758,16 @@ wheels = [
 
 [[package]]
 name = "xdsl"
-version = "0.31.2.dev56+gf4edec3d0"
-source = { git = "https://github.com/xdslproject/xdsl?rev=f4edec3d0134f1e2ab666e172672c0b8098ddb4b#f4edec3d0134f1e2ab666e172672c0b8098ddb4b" }
+version = "0.54.4"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "immutabledict" },
     { name = "ordered-set" },
     { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ba/5f/fb8d2119bb8d92fa5eba064ef9e25dd2f9bac51b417311ae340f42399c08/xdsl-0.54.4.tar.gz", hash = "sha256:c705ce888989c35548902748d82bca842cd58d0f80125a33fe99ed1d59df7d1c", size = 3874572, upload-time = "2025-10-31T09:51:13.151Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/43/9c/60b2177865495d9be1f1f19f3220f7ed7bd8dda697bc0cb016759b3dca19/xdsl-0.54.4-py3-none-any.whl", hash = "sha256:f823e764cbcbb1d0b49968cb64dd50f0596a4d9e8c0bac21b1bedc40dd05dd95", size = 4097163, upload-time = "2025-10-31T09:51:11.547Z" },
 ]
 
 [[package]]
@@ -801,7 +805,7 @@ requires-dist = [
     { name = "pyright", marker = "extra == 'dev'", specifier = "==1.1.408" },
     { name = "pytest", marker = "extra == 'dev'", specifier = "<9.1" },
     { name = "torch", specifier = ">=2.6.0" },
-    { name = "xdsl", git = "https://github.com/xdslproject/xdsl?rev=f4edec3d0134f1e2ab666e172672c0b8098ddb4b" },
+    { name = "xdsl", specifier = "~=0.54.0" },
 ]
 provides-extras = ["dev"]
 
