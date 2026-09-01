@@ -18,7 +18,7 @@ dev = [
     "pyright==1.1.411",
     "lit<19.0.0",
     "pytest<9.2",
-    "filecheck==1.0.3",
+    "filecheck==1.0.5",
     "pre-commit==4.6.2",
     "psutil==7.2.2",
 ]
