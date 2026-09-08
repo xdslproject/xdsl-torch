@@ -189,11 +189,11 @@ wheels = [
 
 [[package]]
 name = "lit"
-version = "18.1.8"
+version = "23.1.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/47/b4/d7e210971494db7b9a9ac48ff37dfa59a8b14c773f9cf47e6bda58411c0d/lit-18.1.8.tar.gz", hash = "sha256:47c174a186941ae830f04ded76a3444600be67d5e5fb8282c3783fba671c4edb", size = 161127, upload-time = "2024-06-25T14:33:14.489Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d0/4d/655d03b8a6ad89dbfe00cda03c84ef87f3143445deb4f3e69e2945a1d35b/lit-23.1.1.tar.gz", hash = "sha256:1e0d11e50ab83ecb88f5346c6698e30ba0dfea75630a4daefae0b0fb72d7f3f5", size = 199747, upload-time = "2026-09-08T11:00:57.575Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/96/06/b36f150fa7c5bcc96a31a4d19a20fddbd1d965b6f02510b57a3bb8d4b930/lit-18.1.8-py3-none-any.whl", hash = "sha256:a873ff7acd76e746368da32eb7355625e2e55a2baaab884c9cc130f2ee0300f7", size = 96365, upload-time = "2024-06-25T14:33:12.101Z" },
+    { url = "https://files.pythonhosted.org/packages/fc/89/ba0b96c97d4a78bdaeeabdc2d17177ba2d0e899e8457d85b758e95543699/lit-23.1.1-py3-none-any.whl", hash = "sha256:201adf4f4c73ef6ac6e5e62b01a51f0bf9cb229cc607e186ea96471506bf3e43", size = 111216, upload-time = "2026-09-08T11:00:55.905Z" },
 ]
 
 [[package]]
@@ -846,7 +846,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "filecheck", marker = "extra == 'dev'", specifier = "==1.0.6" },
-    { name = "lit", marker = "extra == 'dev'", specifier = "<19.0.0" },
+    { name = "lit", marker = "extra == 'dev'", specifier = "<23.1.2" },
     { name = "numpy", specifier = ">=2.2.4" },
     { name = "pre-commit", marker = "extra == 'dev'", specifier = "==4.6.2" },
     { name = "psutil", marker = "extra == 'dev'", specifier = "==7.2.2" },
