@@ -4,7 +4,12 @@ version = "0.1.0"
 description = "Use xDSL for custom compiler rewrites in PyTorch."
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["numpy>=2.2.4", "torch>=2.6.0", "xdsl~=0.71.0"]
+dependencies = [
+    "numpy>=2.2.4",
+    "torch>=2.6.0",
+    "typing-extensions>=4.13.0", # xDSL uses TypeForm but declares an older minimum.
+    "xdsl~=0.71.0",
+]
 
 [project.scripts]
 xdsl-torch-opt = "xdsl_torch.tools.xdsl_torch_opt:main"

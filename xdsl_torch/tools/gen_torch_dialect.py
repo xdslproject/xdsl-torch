@@ -5,14 +5,15 @@ from typing import Any
 import torch
 from xdsl.dialects.builtin import (
     AnyTensorTypeConstr,
-    ContainerOf,
     Float64Type,
     IntegerType,
     NoneType,
     Signedness,
+    container_of,
 )
 from xdsl.irdl import (
     AnyAttr,
+    AnyOf,
     AttrConstraint,
     Attribute,
     BaseAttr,
@@ -30,15 +31,15 @@ from xdsl.utils.dialect_codegen import dump_dialect_pyfile
 
 TORCH_TYPE_TO_ODS_TYPE: dict[str, AttrConstraint[Attribute]] = {
     "Tensor": AnyTensorTypeConstr,
-    "List[Tensor]": ContainerOf(AnyTensorTypeConstr),
+    "List[Tensor]": container_of(AnyTensorTypeConstr),
     "int": BaseAttr(IntegerType),
-    "List[int]": ContainerOf(IntegerType),
+    "List[int]": container_of(IntegerType),
     "float": BaseAttr(Float64Type),
-    "List[float]": ContainerOf(BaseAttr(Float64Type)),
+    "List[float]": container_of(BaseAttr(Float64Type)),
     "bool": EqAttrConstraint(IntegerType(1, Signedness.UNSIGNED)),
-    "List[bool]": ContainerOf(EqAttrConstraint(IntegerType(1, Signedness.UNSIGNED))),
+    "List[bool]": container_of(EqAttrConstraint(IntegerType(1, Signedness.UNSIGNED))),
     "number": BaseAttr(IntegerType) | BaseAttr(Float64Type),
-    "List[number]": ContainerOf(BaseAttr(IntegerType) | BaseAttr(Float64Type)),
+    "List[number]": container_of(BaseAttr(IntegerType) | BaseAttr(Float64Type)),
 }
 
 #### Non aten ops
@@ -57,7 +58,7 @@ custom_ops = [
         OpDef(
             name="torch.prim.ListConstruct",
             operands=[("elements", VarOperandDef(AnyAttr()))],
-            results=[("result", ResultDef(ContainerOf(AnyAttr())))],
+            results=[("result", ResultDef(container_of(AnyAttr())))],
             traits=traits_def(Pure()),
             assembly_format="$elements attr-dict `:` functional-type($elements, $result)",  # noqa: E501
         ),
@@ -97,7 +98,8 @@ def get_base_type(type_str: str) -> str:
 def get_operand_def(type_str: str) -> OperandDef:
     xdsl_type = TORCH_TYPE_TO_ODS_TYPE[get_base_type(type_str)]
     if "Optional" in type_str:
-        xdsl_type |= EqAttrConstraint(NoneType())
+        # AttrSetConstraint's repr is not Python; keep optional bools as AnyOf.
+        xdsl_type = AnyOf((xdsl_type, EqAttrConstraint(NoneType())))
     return OperandDef(xdsl_type)
 
 
