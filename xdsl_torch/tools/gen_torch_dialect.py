@@ -13,10 +13,10 @@ from xdsl.dialects.builtin import (
 )
 from xdsl.irdl import (
     AnyAttr,
+    AttrConstraint,
     Attribute,
     BaseAttr,
     EqAttrConstraint,
-    GenericAttrConstraint,
     OpDef,
     OperandDef,
     ResultDef,
@@ -24,12 +24,11 @@ from xdsl.irdl import (
     traits_def,
 )
 from xdsl.traits import (
-    ConstantLike,
     Pure,
 )
 from xdsl.utils.dialect_codegen import dump_dialect_pyfile
 
-TORCH_TYPE_TO_ODS_TYPE: dict[str, GenericAttrConstraint[Attribute]] = {
+TORCH_TYPE_TO_ODS_TYPE: dict[str, AttrConstraint[Attribute]] = {
     "Tensor": AnyTensorTypeConstr,
     "List[Tensor]": ContainerOf(AnyTensorTypeConstr),
     "int": BaseAttr(IntegerType),
@@ -49,7 +48,7 @@ custom_ops = [
         OpDef(
             name="torch.constant.none",
             results=[("result", ResultDef(EqAttrConstraint(NoneType())))],
-            traits=traits_def(ConstantLike(), Pure()),
+            traits=traits_def(Pure()),  # TODO: ConstantLike()
             assembly_format="attr-dict",
         ),
     ),
@@ -197,7 +196,7 @@ def generate_ops() -> tuple[list[tuple[str, OpDef]], dict[str, str]]:
     for ns, op_name, overload_name, schema in get_core_op_list():
         class_name, opdef = gen_irdl_op(ns, op_name, overload_name, schema)
         full_name = f"torch.ops.{ns}.{op_name}"
-        full_name += f".{overload_name if overload_name else "default"}"
+        full_name += f".{overload_name if overload_name else 'default'}"
 
         if not opdef or not class_name:
             warnings.warn(f"Couldn't generate {full_name}")
