@@ -7,8 +7,7 @@ requires-python = ">=3.10"
 dependencies = [
     "numpy>=2.2.4",
     "torch>=2.6.0",
-    "typing-extensions>=4.13.0", # xDSL uses TypeForm but declares an older minimum.
-    "xdsl~=0.71.0",
+    "xdsl @ git+https://github.com/xdslproject/xdsl.git@0112a62df5e5f6eee5da9e4aa316dd8035af820e",
 ]
 
 [project.scripts]
