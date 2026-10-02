@@ -5,18 +5,18 @@ from typing import Any
 import torch
 from xdsl.dialects.builtin import (
     AnyTensorTypeConstr,
-    ContainerOf,
     Float64Type,
     IntegerType,
     NoneType,
     Signedness,
+    container_of,
 )
 from xdsl.irdl import (
     AnyAttr,
+    AttrConstraint,
     Attribute,
     BaseAttr,
     EqAttrConstraint,
-    GenericAttrConstraint,
     OpDef,
     OperandDef,
     ResultDef,
@@ -24,22 +24,21 @@ from xdsl.irdl import (
     traits_def,
 )
 from xdsl.traits import (
-    ConstantLike,
     Pure,
 )
 from xdsl.utils.dialect_codegen import dump_dialect_pyfile
 
-TORCH_TYPE_TO_ODS_TYPE: dict[str, GenericAttrConstraint[Attribute]] = {
+TORCH_TYPE_TO_ODS_TYPE: dict[str, AttrConstraint[Attribute]] = {
     "Tensor": AnyTensorTypeConstr,
-    "List[Tensor]": ContainerOf(AnyTensorTypeConstr),
+    "List[Tensor]": container_of(AnyTensorTypeConstr),
     "int": BaseAttr(IntegerType),
-    "List[int]": ContainerOf(IntegerType),
+    "List[int]": container_of(IntegerType),
     "float": BaseAttr(Float64Type),
-    "List[float]": ContainerOf(BaseAttr(Float64Type)),
+    "List[float]": container_of(BaseAttr(Float64Type)),
     "bool": EqAttrConstraint(IntegerType(1, Signedness.UNSIGNED)),
-    "List[bool]": ContainerOf(EqAttrConstraint(IntegerType(1, Signedness.UNSIGNED))),
+    "List[bool]": container_of(EqAttrConstraint(IntegerType(1, Signedness.UNSIGNED))),
     "number": BaseAttr(IntegerType) | BaseAttr(Float64Type),
-    "List[number]": ContainerOf(BaseAttr(IntegerType) | BaseAttr(Float64Type)),
+    "List[number]": container_of(BaseAttr(IntegerType) | BaseAttr(Float64Type)),
 }
 
 #### Non aten ops
@@ -49,7 +48,7 @@ custom_ops = [
         OpDef(
             name="torch.constant.none",
             results=[("result", ResultDef(EqAttrConstraint(NoneType())))],
-            traits=traits_def(ConstantLike(), Pure()),
+            traits=traits_def(Pure()),  # TODO: ConstantLike()
             assembly_format="attr-dict",
         ),
     ),
@@ -58,7 +57,7 @@ custom_ops = [
         OpDef(
             name="torch.prim.ListConstruct",
             operands=[("elements", VarOperandDef(AnyAttr()))],
-            results=[("result", ResultDef(ContainerOf(AnyAttr())))],
+            results=[("result", ResultDef(container_of(AnyAttr())))],
             traits=traits_def(Pure()),
             assembly_format="$elements attr-dict `:` functional-type($elements, $result)",  # noqa: E501
         ),
@@ -198,7 +197,7 @@ def generate_ops() -> tuple[list[tuple[str, OpDef]], dict[str, str]]:
     for ns, op_name, overload_name, schema in get_core_op_list():
         class_name, opdef = gen_irdl_op(ns, op_name, overload_name, schema)
         full_name = f"torch.ops.{ns}.{op_name}"
-        full_name += f".{overload_name if overload_name else "default"}"
+        full_name += f".{overload_name if overload_name else 'default'}"
 
         if not opdef or not class_name:
             warnings.warn(f"Couldn't generate {full_name}")

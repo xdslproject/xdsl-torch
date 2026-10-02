@@ -52,7 +52,7 @@ def create_constant_op_with_value(
         case bool():
             attr = BoolAttr.from_bool(value)
         case int():
-            attr = IntegerAttr.from_int_and_width(value, 32)
+            attr = IntegerAttr(value, 32)
         case float():
             attr = FloatAttr(value, 32)
         case _:

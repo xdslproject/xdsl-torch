@@ -96,7 +96,19 @@ class Torch_AtenAliasOp(IRDLOperation):
 class Torch_AtenAmaxOp(IRDLOperation):
     name = "torch.aten.amax"
     self = operand_def(BaseAttr(TensorType))
-    dim = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    dim = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     result = result_def(BaseAttr(TensorType))
 
@@ -107,7 +119,19 @@ class Torch_AtenAmaxOp(IRDLOperation):
 class Torch_AtenAminOp(IRDLOperation):
     name = "torch.aten.amin"
     self = operand_def(BaseAttr(TensorType))
-    dim = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    dim = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     result = result_def(BaseAttr(TensorType))
 
@@ -132,8 +156,14 @@ class Torch_AtenAnyDimsOp(IRDLOperation):
     dim = operand_def(
         AnyOf(
             attr_constrs=(
-                ContainerOf(elem_constr=BaseAttr(IntegerType)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -157,12 +187,7 @@ class Torch_AtenArgmaxOp(IRDLOperation):
     name = "torch.aten.argmax"
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     result = result_def(BaseAttr(TensorType))
@@ -175,12 +200,7 @@ class Torch_AtenArgminOp(IRDLOperation):
     name = "torch.aten.argmin"
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     result = result_def(BaseAttr(TensorType))
@@ -192,15 +212,34 @@ class Torch_AtenArgminOp(IRDLOperation):
 class Torch_AtenAsStridedOp(IRDLOperation):
     name = "torch.aten.as_strided"
     self = operand_def(BaseAttr(TensorType))
-    size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    stride = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    storage_offset = operand_def(
+    size = operand_def(
         AnyOf(
             attr_constrs=(
                 BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
             )
         )
+    )
+    stride = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    storage_offset = operand_def(
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -260,20 +299,51 @@ class Torch_AtenAvgPool2DBackwardOp(IRDLOperation):
     name = "torch.aten.avg_pool2d_backward"
     grad_output = operand_def(BaseAttr(TensorType))
     self = operand_def(BaseAttr(TensorType))
-    kernel_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    stride = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    kernel_size = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    stride = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    padding = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     ceil_mode = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     count_include_pad = operand_def(
         EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
     )
     divisor_override = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -284,20 +354,51 @@ class Torch_AtenAvgPool2DBackwardOp(IRDLOperation):
 class Torch_AtenAvgPool2DOp(IRDLOperation):
     name = "torch.aten.avg_pool2d"
     self = operand_def(BaseAttr(TensorType))
-    kernel_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    stride = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    kernel_size = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    stride = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    padding = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     ceil_mode = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     count_include_pad = operand_def(
         EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
     )
     divisor_override = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -308,20 +409,51 @@ class Torch_AtenAvgPool2DOp(IRDLOperation):
 class Torch_AtenAvgPool3DOp(IRDLOperation):
     name = "torch.aten.avg_pool3d"
     self = operand_def(BaseAttr(TensorType))
-    kernel_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    stride = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    kernel_size = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    stride = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    padding = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     ceil_mode = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     count_include_pad = operand_def(
         EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
     )
     divisor_override = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -430,7 +562,16 @@ class Torch_AtenBmmOp(IRDLOperation):
 @irdl_op_definition
 class Torch_AtenCatOp(IRDLOperation):
     name = "torch.aten.cat"
-    tensors = operand_def(ContainerOf(elem_constr=BaseAttr(TensorType)))
+    tensors = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(TensorType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(TensorType), AnyAttr(), AnyAttr())
+                ),
+            )
+        )
+    )
     dim = operand_def(BaseAttr(IntegerType))
     result = result_def(BaseAttr(TensorType))
 
@@ -455,7 +596,7 @@ class Torch_AtenClampOp(IRDLOperation):
             attr_constrs=(
                 BaseAttr(IntegerType),
                 BaseAttr(Float64Type),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -464,7 +605,7 @@ class Torch_AtenClampOp(IRDLOperation):
             attr_constrs=(
                 BaseAttr(IntegerType),
                 BaseAttr(Float64Type),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -478,20 +619,10 @@ class Torch_AtenClampTensorOp(IRDLOperation):
     name = "torch.aten.clamp.Tensor"
     self = operand_def(BaseAttr(TensorType))
     min = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     max = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -503,12 +634,7 @@ class Torch_AtenCloneOp(IRDLOperation):
     name = "torch.aten.clone"
     self = operand_def(BaseAttr(TensorType))
     memory_format = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -519,11 +645,71 @@ class Torch_AtenCloneOp(IRDLOperation):
 class Torch_AtenCol2ImOp(IRDLOperation):
     name = "torch.aten.col2im"
     self = operand_def(BaseAttr(TensorType))
-    output_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    kernel_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    dilation = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    stride = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    output_size = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    kernel_size = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    dilation = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    padding = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    stride = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $output_size `,` $kernel_size `,` $dilation `,` $padding `,` $stride attr-dict `:` type($self) `,` type($output_size) `,` type($kernel_size) `,` type($dilation) `,` type($padding) `,` type($stride) `->` type($result)"
@@ -533,7 +719,19 @@ class Torch_AtenCol2ImOp(IRDLOperation):
 class Torch_AtenConstantPadNdOp(IRDLOperation):
     name = "torch.aten.constant_pad_nd"
     self = operand_def(BaseAttr(TensorType))
-    pad = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    pad = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     value = operand_def(
         AnyOf(attr_constrs=(BaseAttr(IntegerType), BaseAttr(Float64Type)))
     )
@@ -551,20 +749,92 @@ class Torch_AtenConvolutionBackwardOp(IRDLOperation):
     bias_sizes = operand_def(
         AnyOf(
             attr_constrs=(
-                ContainerOf(elem_constr=BaseAttr(IntegerType)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
-    stride = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    dilation = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    stride = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    padding = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    dilation = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     transposed = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
-    output_padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    output_padding = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     groups = operand_def(BaseAttr(IntegerType))
     output_mask = operand_def(
-        ContainerOf(
-            elem_constr=EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+        AnyOf(
+            attr_constrs=(
+                EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)),
+                ParamAttrConstraint(
+                    VectorType,
+                    (
+                        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)),
+                        AnyAttr(),
+                        AnyAttr(),
+                    ),
+                ),
+                ParamAttrConstraint(
+                    TensorType,
+                    (
+                        AnyAttr(),
+                        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)),
+                        AnyAttr(),
+                    ),
+                ),
+            )
         )
     )
     result0 = result_def(BaseAttr(TensorType))
@@ -580,18 +850,61 @@ class Torch_AtenConvolutionOp(IRDLOperation):
     input = operand_def(BaseAttr(TensorType))
     weight = operand_def(BaseAttr(TensorType))
     bias = operand_def(
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
+    )
+    stride = operand_def(
         AnyOf(
             attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
             )
         )
     )
-    stride = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    dilation = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    padding = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    dilation = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     transposed = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
-    output_padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    output_padding = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     groups = operand_def(BaseAttr(IntegerType))
     result = result_def(BaseAttr(TensorType))
 
@@ -635,12 +948,7 @@ class Torch_AtenCumsumOp(IRDLOperation):
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(BaseAttr(IntegerType))
     dtype = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -683,6 +991,24 @@ class Torch_AtenDivTensorOp(IRDLOperation):
     assembly_format = (
         "$self `,` $other attr-dict `:` type($self) `,` type($other) `->` type($result)"
     )
+
+
+@irdl_op_definition
+class Torch_AtenEluOp(IRDLOperation):
+    name = "torch.aten.elu"
+    self = operand_def(BaseAttr(TensorType))
+    alpha = operand_def(
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), BaseAttr(Float64Type)))
+    )
+    scale = operand_def(
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), BaseAttr(Float64Type)))
+    )
+    input_scale = operand_def(
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), BaseAttr(Float64Type)))
+    )
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $alpha `,` $scale `,` $input_scale attr-dict `:` type($self) `,` type($alpha) `,` type($scale) `,` type($input_scale) `->` type($result)"
 
 
 @irdl_op_definition
@@ -763,7 +1089,19 @@ class Torch_AtenExpOp(IRDLOperation):
 class Torch_AtenExpandOp(IRDLOperation):
     name = "torch.aten.expand"
     self = operand_def(BaseAttr(TensorType))
-    size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    size = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     implicit = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     result = result_def(BaseAttr(TensorType))
 
@@ -797,7 +1135,19 @@ class Torch_AtenFillScalarOp(IRDLOperation):
 class Torch_AtenFlipOp(IRDLOperation):
     name = "torch.aten.flip"
     self = operand_def(BaseAttr(TensorType))
-    dims = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    dims = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = (
@@ -1138,10 +1488,58 @@ class Torch_AtenMaxPool2DWithIndicesBackwardOp(IRDLOperation):
     name = "torch.aten.max_pool2d_with_indices_backward"
     grad_output = operand_def(BaseAttr(TensorType))
     self = operand_def(BaseAttr(TensorType))
-    kernel_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    stride = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    dilation = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    kernel_size = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    stride = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    padding = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    dilation = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     ceil_mode = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     indices = operand_def(BaseAttr(TensorType))
     result = result_def(BaseAttr(TensorType))
@@ -1153,10 +1551,58 @@ class Torch_AtenMaxPool2DWithIndicesBackwardOp(IRDLOperation):
 class Torch_AtenMaxPool2DWithIndicesOp(IRDLOperation):
     name = "torch.aten.max_pool2d_with_indices"
     self = operand_def(BaseAttr(TensorType))
-    kernel_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    stride = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    dilation = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    kernel_size = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    stride = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    padding = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    dilation = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     ceil_mode = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     result0 = result_def(BaseAttr(TensorType))
     result1 = result_def(BaseAttr(TensorType))
@@ -1168,10 +1614,58 @@ class Torch_AtenMaxPool2DWithIndicesOp(IRDLOperation):
 class Torch_AtenMaxPool3DWithIndicesOp(IRDLOperation):
     name = "torch.aten.max_pool3d_with_indices"
     self = operand_def(BaseAttr(TensorType))
-    kernel_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    stride = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    dilation = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    kernel_size = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    stride = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    padding = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    dilation = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     ceil_mode = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     result0 = result_def(BaseAttr(TensorType))
     result1 = result_def(BaseAttr(TensorType))
@@ -1198,19 +1692,20 @@ class Torch_AtenMeanDimOp(IRDLOperation):
     dim = operand_def(
         AnyOf(
             attr_constrs=(
-                ContainerOf(elem_constr=BaseAttr(IntegerType)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
     keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     dtype = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -1222,12 +1717,7 @@ class Torch_AtenMeanOp(IRDLOperation):
     name = "torch.aten.mean"
     self = operand_def(BaseAttr(TensorType))
     dtype = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -1304,12 +1794,7 @@ class Torch_AtenNativeDropoutOp(IRDLOperation):
     input = operand_def(BaseAttr(TensorType))
     p = operand_def(BaseAttr(Float64Type))
     train = operand_def(
-        AnyOf(
-            attr_constrs=(
-                EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AttrSetConstraint(frozenset([IntegerType(1, Signedness.UNSIGNED), NoneType()]))
     )
     result0 = result_def(BaseAttr(TensorType))
     result1 = result_def(BaseAttr(TensorType))
@@ -1325,20 +1810,33 @@ class Torch_AtenNativeGroupNormBackwardOp(IRDLOperation):
     mean = operand_def(BaseAttr(TensorType))
     rstd = operand_def(BaseAttr(TensorType))
     weight = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     N = operand_def(BaseAttr(IntegerType))
     C = operand_def(BaseAttr(IntegerType))
     HxW = operand_def(BaseAttr(IntegerType))
     group = operand_def(BaseAttr(IntegerType))
     output_mask = operand_def(
-        ContainerOf(
-            elem_constr=EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+        AnyOf(
+            attr_constrs=(
+                EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)),
+                ParamAttrConstraint(
+                    VectorType,
+                    (
+                        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)),
+                        AnyAttr(),
+                        AnyAttr(),
+                    ),
+                ),
+                ParamAttrConstraint(
+                    TensorType,
+                    (
+                        AnyAttr(),
+                        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)),
+                        AnyAttr(),
+                    ),
+                ),
+            )
         )
     )
     result0 = result_def(BaseAttr(TensorType))
@@ -1353,20 +1851,10 @@ class Torch_AtenNativeGroupNormOp(IRDLOperation):
     name = "torch.aten.native_group_norm"
     input = operand_def(BaseAttr(TensorType))
     weight = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     bias = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     N = operand_def(BaseAttr(IntegerType))
     C = operand_def(BaseAttr(IntegerType))
@@ -1385,28 +1873,48 @@ class Torch_AtenNativeLayerNormBackwardOp(IRDLOperation):
     name = "torch.aten.native_layer_norm_backward"
     grad_out = operand_def(BaseAttr(TensorType))
     input = operand_def(BaseAttr(TensorType))
-    normalized_shape = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    normalized_shape = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     mean = operand_def(BaseAttr(TensorType))
     rstd = operand_def(BaseAttr(TensorType))
     weight = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     bias = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     output_mask = operand_def(
-        ContainerOf(
-            elem_constr=EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
+        AnyOf(
+            attr_constrs=(
+                EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)),
+                ParamAttrConstraint(
+                    VectorType,
+                    (
+                        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)),
+                        AnyAttr(),
+                        AnyAttr(),
+                    ),
+                ),
+                ParamAttrConstraint(
+                    TensorType,
+                    (
+                        AnyAttr(),
+                        EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)),
+                        AnyAttr(),
+                    ),
+                ),
+            )
         )
     )
     result0 = result_def(BaseAttr(TensorType))
@@ -1420,22 +1928,24 @@ class Torch_AtenNativeLayerNormBackwardOp(IRDLOperation):
 class Torch_AtenNativeLayerNormOp(IRDLOperation):
     name = "torch.aten.native_layer_norm"
     input = operand_def(BaseAttr(TensorType))
-    normalized_shape = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
-    weight = operand_def(
+    normalized_shape = operand_def(
         AnyOf(
             attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
             )
         )
     )
+    weight = operand_def(
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
+    )
     bias = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     eps = operand_def(BaseAttr(Float64Type))
     result0 = result_def(BaseAttr(TensorType))
@@ -1493,7 +2003,19 @@ class Torch_AtenNonzeroOp(IRDLOperation):
 class Torch_AtenPermuteOp(IRDLOperation):
     name = "torch.aten.permute"
     self = operand_def(BaseAttr(TensorType))
-    dims = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    dims = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = (
@@ -1542,12 +2064,7 @@ class Torch_AtenProdDimIntOp(IRDLOperation):
     dim = operand_def(BaseAttr(IntegerType))
     keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     dtype = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -1559,12 +2076,7 @@ class Torch_AtenProdOp(IRDLOperation):
     name = "torch.aten.prod"
     self = operand_def(BaseAttr(TensorType))
     dtype = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -1586,7 +2098,19 @@ class Torch_AtenReciprocalOp(IRDLOperation):
 class Torch_AtenReflectionPad1DOp(IRDLOperation):
     name = "torch.aten.reflection_pad1d"
     self = operand_def(BaseAttr(TensorType))
-    padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    padding = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $padding attr-dict `:` type($self) `,` type($padding) `->` type($result)"
@@ -1596,7 +2120,19 @@ class Torch_AtenReflectionPad1DOp(IRDLOperation):
 class Torch_AtenReflectionPad2DOp(IRDLOperation):
     name = "torch.aten.reflection_pad2d"
     self = operand_def(BaseAttr(TensorType))
-    padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    padding = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $padding attr-dict `:` type($self) `,` type($padding) `->` type($result)"
@@ -1606,7 +2142,19 @@ class Torch_AtenReflectionPad2DOp(IRDLOperation):
 class Torch_AtenReflectionPad3DOp(IRDLOperation):
     name = "torch.aten.reflection_pad3d"
     self = operand_def(BaseAttr(TensorType))
-    padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    padding = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $padding attr-dict `:` type($self) `,` type($padding) `->` type($result)"
@@ -1651,7 +2199,19 @@ class Torch_AtenRemainderTensorOp(IRDLOperation):
 class Torch_AtenRepeatOp(IRDLOperation):
     name = "torch.aten.repeat"
     self = operand_def(BaseAttr(TensorType))
-    repeats = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    repeats = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $repeats attr-dict `:` type($self) `,` type($repeats) `->` type($result)"
@@ -1661,7 +2221,19 @@ class Torch_AtenRepeatOp(IRDLOperation):
 class Torch_AtenReplicationPad2DOp(IRDLOperation):
     name = "torch.aten.replication_pad2d"
     self = operand_def(BaseAttr(TensorType))
-    padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    padding = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $padding attr-dict `:` type($self) `,` type($padding) `->` type($result)"
@@ -1671,7 +2243,19 @@ class Torch_AtenReplicationPad2DOp(IRDLOperation):
 class Torch_AtenReplicationPad3DOp(IRDLOperation):
     name = "torch.aten.replication_pad3d"
     self = operand_def(BaseAttr(TensorType))
-    padding = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    padding = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $padding attr-dict `:` type($self) `,` type($padding) `->` type($result)"
@@ -1799,20 +2383,10 @@ class Torch_AtenSliceScatterOp(IRDLOperation):
     src = operand_def(BaseAttr(TensorType))
     dim = operand_def(BaseAttr(IntegerType))
     start = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     end = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     step = operand_def(BaseAttr(IntegerType))
     result = result_def(BaseAttr(TensorType))
@@ -1826,20 +2400,10 @@ class Torch_AtenSliceTensorOp(IRDLOperation):
     self = operand_def(BaseAttr(TensorType))
     dim = operand_def(BaseAttr(IntegerType))
     start = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     end = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     step = operand_def(BaseAttr(IntegerType))
     result = result_def(BaseAttr(TensorType))
@@ -1863,9 +2427,30 @@ class Torch_AtenSortOp(IRDLOperation):
 class Torch_AtenSplitWithSizesOp(IRDLOperation):
     name = "torch.aten.split_with_sizes"
     self = operand_def(BaseAttr(TensorType))
-    split_sizes = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    split_sizes = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     dim = operand_def(BaseAttr(IntegerType))
-    result = result_def(ContainerOf(elem_constr=BaseAttr(TensorType)))
+    result = result_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(TensorType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(TensorType), AnyAttr(), AnyAttr())
+                ),
+            )
+        )
+    )
 
     assembly_format = "$self `,` $split_sizes `,` $dim attr-dict `:` type($self) `,` type($split_sizes) `,` type($dim) `->` type($result)"
 
@@ -1895,7 +2480,19 @@ class Torch_AtenSqueezeDimOp(IRDLOperation):
 class Torch_AtenSqueezeDimsOp(IRDLOperation):
     name = "torch.aten.squeeze.dims"
     self = operand_def(BaseAttr(TensorType))
-    dim = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    dim = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = (
@@ -1938,19 +2535,20 @@ class Torch_AtenSumDimIntlistOp(IRDLOperation):
     dim = operand_def(
         AnyOf(
             attr_constrs=(
-                ContainerOf(elem_constr=BaseAttr(IntegerType)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
     keepdim = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     dtype = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -2035,8 +2633,14 @@ class Torch_AtenUpsampleBilinear2DVecOp(IRDLOperation):
     output_size = operand_def(
         AnyOf(
             attr_constrs=(
-                ContainerOf(elem_constr=BaseAttr(IntegerType)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -2046,8 +2650,14 @@ class Torch_AtenUpsampleBilinear2DVecOp(IRDLOperation):
     scale_factors = operand_def(
         AnyOf(
             attr_constrs=(
-                ContainerOf(elem_constr=BaseAttr(Float64Type)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                BaseAttr(Float64Type),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(Float64Type), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(Float64Type), AnyAttr())
+                ),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -2063,16 +2673,28 @@ class Torch_AtenUpsampleNearest2DVecOp(IRDLOperation):
     output_size = operand_def(
         AnyOf(
             attr_constrs=(
-                ContainerOf(elem_constr=BaseAttr(IntegerType)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
     scale_factors = operand_def(
         AnyOf(
             attr_constrs=(
-                ContainerOf(elem_constr=BaseAttr(Float64Type)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                BaseAttr(Float64Type),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(Float64Type), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(Float64Type), AnyAttr())
+                ),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -2088,8 +2710,14 @@ class Torch_AtenVarCorrectionOp(IRDLOperation):
     dim = operand_def(
         AnyOf(
             attr_constrs=(
-                ContainerOf(elem_constr=BaseAttr(IntegerType)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -2098,7 +2726,7 @@ class Torch_AtenVarCorrectionOp(IRDLOperation):
             attr_constrs=(
                 BaseAttr(IntegerType),
                 BaseAttr(Float64Type),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -2115,8 +2743,14 @@ class Torch_AtenVarDimOp(IRDLOperation):
     dim = operand_def(
         AnyOf(
             attr_constrs=(
-                ContainerOf(elem_constr=BaseAttr(IntegerType)),
-                EqAttrConstraint(attr=NoneType(parameters=())),
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+                EqAttrConstraint(attr=NoneType()),
             )
         )
     )
@@ -2131,7 +2765,19 @@ class Torch_AtenVarDimOp(IRDLOperation):
 class Torch_AtenViewOp(IRDLOperation):
     name = "torch.aten.view"
     self = operand_def(BaseAttr(TensorType))
-    size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    size = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = (
@@ -2164,7 +2810,19 @@ class Torch_Aten_AdaptiveAvgPool2DBackwardOp(IRDLOperation):
 class Torch_Aten_AdaptiveAvgPool2DOp(IRDLOperation):
     name = "torch.aten._adaptive_avg_pool2d"
     self = operand_def(BaseAttr(TensorType))
-    output_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    output_size = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $output_size attr-dict `:` type($self) `,` type($output_size) `->` type($result)"
@@ -2174,7 +2832,19 @@ class Torch_Aten_AdaptiveAvgPool2DOp(IRDLOperation):
 class Torch_Aten_AdaptiveAvgPool3DOp(IRDLOperation):
     name = "torch.aten._adaptive_avg_pool3d"
     self = operand_def(BaseAttr(TensorType))
-    output_size = operand_def(ContainerOf(elem_constr=BaseAttr(IntegerType)))
+    output_size = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
     result = result_def(BaseAttr(TensorType))
 
     assembly_format = "$self `,` $output_size attr-dict `:` type($self) `,` type($output_size) `->` type($result)"
@@ -2187,12 +2857,7 @@ class Torch_Aten_CdistForwardOp(IRDLOperation):
     x2 = operand_def(BaseAttr(TensorType))
     p = operand_def(BaseAttr(Float64Type))
     compute_mode = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(IntegerType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(IntegerType), EqAttrConstraint(attr=NoneType())))
     )
     result = result_def(BaseAttr(TensorType))
 
@@ -2211,12 +2876,7 @@ class Torch_Aten_EmbeddingBagOp(IRDLOperation):
     mode = operand_def(BaseAttr(IntegerType))
     sparse = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     per_sample_weights = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     include_last_offset = operand_def(
         EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED))
@@ -2228,6 +2888,54 @@ class Torch_Aten_EmbeddingBagOp(IRDLOperation):
     result3 = result_def(BaseAttr(TensorType))
 
     assembly_format = "$weight `,` $indices `,` $offsets `,` $scale_grad_by_freq `,` $mode `,` $sparse `,` $per_sample_weights `,` $include_last_offset `,` $padding_idx attr-dict `:` type($weight) `,` type($indices) `,` type($offsets) `,` type($scale_grad_by_freq) `,` type($mode) `,` type($sparse) `,` type($per_sample_weights) `,` type($include_last_offset) `,` type($padding_idx) `->` type($result0) `,` type($result1) `,` type($result2) `,` type($result3)"
+
+
+@irdl_op_definition
+class Torch_Aten_FftC2ROp(IRDLOperation):
+    name = "torch.aten._fft_c2r"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    normalization = operand_def(BaseAttr(IntegerType))
+    last_dim_size = operand_def(BaseAttr(IntegerType))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $normalization `,` $last_dim_size attr-dict `:` type($self) `,` type($dim) `,` type($normalization) `,` type($last_dim_size) `->` type($result)"
+
+
+@irdl_op_definition
+class Torch_Aten_FftR2COp(IRDLOperation):
+    name = "torch.aten._fft_r2c"
+    self = operand_def(BaseAttr(TensorType))
+    dim = operand_def(
+        AnyOf(
+            attr_constrs=(
+                BaseAttr(IntegerType),
+                ParamAttrConstraint(
+                    VectorType, (BaseAttr(IntegerType), AnyAttr(), AnyAttr())
+                ),
+                ParamAttrConstraint(
+                    TensorType, (AnyAttr(), BaseAttr(IntegerType), AnyAttr())
+                ),
+            )
+        )
+    )
+    normalization = operand_def(BaseAttr(IntegerType))
+    onesided = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
+    result = result_def(BaseAttr(TensorType))
+
+    assembly_format = "$self `,` $dim `,` $normalization `,` $onesided attr-dict `:` type($self) `,` type($dim) `,` type($normalization) `,` type($onesided) `->` type($result)"
 
 
 @irdl_op_definition
@@ -2259,20 +2967,10 @@ class Torch_Aten_NativeBatchNormLegitNoStatsOp(IRDLOperation):
     name = "torch.aten._native_batch_norm_legit.no_stats"
     input = operand_def(BaseAttr(TensorType))
     weight = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     bias = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     training = operand_def(EqAttrConstraint(attr=IntegerType(1, Signedness.UNSIGNED)))
     momentum = operand_def(BaseAttr(Float64Type))
@@ -2289,20 +2987,10 @@ class Torch_Aten_NativeBatchNormLegitNoTrainingOp(IRDLOperation):
     name = "torch.aten._native_batch_norm_legit_no_training"
     input = operand_def(BaseAttr(TensorType))
     weight = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     bias = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     running_mean = operand_def(BaseAttr(TensorType))
     running_var = operand_def(BaseAttr(TensorType))
@@ -2320,20 +3008,10 @@ class Torch_Aten_NativeBatchNormLegitOp(IRDLOperation):
     name = "torch.aten._native_batch_norm_legit"
     input = operand_def(BaseAttr(TensorType))
     weight = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     bias = operand_def(
-        AnyOf(
-            attr_constrs=(
-                BaseAttr(TensorType),
-                EqAttrConstraint(attr=NoneType(parameters=())),
-            )
-        )
+        AnyOf(attr_constrs=(BaseAttr(TensorType), EqAttrConstraint(attr=NoneType())))
     )
     running_mean = operand_def(BaseAttr(TensorType))
     running_var = operand_def(BaseAttr(TensorType))
@@ -2375,9 +3053,9 @@ class Torch_Aten_SoftmaxOp(IRDLOperation):
 @irdl_op_definition
 class Torch_ConstantNoneOp(IRDLOperation):
     name = "torch.constant.none"
-    result = result_def(EqAttrConstraint(attr=NoneType(parameters=())))
+    result = result_def(EqAttrConstraint(attr=NoneType()))
 
-    traits = traits_def(ConstantLike(), Pure())
+    traits = traits_def(Pure())
 
     assembly_format = "attr-dict"
 
@@ -2386,7 +3064,7 @@ class Torch_ConstantNoneOp(IRDLOperation):
 class Torch_PrimListConstructOp(IRDLOperation):
     name = "torch.prim.ListConstruct"
     elements = var_operand_def(AnyAttr())
-    result = result_def(ContainerOf(elem_constr=AnyAttr()))
+    result = result_def(AnyAttr())
 
     traits = traits_def(Pure())
 
@@ -2443,6 +3121,7 @@ TorchDialect = Dialect(
         Torch_AtenDiagonalOp,
         Torch_AtenDivScalarOp,
         Torch_AtenDivTensorOp,
+        Torch_AtenEluOp,
         Torch_AtenEmbeddingDenseBackwardOp,
         Torch_AtenEmbeddingOp,
         Torch_AtenEqScalarOp,
@@ -2556,6 +3235,8 @@ TorchDialect = Dialect(
         Torch_Aten_AdaptiveAvgPool3DOp,
         Torch_Aten_CdistForwardOp,
         Torch_Aten_EmbeddingBagOp,
+        Torch_Aten_FftC2ROp,
+        Torch_Aten_FftR2COp,
         Torch_Aten_LocalScalarDenseOp,
         Torch_Aten_LogSoftmaxOp,
         Torch_Aten_NativeBatchNormLegitNoStatsOp,

@@ -13,6 +13,8 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten._adaptive_avg_pool3d.default: Torch_Aten_AdaptiveAvgPool3DOp,  # type: ignore
     torch.ops.aten._cdist_forward.default: Torch_Aten_CdistForwardOp,  # type: ignore
     torch.ops.aten._embedding_bag.default: Torch_Aten_EmbeddingBagOp,  # type: ignore
+    torch.ops.aten._fft_c2r.default: Torch_Aten_FftC2ROp,  # type: ignore
+    torch.ops.aten._fft_r2c.default: Torch_Aten_FftR2COp,  # type: ignore
     torch.ops.aten._local_scalar_dense.default: Torch_Aten_LocalScalarDenseOp,  # type: ignore
     torch.ops.aten._log_softmax.default: Torch_Aten_LogSoftmaxOp,  # type: ignore
     torch.ops.aten._native_batch_norm_legit.default: Torch_Aten_NativeBatchNormLegitOp,  # type: ignore
@@ -67,6 +69,7 @@ XDSL_TORCH_OPS: Dict[Any, type] = {
     torch.ops.aten.diagonal.default: Torch_AtenDiagonalOp,  # type: ignore
     torch.ops.aten.div.Scalar: Torch_AtenDivScalarOp,  # type: ignore
     torch.ops.aten.div.Tensor: Torch_AtenDivTensorOp,  # type: ignore
+    torch.ops.aten.elu.default: Torch_AtenEluOp,  # type: ignore
     torch.ops.aten.embedding.default: Torch_AtenEmbeddingOp,  # type: ignore
     torch.ops.aten.embedding_dense_backward.default: Torch_AtenEmbeddingDenseBackwardOp,  # type: ignore
     torch.ops.aten.eq.Scalar: Torch_AtenEqScalarOp,  # type: ignore
