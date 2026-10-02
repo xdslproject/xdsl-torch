@@ -810,8 +810,8 @@ wheels = [
 
 [[package]]
 name = "xdsl"
-version = "0.71.1.dev33+g0112a62df"
-source = { git = "https://github.com/xdslproject/xdsl.git?rev=0112a62df5e5f6eee5da9e4aa316dd8035af820e#0112a62df5e5f6eee5da9e4aa316dd8035af820e" }
+version = "0.71.1.dev52+g13cb0d3b1"
+source = { git = "https://github.com/xdslproject/xdsl.git?rev=13cb0d3b117498c2cbf1d0d047bdf33ecd6332e5#13cb0d3b117498c2cbf1d0d047bdf33ecd6332e5" }
 dependencies = [
     { name = "immutabledict" },
     { name = "ordered-set" },
@@ -853,7 +853,7 @@ requires-dist = [
     { name = "pyright", marker = "extra == 'dev'", specifier = "==1.1.414" },
     { name = "pytest", marker = "extra == 'dev'", specifier = "<9.2" },
     { name = "torch", specifier = ">=2.6.0" },
-    { name = "xdsl", git = "https://github.com/xdslproject/xdsl.git?rev=0112a62df5e5f6eee5da9e4aa316dd8035af820e" },
+    { name = "xdsl", git = "https://github.com/xdslproject/xdsl.git?rev=13cb0d3b117498c2cbf1d0d047bdf33ecd6332e5" },
 ]
 provides-extras = ["dev"]
 

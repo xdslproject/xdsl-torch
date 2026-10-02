@@ -13,7 +13,6 @@ from xdsl.dialects.builtin import (
 )
 from xdsl.irdl import (
     AnyAttr,
-    AnyOf,
     AttrConstraint,
     Attribute,
     BaseAttr,
@@ -98,8 +97,7 @@ def get_base_type(type_str: str) -> str:
 def get_operand_def(type_str: str) -> OperandDef:
     xdsl_type = TORCH_TYPE_TO_ODS_TYPE[get_base_type(type_str)]
     if "Optional" in type_str:
-        # AttrSetConstraint's repr is not Python; keep optional bools as AnyOf.
-        xdsl_type = AnyOf((xdsl_type, EqAttrConstraint(NoneType())))
+        xdsl_type |= EqAttrConstraint(NoneType())
     return OperandDef(xdsl_type)
 
 
