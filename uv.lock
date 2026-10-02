@@ -810,12 +810,16 @@ wheels = [
 
 [[package]]
 name = "xdsl"
-version = "0.71.1.dev52+g13cb0d3b1"
-source = { git = "https://github.com/xdslproject/xdsl.git?rev=13cb0d3b117498c2cbf1d0d047bdf33ecd6332e5#13cb0d3b117498c2cbf1d0d047bdf33ecd6332e5" }
+version = "0.72.0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "immutabledict" },
     { name = "ordered-set" },
     { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/4b/20/2d1108d600087984b36b7c650266ec58cb202abc61b09da6ede1c2d80081/xdsl-0.72.0.tar.gz", hash = "sha256:0e231bca2196216c37bc5567f5321e7e036aa868e2f537d68013deef0dd4085f", size = 4256174, upload-time = "2026-10-02T06:29:21.723Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6f/64/0584bd5c69d4cfa3971aefadea108f8866f8a1cfa96598c7c862b0b59591/xdsl-0.72.0-py3-none-any.whl", hash = "sha256:894539ef6ca51d30398007b5f1ddc662127a01d81dfb20c289b7734f27baeb6c", size = 4563279, upload-time = "2026-10-02T06:29:20.027Z" },
 ]
 
 [[package]]
@@ -853,7 +857,7 @@ requires-dist = [
     { name = "pyright", marker = "extra == 'dev'", specifier = "==1.1.414" },
     { name = "pytest", marker = "extra == 'dev'", specifier = "<9.2" },
     { name = "torch", specifier = ">=2.6.0" },
-    { name = "xdsl", git = "https://github.com/xdslproject/xdsl.git?rev=13cb0d3b117498c2cbf1d0d047bdf33ecd6332e5" },
+    { name = "xdsl", specifier = "~=0.72.0" },
 ]
 provides-extras = ["dev"]
 
