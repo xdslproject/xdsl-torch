@@ -3,7 +3,7 @@ name = "xdsl_torch"
 version = "0.1.0"
 description = "Use xDSL for custom compiler rewrites in PyTorch."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = ["numpy>=2.2.4", "torch>=2.6.0", "xdsl~=0.73.0"]
 
 [project.scripts]
@@ -36,7 +36,7 @@ include = ["xdsl_torch"]
 ]
 
 [tool.ruff]
-target-version = "py310"
+target-version = "py311"
 extend-include = ["*.ipynb", "*.pyi"]
 
 [tool.ruff.lint]
