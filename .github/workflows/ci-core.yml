@@ -34,7 +34,7 @@ jobs:
       run: uv python install ${{ matrix.python-version }}
 
     - name: Install the package locally
-      run: uv sync
+      run: uv sync --locked
 
     - name: Run all tests
       run: make tests
