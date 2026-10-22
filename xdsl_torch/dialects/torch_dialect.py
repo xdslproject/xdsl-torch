@@ -11,6 +11,11 @@ from xdsl.traits import *
 # ruff: noqa: F403, F405
 
 
+@irdl_attr_definition
+class Torch_IntType(ParametrizedAttribute, TypeAttribute):
+    name = "torch.int"
+
+
 @irdl_op_definition
 class Torch_AtenAbsOp(IRDLOperation):
     name = "torch.aten.abs"
@@ -3247,5 +3252,5 @@ TorchDialect = Dialect(
         Torch_ConstantNoneOp,
         Torch_PrimListConstructOp,
     ],
-    [],
+    [Torch_IntType],
 )
