@@ -4,13 +4,17 @@ version = "0.1.0"
 description = "Use xDSL for custom compiler rewrites in PyTorch."
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = ["numpy>=2.2.4", "xdsl~=0.74.0"]
+dependencies = [
+    "numpy>=2.2.4",
+    "xdsl~=0.74.0",
+    "torch==2.14.1",
+    "torch-mlir==20261001",
+]
 
 [project.scripts]
 xdsl-torch-opt = "xdsl_torch.tools.xdsl_torch_opt:main"
 
 [project.optional-dependencies]
-torch = ["torch==2.14.1", "torch-mlir==20261001"]
 dev = [
     "pyright==1.1.414",
     "lit<23.1.5",
@@ -21,7 +25,7 @@ dev = [
 ]
 
 [dependency-groups]
-dev = ["xdsl_torch[dev,torch]"]
+dev = ["xdsl_torch[dev]"]
 
 [build-system]
 requires = ["setuptools>=61", "wheel"]

@@ -752,6 +752,8 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "numpy" },
+    { name = "torch" },
+    { name = "torch-mlir" },
     { name = "xdsl" },
 ]
 
@@ -764,14 +766,10 @@ dev = [
     { name = "pyright" },
     { name = "pytest" },
 ]
-torch = [
-    { name = "torch" },
-    { name = "torch-mlir" },
-]
 
 [package.dev-dependencies]
 dev = [
-    { name = "xdsl-torch", extra = ["dev", "torch"] },
+    { name = "xdsl-torch", extra = ["dev"] },
 ]
 
 [package.metadata]
@@ -783,11 +781,11 @@ requires-dist = [
     { name = "psutil", marker = "extra == 'dev'", specifier = "==7.2.2" },
     { name = "pyright", marker = "extra == 'dev'", specifier = "==1.1.414" },
     { name = "pytest", marker = "extra == 'dev'", specifier = "<9.2" },
-    { name = "torch", marker = "extra == 'torch'", specifier = "==2.14.1" },
-    { name = "torch-mlir", marker = "extra == 'torch'", specifier = "==20261001" },
+    { name = "torch", specifier = "==2.14.1" },
+    { name = "torch-mlir", specifier = "==20261001" },
     { name = "xdsl", specifier = "~=0.74.0" },
 ]
-provides-extras = ["torch", "dev"]
+provides-extras = ["dev"]
 
 [package.metadata.requires-dev]
-dev = [{ name = "xdsl-torch", extras = ["dev", "torch"] }]
+dev = [{ name = "xdsl-torch", extras = ["dev"] }]
