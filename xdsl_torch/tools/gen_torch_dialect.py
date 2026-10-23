@@ -19,6 +19,7 @@ from xdsl.irdl import (
     EqAttrConstraint,
     OpDef,
     OperandDef,
+    ParamAttrDef,
     ResultDef,
     VarOperandDef,
     traits_def,
@@ -249,9 +250,18 @@ REVERSE_XDSL_TORCH_OPS = {
 ops, op_class_mapping = generate_ops()
 ops.sort(key=lambda x: x[0])
 
+types = [
+    ("Torch_IntType", ParamAttrDef("torch.int", [])),
+]
+
 with open("xdsl_torch/dialects/torch_dialect.py", "w+") as f:
     f.write(preamble)
-    dump_dialect_pyfile("torch", ops + custom_ops, out=f)  # type: ignore
+    dump_dialect_pyfile(
+        "torch",
+        ops + custom_ops,
+        types=types,
+        out=f,
+    )
 
 with open("xdsl_torch/dialects/torch_mapping.py", "w+") as f:
     f.write(preamble)
