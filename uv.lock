@@ -683,21 +683,21 @@ wheels = [
 
 [[package]]
 name = "torch-mlir"
-version = "20261001"
+version = "20261101"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "numpy" },
     { name = "packaging" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/3f/f3/97f4c8bcb04500b41aad14d17f09d14b0c6deadf7271c0253eb75dc7776e/torch_mlir-20261001-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:51d0672a8c0a198d6bc27a9dafd917e11c04203197b736d1127396034d18ab2e", size = 53205419, upload-time = "2026-10-01T12:56:55.004Z" },
-    { url = "https://files.pythonhosted.org/packages/f6/84/d343bcf6403dbdad943ad6468ef59112eb63afb9b0c74b2b7004a6310c37/torch_mlir-20261001-cp311-cp311-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:ce024fba1d9ff527e9eef1e4ed2da9caec28bf69fafd7d22d82ac1a210fe1abe", size = 77267928, upload-time = "2026-10-01T12:56:58.672Z" },
-    { url = "https://files.pythonhosted.org/packages/21/42/5f964a3be788df2b0832dc95c399ccdf40a2b25ba31a4c39d9f0438ebe79/torch_mlir-20261001-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:3fb6cc11d248f1ece7149cf21cc40f528b9c6f45424464678485db2c83c199af", size = 80430434, upload-time = "2026-10-01T12:57:02.502Z" },
-    { url = "https://files.pythonhosted.org/packages/2f/2e/f427068a72aae6b100d47a0409ce622a291d50f09896197b0ebe569413a8/torch_mlir-20261001-cp311-cp311-win_amd64.whl", hash = "sha256:553a0905aeae1b31ca62e36b8ba9ca8ddc5608903406a0bf7687697d55cea840", size = 82593022, upload-time = "2026-10-01T12:57:07.13Z" },
-    { url = "https://files.pythonhosted.org/packages/3d/06/13c06ccd2e2dd2e9b8272cbec2cdf79d2e62b4259b339ea64d799d818d35/torch_mlir-20261001-cp312-abi3-macosx_11_0_arm64.whl", hash = "sha256:16cc340633b96b77231836d09a955005063a4907b576b03c1681a8b1f3feb357", size = 53211680, upload-time = "2026-10-01T12:57:17.551Z" },
-    { url = "https://files.pythonhosted.org/packages/c9/f2/43d31fe02a9bea321d9cecf30a2f61a29a3063156fc79d3e91eef490374c/torch_mlir-20261001-cp312-abi3-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:60e950689052bcb2629c727350af445fd76afda1469ab32d00837b05670d834b", size = 77265050, upload-time = "2026-10-01T12:57:21.416Z" },
-    { url = "https://files.pythonhosted.org/packages/0d/f8/0733cd4792f53f13bb6789cb7a77689c91a9f907ad1d9b4c7748d3ed24f1/torch_mlir-20261001-cp312-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:e02ab29293ec2eba0a573ef20a154ecafd0ab1e8b305979fca2e2ac0b48e2b34", size = 80437517, upload-time = "2026-10-01T12:57:25.596Z" },
-    { url = "https://files.pythonhosted.org/packages/f8/a6/f1c63eb25119515c17f79f0f216a0fde74f9bfc678a85c816a5984077e3c/torch_mlir-20261001-cp312-abi3-win_amd64.whl", hash = "sha256:3a24686666641cdb9a2a967459bec9e040e68ef605c1f65421d755a88ed412b9", size = 82587694, upload-time = "2026-10-01T12:57:29.307Z" },
+    { url = "https://files.pythonhosted.org/packages/65/25/0310aaa9c54ee8b6f60e49fecc648598d56d8a6a8de8af61d1def2f71b47/torch_mlir-20261101-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:c3978be0acf572969e7ccb51409cd244f9a7cc89337da2a2a483b7d9642d6361", size = 52455239, upload-time = "2026-11-01T12:56:49.495Z" },
+    { url = "https://files.pythonhosted.org/packages/23/51/9d689a300060cbe741d25cf19795dd47a19a6f0538311a512b982dc7e82c/torch_mlir-20261101-cp311-cp311-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:5e0ee235ba7251be7a72a860ab4ec7325343525cf81c88cfdcd2532faa77843b", size = 76339822, upload-time = "2026-11-01T12:56:52.885Z" },
+    { url = "https://files.pythonhosted.org/packages/eb/fb/221442c46923a524b75946dbd00f6ac919a290802469dd4226ccda95fba1/torch_mlir-20261101-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:e55afe7e8d97b7a0ebc1ebd6877d157c49102695ecf9f11fe1ce5ce656306edf", size = 79482238, upload-time = "2026-11-01T12:56:56.856Z" },
+    { url = "https://files.pythonhosted.org/packages/d7/66/c472aa521654713e0195db15e8e5b39375fd1d20328fe91d2336b0a218b3/torch_mlir-20261101-cp311-cp311-win_amd64.whl", hash = "sha256:2080a0eeee991c4acc951bc33cb041742f5c7b8f4ebbb69e84045ff32a4ecd4d", size = 84045529, upload-time = "2026-11-01T12:57:00.366Z" },
+    { url = "https://files.pythonhosted.org/packages/ee/a2/ff6df95003ffbb79c1541292d418fd8df01372261b6430257b2142f99143/torch_mlir-20261101-cp312-abi3-macosx_11_0_arm64.whl", hash = "sha256:90077206f4f57afbab97beb34268dbe1f08ddebef6dd1d2e2971b3525ffba138", size = 52468774, upload-time = "2026-11-01T12:57:03.828Z" },
+    { url = "https://files.pythonhosted.org/packages/e2/58/31e07703961e8970032eb2478f889bcd9577610127c5863398da4aa0942f/torch_mlir-20261101-cp312-abi3-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:0a48cd409b32a908408b7535ee10d67fd97f9b4b59899242e33b831a0b20f8a4", size = 76340880, upload-time = "2026-11-01T12:57:07.183Z" },
+    { url = "https://files.pythonhosted.org/packages/1b/6e/e681c433957c10cd6a5b61d6be59b6555b4ec719542098b1748c6eece977/torch_mlir-20261101-cp312-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:9864998257cac7bb159de0a5913814a54a982b8bc62971b1a1338c2c4fdfee29", size = 79491933, upload-time = "2026-11-01T12:57:10.951Z" },
+    { url = "https://files.pythonhosted.org/packages/da/f5/63351a2b26cf05417dd59bcc390d8f28bf1107e9a4ab3144f1edf6cbdc81/torch_mlir-20261101-cp312-abi3-win_amd64.whl", hash = "sha256:de286729468f12327612f459f3457f0655dec83d991962de7c372a796fdeb60f", size = 84040278, upload-time = "2026-11-01T12:57:15.19Z" },
 ]
 
 [[package]]
@@ -788,7 +788,7 @@ requires-dist = [
     { name = "pyright", marker = "extra == 'dev'", specifier = "==1.1.414" },
     { name = "pytest", marker = "extra == 'dev'", specifier = "<9.3" },
     { name = "torch", specifier = "==2.15.0" },
-    { name = "torch-mlir", specifier = "==20261001" },
+    { name = "torch-mlir", specifier = "==20261101" },
     { name = "xdsl", specifier = "~=0.74.0" },
 ]
 provides-extras = ["dev"]
