@@ -8,7 +8,7 @@ dependencies = [
     "numpy>=2.2.4",
     "xdsl~=0.74.0",
     "torch==2.15.0",
-    "torch-mlir==20261001",
+    "torch-mlir==20261101",
 ]
 
 [project.scripts]
