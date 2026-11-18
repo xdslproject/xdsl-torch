@@ -81,16 +81,16 @@ def create_op_operands(
 
     for arg_spec, arg_value in arguments:
         if type(arg_value) is torch.fx.Node:
-            assert (
-                arg_value.name in xdsl_nodes
-            ), f"Node {arg_value.name} should have been processed before"
+            assert arg_value.name in xdsl_nodes, (
+                f"Node {arg_value.name} should have been processed before"
+            )
             operands.append(get_single(xdsl_nodes[arg_value.name]))
             continue
 
         if arg_value is None:
-            assert (
-                arg_spec.has_default_value()
-            ), "A non provided argument must have a default value"
+            assert arg_spec.has_default_value(), (
+                "A non provided argument must have a default value"
+            )
             value = arg_spec.default_value
         else:
             value = arg_value
@@ -189,9 +189,9 @@ def import_torch_op_overload(
 
 def import_getitem(node: torch.fx.Node, xdsl_nodes: dict[str, tuple[SSAValue, ...]]):
     ref_node, index = node.args
-    assert isinstance(
-        ref_node, torch.fx.Node
-    ), f"Unexpected getitem arguments: {node.args}"
+    assert isinstance(ref_node, torch.fx.Node), (
+        f"Unexpected getitem arguments: {node.args}"
+    )
     assert isinstance(index, int), f"Unexpected getitem arguments: {node.args}"
 
     if len(xdsl_nodes[ref_node.name]) > 1:
