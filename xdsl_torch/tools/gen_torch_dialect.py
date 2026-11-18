@@ -4,15 +4,16 @@ from typing import Any
 
 import torch
 from xdsl.dialects.builtin import (
-    AnyTensorTypeConstr,
     Float64Type,
     IntegerType,
     NoneType,
     Signedness,
+    TensorType,
     container_of,
 )
 from xdsl.irdl import (
     AnyAttr,
+    AnyRange,
     AttrConstraint,
     Attribute,
     BaseAttr,
@@ -20,6 +21,7 @@ from xdsl.irdl import (
     OpDef,
     OperandDef,
     ParamAttrDef,
+    RangeOf,
     ResultDef,
     VarOperandDef,
     traits_def,
@@ -30,8 +32,8 @@ from xdsl.traits import (
 from xdsl.utils.dialect_codegen import dump_dialect_pyfile
 
 TORCH_TYPE_TO_ODS_TYPE: dict[str, AttrConstraint[Attribute]] = {
-    "Tensor": AnyTensorTypeConstr,
-    "List[Tensor]": container_of(AnyTensorTypeConstr),
+    "Tensor": TensorType.constr(),
+    "List[Tensor]": container_of(TensorType.constr()),
     "int": BaseAttr(IntegerType),
     "List[int]": container_of(IntegerType),
     "float": BaseAttr(Float64Type),
@@ -48,7 +50,7 @@ custom_ops = [
         "Torch_ConstantNoneOp",
         OpDef(
             name="torch.constant.none",
-            results=[("result", ResultDef(EqAttrConstraint(NoneType())))],
+            results=[("result", ResultDef(RangeOf(EqAttrConstraint(NoneType()))))],
             traits=traits_def(Pure()),  # TODO: ConstantLike()
             assembly_format="attr-dict",
         ),
@@ -57,8 +59,8 @@ custom_ops = [
         "Torch_PrimListConstructOp",
         OpDef(
             name="torch.prim.ListConstruct",
-            operands=[("elements", VarOperandDef(AnyAttr()))],
-            results=[("result", ResultDef(container_of(AnyAttr())))],
+            operands=[("elements", VarOperandDef(AnyRange()))],
+            results=[("result", ResultDef(RangeOf(container_of(AnyAttr()))))],
             traits=traits_def(Pure()),
             assembly_format="$elements attr-dict `:` functional-type($elements, $result)",  # noqa: E501
         ),
@@ -99,7 +101,7 @@ def get_operand_def(type_str: str) -> OperandDef:
     xdsl_type = TORCH_TYPE_TO_ODS_TYPE[get_base_type(type_str)]
     if "Optional" in type_str:
         xdsl_type |= EqAttrConstraint(NoneType())
-    return OperandDef(xdsl_type)
+    return OperandDef(RangeOf(xdsl_type))
 
 
 def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
@@ -153,7 +155,7 @@ def gen_irdl_op(ns: str, op_name: str, overload_name: str, schema: Any):
                 unnamed_idx += 1
 
     results = [
-        (name, ResultDef(TORCH_TYPE_TO_ODS_TYPE[str(out.type)]))
+        (name, ResultDef(RangeOf(TORCH_TYPE_TO_ODS_TYPE[str(out.type)])))
         for name, out in zip(results_names, schema.returns)
     ]
 
